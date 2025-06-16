@@ -1,0 +1,160 @@
+/* Admin Dashboard Styles */
+:root {
+    --primary-color: #9999ff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+}
+
+/* Admin Layout */
+.admin-container {
+    padding: 20px;
+    background-color: var(--light-color);
+    min-height: 100vh;
+}
+
+.admin-header {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Product Management */
+.product-table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.product-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
+}
+
+.product-table td, .product-table th {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* Product Form */
+.product-form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.product-form label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.product-form input[type="text"],
+.product-form input[type="number"],
+.product-form select,
+.product-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.product-form input[type="text"]:focus,
+.product-form input[type="number"]:focus,
+.product-form select:focus,
+.product-form textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(153, 153, 255, 0.25);
+}
+
+/* Buttons */
+.btn-admin {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-admin-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-admin-primary:hover {
+    background-color: #8080ff;
+}
+
+.btn-admin-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-admin-danger:hover {
+    background-color: #c82333;
+}
+
+/* Dynamic Fields */
+.dynamic-field {
+    position: relative;
+    padding: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.dynamic-field .remove-field {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: var(--danger-color);
+    cursor: pointer;
+}
+
+/* Alerts */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .product-form {
+        padding: 1rem;
+    }
+    
+    .product-table {
+        overflow-x: auto;
+    }
+    
+    .btn-admin {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+} 

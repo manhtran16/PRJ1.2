@@ -1,0 +1,31 @@
+/* Import MDB Core */
+@import url('../mdb.min.css');
+
+/* Import Admin Styles */
+@import url('./admin.css');
+
+/* Override Styles */
+.btn-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.table-responsive {
+    margin-bottom: 1rem;
+}
+
+/* Fix MDB Form Styles */
+.form-outline .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: inset 0 0 0 1px var(--primary-color);
+}
+
+.form-outline .form-control:focus ~ .form-label {
+    color: var(--primary-color);
+}
+
+.form-outline .form-control:focus ~ .form-notch .form-notch-leading,
+.form-outline .form-control:focus ~ .form-notch .form-notch-middle,
+.form-outline .form-control:focus ~ .form-notch .form-notch-trailing {
+    border-color: var(--primary-color);
+    box-shadow: -1px 0 0 0 var(--primary-color), 0 1px 0 0 var(--primary-color), 0 -1px 0 0 var(--primary-color);
+} 
