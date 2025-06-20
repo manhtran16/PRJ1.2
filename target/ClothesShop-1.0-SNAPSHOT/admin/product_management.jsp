@@ -52,7 +52,7 @@
     <body>
         <div class="content">
             <h1>Product Management</h1>
-            <a href="add_product.jsp">Add Product</a>
+            <a href="${pageContext.request.contextPath}/addproduct">Add Product</a>
             <a href="update_product.jsp">Update Product</a>
         </div>
     </body>

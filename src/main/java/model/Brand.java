@@ -1,29 +1,52 @@
 package model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 public class Brand {
-	private int BrandID;
-	private String BrandName;
 
-	public Brand(int brandID, String brandName) {
-		super();
-		BrandID = brandID;
-		BrandName = brandName;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int brandID;
 
-	public int getBrandID() {
-		return BrandID;
-	}
+    private String brandName;
 
-	public String getBrandName() {
-		return BrandName;
-	}
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
 
-	public void setBrandID(int brandID) {
-		BrandID = brandID;
-	}
+    public Brand() {
+    }
 
-	public void setBrandName(String brandName) {
-		BrandName = brandName;
-	}
+    public Brand(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public Brand(int brandID, String brandName) {
+        this.brandID = brandID;
+        this.brandName = brandName;
+    }
+
+    public int getBrandID() {
+        return brandID;
+    }
+
+    public void setBrandID(int brandID) {
+        this.brandID = brandID;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
 
 }

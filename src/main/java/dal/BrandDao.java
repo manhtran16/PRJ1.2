@@ -1,6 +1,6 @@
 package dal;
 
-import java.sql.Connection;
+import controller.user.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,12 +10,7 @@ import java.util.List;
 
 import model.Brand;
 
-public class BrandDao {
-	private Connection connection;
-
-	public BrandDao(Connection connection) {
-		this.connection = connection;
-	}
+public class BrandDao extends DBContext{
 
 	// Pagination: mỗi trang lấy tối đa 100 brand
 	public List<Brand> getListBrand(int numPage) {
@@ -28,7 +23,7 @@ public class BrandDao {
 					 "  FROM [dbo].[Brand]" +
 					 ") AS temp WHERE rn BETWEEN ? AND ?";
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+		try (PreparedStatement preparedStatement = c.prepareStatement(sql)) {
 			preparedStatement.setInt(1, from);
 			preparedStatement.setInt(2, to);
 
@@ -51,7 +46,7 @@ public class BrandDao {
 		List<Brand> brandList = new ArrayList<>();
 		String sql = "SELECT BrandID, BrandName FROM Brand";
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		try (PreparedStatement preparedStatement = c.prepareStatement(sql);
 			 ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -71,7 +66,7 @@ public class BrandDao {
 		String sql = "SELECT BrandName FROM Brand WHERE BrandID=?";
 		String brandName = "";
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+		try (PreparedStatement preparedStatement = c.prepareStatement(sql)) {
 			preparedStatement.setInt(1, brandId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -91,7 +86,7 @@ public class BrandDao {
 		String sql = "SELECT COUNT(*) AS numBrand FROM Brand";
 		int numBrand = 0;
 
-		try (Statement statement = connection.createStatement();
+		try (Statement statement = c.createStatement();
 			 ResultSet resultSet = statement.executeQuery(sql)) {
 
 			if (resultSet.next()) {
@@ -108,7 +103,7 @@ public class BrandDao {
 	public void createBrand(String brandName) {
 		String sql = "INSERT INTO Brand (BrandName) VALUES (?)";
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+		try (PreparedStatement preparedStatement = c.prepareStatement(sql)) {
 			preparedStatement.setString(1, brandName);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -120,7 +115,7 @@ public class BrandDao {
 	public void deleteBrand(int id) {
 		String sql = "DELETE FROM Brand WHERE BrandID = ?";
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+		try (PreparedStatement preparedStatement = c.prepareStatement(sql)) {
 			preparedStatement.setInt(1, id);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -132,7 +127,7 @@ public class BrandDao {
 	public void updateBrand(int id, String newName) {
 		String sql = "UPDATE Brand SET BrandName = ? WHERE BrandID = ?";
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+		try (PreparedStatement preparedStatement = c.prepareStatement(sql)) {
 			preparedStatement.setString(1, newName);
 			preparedStatement.setInt(2, id);
 			preparedStatement.executeUpdate();

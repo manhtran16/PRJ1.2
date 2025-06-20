@@ -10,7 +10,6 @@ import java.util.List;
 import model.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import model.SpecProduct;
 import java.sql.SQLException;
 
 /**
@@ -19,7 +18,7 @@ import java.sql.SQLException;
  */
 public class ProductDao extends DBContext {
 
-    private final String GET_ALL_PRODUCT = "SELECT ProductID, ProductName, "
+    /*private final String GET_ALL_PRODUCT = "SELECT ProductID, ProductName, "
             + "ProductQuantity, Description, Price, BrandID FROM Product";
     private final String GET_PRODUCT_TYPE = "SELECT Type.TypeName FROM Type "
             + "JOIN [dbo].[Product]P ON  Type.TypeID = "
@@ -307,5 +306,5 @@ public class ProductDao extends DBContext {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 }

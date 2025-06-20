@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -54,12 +54,22 @@
                 <input type="text" class="form-control" id="productName" name="productName" required>
             </div>
             <div class="mb-3">
-                <label for="typeID" class="form-label">Loại sản phẩm (typeID)</label>
-                <input type="text" class="form-control" id="typeID" name="typeID" required>
+                <label for="typeID" class="form-label">Loại sản phẩm</label>
+                <select class="form-select" id="typeID" name="typeID" required>
+                    <option value="">-- Chọn loại sản phẩm --</option>
+                    <c:forEach var="type" items="${typeList}">
+                        <option value="${type.typeID}">${type.typeName}</option>
+                    </c:forEach>
+                </select>
             </div>
             <div class="mb-3">
-                <label for="brandID" class="form-label">Thương hiệu (brandID)</label>
-                <input type="text" class="form-control" id="brandID" name="brandID" required>
+                <label for="brandID" class="form-label">Thương hiệu</label>
+                <select class="form-select" id="brandID" name="brandID" required>
+                    <option value="">-- Chọn thương hiệu --</option>
+                    <c:forEach var="brand" items="${brandList}">
+                        <option value="${brand.brandID}">${brand.brandName}</option>
+                    </c:forEach>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Mô tả</label>

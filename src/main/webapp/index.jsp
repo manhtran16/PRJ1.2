@@ -1,4 +1,3 @@
-
 <%-- 
     Document   : home
     Created on : Jun 3, 2025, 11:29:10 AM
@@ -43,7 +42,7 @@
 
                 <c:choose>
                     <c:when test="${not empty sessionScope.user}">
-                        <a href="logout">Đăng xuất</a>
+                        <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                     </c:when>
                     <c:otherwise>
                         <a href="login.jsp">Đăng nhập</a>
