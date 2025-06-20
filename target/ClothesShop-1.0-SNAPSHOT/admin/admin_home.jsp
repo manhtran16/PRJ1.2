@@ -54,12 +54,12 @@
 	<f:view>
 		<h1>Admin Side</h1>
 		<div class="content">
-			<a href="../index.jsp">User Home</a> 
-            <a href="product_management.jsp">Product Management</a> 
-            <a href="BrandManagement">Brand Management</a> 
-            <a href="SpecificationManagment">Specification Management</a> 
-            <a href="TypeManagement">Type Management</a> 
-            <a href="#">Statistics</a>
+                    <a href="../index.jsp">User Home</a> 
+                    <a href="product_management.jsp">Product Management</a> 
+                    <a href="BrandManagement">Brand Management</a> 
+                    <a href="SpecificationManagment">Specification Management</a> 
+                    <a href="TypeManagement">Type Management</a> 
+                    <a href="#">Statistics</a>
 		</div>
 	</f:view>
 </body>

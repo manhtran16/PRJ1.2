@@ -17,32 +17,10 @@ import model.User;
  */
 public class UserDao extends DBContext {
 
-    private final String GET_ALL_USER = "SELECT * FROM [dbo].[User]";
-    private final String GET_USER_BY_EMAIL = "Select * from [dbo].[User] where Email like ? ";
-    private final String CHECK_LOGIN = "SELECT Password FROM [dbo].[User] WHERE Email = ?";
-    private final String GET_USER_BY_USERNAME = "SELECT * FROM [dbo].[User] WHERE UserName = ?";
-    private final String REGISTER_USER = "INSERT INTO [dbo].[User]\n" +
-"           ([UserRole]\n" +
-"           ,[UserName]\n" +
-"           ,[Email]\n" +
-"           ,[PhoneNumber]\n" +
-"           ,[Address]\n" +
-"           ,[firstName]\n" +
-"           ,[lastName]\n" +
-"           ,[Password])\n" +
-"     VALUES\n" +
-"           (?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?)";
-
     public List<User> getAllUsers() {
+        String sql = "SELECT * FROM [dbo].[User]";
         try {
-            PreparedStatement stm = c.prepareStatement(GET_ALL_USER);
+            PreparedStatement stm = c.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
 
             List<User> listCustomers = new ArrayList<>();
@@ -64,8 +42,8 @@ public class UserDao extends DBContext {
     }
 
     public int checkLoginUser(String email, String password) {
-
-        try (PreparedStatement stm = c.prepareStatement(CHECK_LOGIN)) {
+        String sql = "SELECT Password FROM [dbo].[User] WHERE Email = ?";
+        try (PreparedStatement stm = c.prepareStatement(sql)) {
             stm.setString(1, email);
 
             try (ResultSet resultSet = stm.executeQuery()) {
@@ -89,8 +67,9 @@ public class UserDao extends DBContext {
 
     public User getUserByUserName(String userName) {
         User user = null;
+        String sql = "SELECT * FROM [dbo].[User] WHERE UserName = ?";
         try {
-            PreparedStatement stm = c.prepareStatement(GET_USER_BY_USERNAME);
+            PreparedStatement stm = c.prepareStatement(sql);
             stm.setString(1, userName);
 
             try (ResultSet resultSet = stm.executeQuery()) {
@@ -112,9 +91,10 @@ public class UserDao extends DBContext {
     }
     
         public User getUserByEmail(String email) {
+        String sql = "Select * from [dbo].[User] where Email like ? ";
         User user = null;
         try {
-            PreparedStatement stm = c.prepareStatement(GET_USER_BY_EMAIL);
+            PreparedStatement stm = c.prepareStatement(sql);
             stm.setString(1, email);
 
             try (ResultSet resultSet = stm.executeQuery()) {
@@ -136,16 +116,34 @@ public class UserDao extends DBContext {
     }
 
     public void createUser(User user, String password) {
+            String sql = "INSERT INTO [dbo].[User]\n" +
+"           ([UserName]\n" +
+"           ,[Email]\n" +
+"           ,[PhoneNumber]\n" +
+"           ,[Address]\n" +
+"           ,[FirstName]\n" +
+"           ,[LastName]\n" +
+"           ,[Password]\n" +
+"           ,[UserRole])\n" +
+"     VALUES\n" +
+"           (?\n" +
+"           ,?\n" +
+"           ,?\n" +
+"           ,?\n" +
+"           ,?\n" +
+"           ,?\n" +
+"           ,?\n" +
+"           ,?)";
         try {
-            PreparedStatement stm = c.prepareStatement(REGISTER_USER);
-            stm.setInt(1, user.getUserRole());
-            stm.setString(2, user.getUserName());
-            stm.setString(3, user.getEmail());
-            stm.setString(4, user.getPhoneNumber());
-            stm.setString(5, user.getAddress());
-            stm.setString(6, user.getFirstName());
-            stm.setString(7, user.getLastName());
-            stm.setString(8, password);
+            PreparedStatement stm = c.prepareStatement(sql);
+            stm.setInt(8, user.getUserRole());
+            stm.setString(1, user.getUserName());
+            stm.setString(2, user.getEmail());
+            stm.setString(3, user.getPhoneNumber());
+            stm.setString(4, user.getAddress());
+            stm.setString(5, user.getFirstName());
+            stm.setString(6, user.getLastName());
+            stm.setString(7, password);
             int check = stm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,7 +4,6 @@
  */
 package controller.user;
 
-import com.sun.jdi.connect.spi.Connection;
 import dal.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -107,10 +106,9 @@ public class AuthController extends HttpServlet {
 			case 0:// login success
 				User user = userDao.getUserByEmail(email);
                                 HttpSession session = request.getSession();
-				session.setAttribute("isLogged", true);// user is logged
-				session.setAttribute("user", user.getUserName());
+				session.setAttribute("user", user);
                                 if(user.getUserRole()==0){
-				response.sendRedirect("userhome.jsp");}
+				response.sendRedirect("index.jsp");}
                                 else {
                                     response.sendRedirect("admin/admin_home.jsp");
                                 }

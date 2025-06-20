@@ -6,6 +6,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,6 +15,8 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
         <title>CLoth store</title>
         <style>
+
+
             nav {
                 background-color: #cc66ff;
                 padding: 10px 30px;
@@ -33,14 +36,20 @@
     </head>
     <body>
         <header>
-            <!-- Navbar -->
             <nav>
-                <a href="index.jsp">Trang chủ</a>
+                <a href="userhome.jsp">Trang chủ</a>
                 <a href="products.jsp">Sản phẩm</a>
                 <a href="about.jsp">Giới thiệu</a>
-                <a href="login.jsp">Đăng nhập</a>
-                <a href="register.jsp">Đăng ký</a>
 
+                <c:choose>
+                    <c:when test="${not empty sessionScope.user}">
+                        <a href="logout">Đăng xuất</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="login.jsp">Đăng nhập</a>
+                        <a href="register.jsp">Đăng kí</a>
+                    </c:otherwise>
+                </c:choose>
             </nav>
             <nav class="navbar navbar-expand-lg bg-body">
                 <div class="container-fluid">
@@ -207,7 +216,7 @@
                             <div class="card">
                                 <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
                                     <img src="https://nocturnal.vn/wp-content/uploads/2024/10/1.jpg" class="img-fluid"/>
-                                    <a href="#!">
+                                    <a href="displayPro.jsp">
                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                                     </a>
                                 </div>
@@ -224,7 +233,7 @@
                             <div class="card">
                                 <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
                                     <img src="https://nocturnal.vn/wp-content/uploads/2024/05/2-2-scaled.jpg" class="img-fluid"/>
-                                    <a href="#!">
+                                    <a href="displayPro.jsp">
                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                                     </a>
                                 </div>

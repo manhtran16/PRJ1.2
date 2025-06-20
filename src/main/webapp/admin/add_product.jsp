@@ -4,107 +4,129 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Add Product - Admin Dashboard</title>
-	<!-- MDB and Admin styles -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/index.css">
+    <meta charset="UTF-8">
+    <title>Thêm sản phẩm mới</title>
+    <link rel="stylesheet" href="css/mdb.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+        .add-product-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 32px 28px;
+        }
+        .add-product-container h2 {
+            color: #6c2eb7;
+            font-weight: 700;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #a770ef 0%, #f6d365 100%);
+            border: none;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #f6d365 0%, #a770ef 100%);
+        }
+        .form-check-inline {
+            margin-right: 15px;
+        }
+    </style>
 </head>
-<body class="admin-container">
-	<div class="admin-header">
-		<h1 class="text-center mb-0">Add New Product</h1>
-	</div>
+<body>
+    <div class="add-product-container">
+        <h2><i class="fas fa-plus-circle"></i> Thêm sản phẩm mới</h2>
+        <form action="addproduct" method="post">
+            <div class="mb-3">
+                <label for="productName" class="form-label">Tên sản phẩm</label>
+                <input type="text" class="form-control" id="productName" name="productName" required>
+            </div>
+            <div class="mb-3">
+                <label for="typeID" class="form-label">Loại sản phẩm (typeID)</label>
+                <input type="text" class="form-control" id="typeID" name="typeID" required>
+            </div>
+            <div class="mb-3">
+                <label for="brandID" class="form-label">Thương hiệu (brandID)</label>
+                <input type="text" class="form-control" id="brandID" name="brandID" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Mô tả</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Kích cỡ</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sizeS" name="size" value="S">
+                    <label class="form-check-label" for="sizeS">S</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sizeM" name="size" value="M">
+                    <label class="form-check-label" for="sizeM">M</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sizeL" name="size" value="L">
+                    <label class="form-check-label" for="sizeL">L</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sizeXL" name="size" value="XL">
+                    <label class="form-check-label" for="sizeXL">XL</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sizeXXL" name="size" value="XXL">
+                    <label class="form-check-label" for="sizeXXL">XXL</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="sizeOther" name="size" value="" onchange="toggleOtherSizeInput(this)">
+                    <label class="form-check-label" for="sizeOther">Khác</label>
+                </div>
+                <input type="text" class="form-control mt-2" id="otherSizeInput" name="sizeOther" placeholder="Nhập kích cỡ khác..." style="display:none; max-width:250px;">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Màu sắc</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="colorRed" name="color" value="Đỏ">
+                    <label class="form-check-label" for="colorRed">Đỏ</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="colorBlue" name="color" value="Xanh dương">
+                    <label class="form-check-label" for="colorBlue">Xanh dương</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="colorBlack" name="color" value="Đen">
+                    <label class="form-check-label" for="colorBlack">Đen</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="colorWhite" name="color" value="Trắng">
+                    <label class="form-check-label" for="colorWhite">Trắng</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="colorYellow" name="color" value="Vàng">
+                    <label class="form-check-label" for="colorYellow">Vàng</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="colorOther" name="color" value="" onchange="toggleOtherColorInput(this)">
+                    <label class="form-check-label" for="colorOther">Khác</label>
+                </div>
+                <input type="text" class="form-control mt-2" id="otherColorInput" name="colorOther" placeholder="Nhập màu khác..." style="display:none; max-width:250px;">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Thêm sản phẩm</button>
+        </form>
+    </div>
 
-	<div class="container">
-		<c:if test="${not empty error}">
-			<div class="alert alert-danger">${error}</div>
-		</c:if>
-
-		<form action="AddProduct" method="post" class="product-form">
-			<div class="form-group">
-				<label for="productName">Product Name</label>
-				<input type="text" class="form-control" id="productName" name="productName" 
-					   placeholder="Enter product name" required>
-			</div>
-
-			<div class="form-group">
-				<label for="productQuantity">Quantity</label>
-				<input type="number" class="form-control" id="productQuantity" name="productQuantity"
-					   placeholder="Enter product quantity" min="1" required>
-			</div>
-
-			<div class="form-group">
-				<label for="productDescription">Description</label>
-				<textarea class="form-control" id="productDescription" name="productDescription"
-						  placeholder="Enter product description" required></textarea>
-			</div>
-
-			<div class="form-group">
-				<label for="productPrice">Price</label>
-				<input type="number" class="form-control" id="productPrice" name="productPrice"
-					   placeholder="Enter product price" step="0.01" min="0" required>
-			</div>
-
-			<div class="form-group">
-				<label for="productBrand">Brand</label>
-				<select class="form-control" id="productBrand" name="productBrand" required>
-					<c:forEach var="brand" items="${brandList}">
-						<option value="${brand.brandID}">${brand.brandName}</option>
-					</c:forEach>
-				</select>
-				<a href="BrandManagement" class="btn btn-admin-primary mt-2">Add new brand</a>
-			</div>
-
-			<div class="form-group">
-				<label>Product Types</label>
-				<div id="typeFields">
-					<div class="dynamic-field">
-						<select class="form-control" name="productType" required>
-							<c:forEach var="type" items="${typeList}">
-								<option value="${type.typeID}">${type.typeName}</option>
-							</c:forEach>
-						</select>
-					</div>
-				</div>
-				<button type="button" class="btn btn-admin-primary mt-2" onclick="addTypeField()">Add More Types</button>
-				<a href="TypeManagement" class="btn btn-admin-primary mt-2 ml-2">Add New Type</a>
-			</div>
-
-			<div class="form-group">
-				<label>Specifications</label>
-				<div id="specificationFields">
-					<div class="dynamic-field">
-						<select class="form-control mb-2" name="productSpecification" required>
-							<c:forEach var="spec" items="${specificationList}">
-								<option value="${spec.specID}">${spec.specName}</option>
-							</c:forEach>
-						</select>
-						<input type="text" class="form-control mb-2" name="specProduct" placeholder="Specification Product">
-						<input type="number" class="form-control" name="specValue" placeholder="Specification Value" step="0.01">
-					</div>
-				</div>
-				<button type="button" class="btn btn-admin-primary mt-2" onclick="addSpecField()">Add More Specifications</button>
-				<a href="SpecificationManagement" class="btn btn-admin-primary mt-2 ml-2">Add New Specification</a>
-			</div>
-
-			<div class="form-group">
-				<label>Product Images</label>
-				<div id="imageFields">
-					<div class="dynamic-field">
-						<input type="text" class="form-control" name="productImage" placeholder="Image URL" required>
-					</div>
-				</div>
-				<button type="button" class="btn btn-admin-primary mt-2" onclick="addImageField()">Add More Images</button>
-			</div>
-
-			<button type="submit" class="btn btn-admin-primary btn-block mt-4">Add Product</button>
-		</form>
-	</div>
-
-	<!-- MDB JS -->
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/mdb.min.js"></script>
+    <!-- MDB JS -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/mdb.min.js"></script>
 	
 	<!-- Custom JS for dynamic fields -->
 	<script>
@@ -130,6 +152,29 @@
 			const template = document.querySelector('#imageFields .dynamic-field').innerHTML;
 			addDynamicField('imageFields', template);
 		}
+
+		function toggleOtherSizeInput(checkbox) {
+    var input = document.getElementById('otherSizeInput');
+    if (checkbox.checked) {
+        input.style.display = 'inline-block';
+        input.required = true;
+    } else {
+        input.style.display = 'none';
+        input.value = '';
+        input.required = false;
+    }
+}
+		function toggleOtherColorInput(checkbox) {
+    var input = document.getElementById('otherColorInput');
+    if (checkbox.checked) {
+        input.style.display = 'inline-block';
+        input.required = true;
+    } else {
+        input.style.display = 'none';
+        input.value = '';
+        input.required = false;
+    }
+}
 	</script>
 </body>
 </html>

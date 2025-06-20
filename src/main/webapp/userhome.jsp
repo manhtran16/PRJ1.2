@@ -45,9 +45,18 @@
     <body>
         <header>
 
-            <div class="user-info">
-                <h2>${sessionScope.user}</h2>
-            </div>
+            <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<div class="user-info">
+    <c:choose>
+        <c:when test="${not empty sessionScope.user}">
+            <h2>${sessionScope.user.userName}</h2>
+        </c:when>
+        <c:otherwise>
+            <h2>Chưa đăng nhập</h2>
+        </c:otherwise>
+    </c:choose>
+</div>
             <!-- Navbar -->
             <nav>
                 <a href="userhome.jsp">Trang chủ</a>
