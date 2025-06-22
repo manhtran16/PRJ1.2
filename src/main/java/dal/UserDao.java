@@ -62,7 +62,7 @@ public class UserDao extends DBContext {
             e.printStackTrace();
             return -1;
         }
-        
+
     }
 
     public User getUserByUserName(String userName) {
@@ -89,8 +89,8 @@ public class UserDao extends DBContext {
 
         return user;
     }
-    
-        public User getUserByEmail(String email) {
+
+    public User getUserByEmail(String email) {
         String sql = "Select * from [dbo].[User] where Email like ? ";
         User user = null;
         try {
@@ -116,24 +116,24 @@ public class UserDao extends DBContext {
     }
 
     public void createUser(User user, String password) {
-            String sql = "INSERT INTO [dbo].[User]\n" +
-"           ([UserName]\n" +
-"           ,[Email]\n" +
-"           ,[PhoneNumber]\n" +
-"           ,[Address]\n" +
-"           ,[FirstName]\n" +
-"           ,[LastName]\n" +
-"           ,[Password]\n" +
-"           ,[UserRole])\n" +
-"     VALUES\n" +
-"           (?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?)";
+        String sql = "INSERT INTO [dbo].[User]\n" +
+                "           ([UserName]\n" +
+                "           ,[Email]\n" +
+                "           ,[PhoneNumber]\n" +
+                "           ,[Address]\n" +
+                "           ,[FirstName]\n" +
+                "           ,[LastName]\n" +
+                "           ,[Password]\n" +
+                "           ,[UserRole])\n" +
+                "     VALUES\n" +
+                "           (?\n" +
+                "           ,?\n" +
+                "           ,?\n" +
+                "           ,?\n" +
+                "           ,?\n" +
+                "           ,?\n" +
+                "           ,?\n" +
+                "           ,?)";
         try {
             PreparedStatement stm = c.prepareStatement(sql);
             stm.setInt(8, user.getUserRole());
@@ -150,10 +150,49 @@ public class UserDao extends DBContext {
         }
     }
 
+    /**
+     * Check if current password is correct for a user
+     */
+    public boolean verifyCurrentPassword(String email, String currentPassword) {
+        String sql = "SELECT Password FROM [dbo].[User] WHERE Email = ?";
+        try (PreparedStatement stm = c.prepareStatement(sql)) {
+            stm.setString(1, email);
+
+            try (ResultSet resultSet = stm.executeQuery()) {
+                if (resultSet.next()) {
+                    String storedPassword = resultSet.getString("Password");
+                    // Simple plain text comparison
+                    return currentPassword.equals(storedPassword);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Update user password
+     */
+    public boolean updatePassword(String email, String newPassword) {
+        String sql = "UPDATE [dbo].[User] SET Password = ? WHERE Email = ?";
+        try {
+            PreparedStatement stm = c.prepareStatement(sql);
+            stm.setString(1, newPassword); // Store as plain text for simplicity
+            stm.setString(2, email);
+
+            int rowsAffected = stm.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         User user = new User(0, "manhtran16", "manhdzvcl@gmail.com", "1234567890", "hanoi", "manh", "tran");
         UserDao dao = new UserDao();
-        
+
         for (User us : dao.getAllUsers()) {
             System.out.println(us);
         }
