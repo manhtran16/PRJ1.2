@@ -76,6 +76,10 @@
                     <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                 </div>
                 <div class="mb-3">
+                    <label for="price" class="form-label">Giá sản phẩm (VNĐ)</label>
+                    <input type="number" class="form-control" id="price" name="price" min="0" required>
+                </div>
+                <div class="mb-3">
                     <label class="form-label">Kích cỡ</label><br>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input size-checkbox" type="checkbox" id="sizeS" name="size" value="S">
@@ -131,6 +135,7 @@
                     </div>
                     <input type="text" class="form-control mt-2" id="otherColorInput" name="color" placeholder="Nhập màu khác..." style="display:none; max-width:250px;">
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Biến thể sản phẩm (Size + Màu + Số lượng)</label>
                     <div id="variantTableContainer"></div>
@@ -150,121 +155,121 @@
 
         <!-- Custom JS for dynamic fields -->
         <script>
-                        function addDynamicField(containerId, template) {
-                            const container = document.getElementById(containerId);
-                            const newField = document.createElement('div');
-                            newField.className = 'dynamic-field mt-3';
-                            newField.innerHTML = template + '<button type="button" class="btn-close remove-field" onclick="this.parentElement.remove()"></button>';
-                            container.appendChild(newField);
-                        }
-
-                        function addTypeField() {
-                            const template = document.querySelector('#typeFields .dynamic-field').innerHTML;
-                            addDynamicField('typeFields', template);
-                        }
-
-                        function addSpecField() {
-                            const template = document.querySelector('#specificationFields .dynamic-field').innerHTML;
-                            addDynamicField('specificationFields', template);
-                        }
-
-                        function addImageField() {
-                            const template = document.querySelector('#imageFields .dynamic-field').innerHTML;
-                            addDynamicField('imageFields', template);
-                        }
-
-                        function toggleOtherSizeInput(checkbox) {
-                            var input = document.getElementById('otherSizeInput');
-                            if (checkbox.checked) {
-                                input.style.display = 'inline-block';
-                                input.required = true;
-                            } else {
-                                input.style.display = 'none';
-                                input.value = '';
-                                input.required = false;
+                            function addDynamicField(containerId, template) {
+                                const container = document.getElementById(containerId);
+                                const newField = document.createElement('div');
+                                newField.className = 'dynamic-field mt-3';
+                                newField.innerHTML = template + '<button type="button" class="btn-close remove-field" onclick="this.parentElement.remove()"></button>';
+                                container.appendChild(newField);
                             }
-                            updateVariantTable();
-                        }
-                        function toggleOtherColorInput(checkbox) {
-                            var input = document.getElementById('otherColorInput');
-                            if (checkbox.checked) {
-                                input.style.display = 'inline-block';
-                                input.required = true;
-                            } else {
-                                input.style.display = 'none';
-                                input.value = '';
-                                input.required = false;
+
+                            function addTypeField() {
+                                const template = document.querySelector('#typeFields .dynamic-field').innerHTML;
+                                addDynamicField('typeFields', template);
                             }
-                            updateVariantTable();
-                        }
+
+                            function addSpecField() {
+                                const template = document.querySelector('#specificationFields .dynamic-field').innerHTML;
+                                addDynamicField('specificationFields', template);
+                            }
+
+                            function addImageField() {
+                                const template = document.querySelector('#imageFields .dynamic-field').innerHTML;
+                                addDynamicField('imageFields', template);
+                            }
+
+                            function toggleOtherSizeInput(checkbox) {
+                                var input = document.getElementById('otherSizeInput');
+                                if (checkbox.checked) {
+                                    input.style.display = 'inline-block';
+                                    input.required = true;
+                                } else {
+                                    input.style.display = 'none';
+                                    input.value = '';
+                                    input.required = false;
+                                }
+                                updateVariantTable();
+                            }
+                            function toggleOtherColorInput(checkbox) {
+                                var input = document.getElementById('otherColorInput');
+                                if (checkbox.checked) {
+                                    input.style.display = 'inline-block';
+                                    input.required = true;
+                                } else {
+                                    input.style.display = 'none';
+                                    input.value = '';
+                                    input.required = false;
+                                }
+                                updateVariantTable();
+                            }
 
 // Lấy danh sách size và color đã chọn
-                        function getSelectedSizes() {
-                            let sizes = [];
-                            document.querySelectorAll('.size-checkbox').forEach(cb => {
-                                if (cb.checked && cb.id !== 'sizeOther')
-                                    sizes.push(cb.value);
-                            });
-                            const otherSizeCb = document.getElementById('sizeOther');
-                            const otherSizeInput = document.getElementById('otherSizeInput');
-                            if (otherSizeCb && otherSizeCb.checked && otherSizeInput.value.trim() !== '') {
-                                sizes.push(otherSizeInput.value.trim());
+                            function getSelectedSizes() {
+                                let sizes = [];
+                                document.querySelectorAll('.size-checkbox').forEach(cb => {
+                                    if (cb.checked && cb.id !== 'sizeOther')
+                                        sizes.push(cb.value);
+                                });
+                                const otherSizeCb = document.getElementById('sizeOther');
+                                const otherSizeInput = document.getElementById('otherSizeInput');
+                                if (otherSizeCb && otherSizeCb.checked && otherSizeInput.value.trim() !== '') {
+                                    sizes.push(otherSizeInput.value.trim());
+                                }
+                                return sizes;
                             }
-                            return sizes;
-                        }
-                        function getSelectedColors() {
-                            let colors = [];
-                            document.querySelectorAll('.color-checkbox').forEach(cb => {
-                                if (cb.checked && cb.id !== 'colorOther')
-                                    colors.push(cb.value);
-                            });
-                            const otherColorCb = document.getElementById('colorOther');
-                            const otherColorInput = document.getElementById('otherColorInput');
-                            if (otherColorCb && otherColorCb.checked && otherColorInput.value.trim() !== '') {
-                                colors.push(otherColorInput.value.trim());
+                            function getSelectedColors() {
+                                let colors = [];
+                                document.querySelectorAll('.color-checkbox').forEach(cb => {
+                                    if (cb.checked && cb.id !== 'colorOther')
+                                        colors.push(cb.value);
+                                });
+                                const otherColorCb = document.getElementById('colorOther');
+                                const otherColorInput = document.getElementById('otherColorInput');
+                                if (otherColorCb && otherColorCb.checked && otherColorInput.value.trim() !== '') {
+                                    colors.push(otherColorInput.value.trim());
+                                }
+                                return colors;
                             }
-                            return colors;
-                        }
 
 // Tạo bảng biến thể
-                        function updateVariantTable() {
-                            const sizes = getSelectedSizes();
-                            const colors = getSelectedColors();
-                            const container = document.getElementById('variantTableContainer');
-                            container.innerHTML = '';
-                            if (sizes.length === 0 || colors.length === 0)
-                                return;
+                            function updateVariantTable() {
+                                const sizes = getSelectedSizes();
+                                const colors = getSelectedColors();
+                                const container = document.getElementById('variantTableContainer');
+                                container.innerHTML = '';
+                                if (sizes.length === 0 || colors.length === 0)
+                                    return;
 
-                            let html = '<table class="table table-bordered"><thead><tr><th>Size</th><th>Màu</th><th>Số lượng</th><th>Image URL</th></tr></thead><tbody>';
-                            sizes.forEach(size => {
-                                colors.forEach(color => {
-                                    html += `<tr>
+                                let html = '<table class="table table-bordered"><thead><tr><th>Size</th><th>Màu</th><th>Số lượng</th><th>Image URL</th></tr></thead><tbody>';
+                                sizes.forEach(size => {
+                                    colors.forEach(color => {
+                                        html += `<tr>
                 <td><input type="hidden" name="variantSize[]" value="` + size + `">` + size + `</td>
                 <td><input type="hidden" name="variantColor[]" value="` + color + `">` + color + `</td>
                 <td><input type="number" name="variantQuantity[]" class="form-control" min="0" required></td>
                 <td><input type="text" name="variantImage[]" class="form-control" placeholder="Nhập URL ảnh"></td>
             </tr>`;
+                                    });
                                 });
-                            });
-                            html += '</tbody></table>';
-                            container.innerHTML = html;
-                        }
+                                html += '</tbody></table>';
+                                container.innerHTML = html;
+                            }
 
 
 // Lắng nghe sự kiện thay đổi checkbox và input
-                        function attachVariantEvents() {
-                            document.querySelectorAll('.size-checkbox, .color-checkbox').forEach(cb => {
-                                cb.addEventListener('change', updateVariantTable);
-                            });
-                            document.getElementById('otherSizeInput').addEventListener('input', updateVariantTable);
-                            document.getElementById('otherColorInput').addEventListener('input', updateVariantTable);
-                        }
+                            function attachVariantEvents() {
+                                document.querySelectorAll('.size-checkbox, .color-checkbox').forEach(cb => {
+                                    cb.addEventListener('change', updateVariantTable);
+                                });
+                                document.getElementById('otherSizeInput').addEventListener('input', updateVariantTable);
+                                document.getElementById('otherColorInput').addEventListener('input', updateVariantTable);
+                            }
 
-                        // Gọi khi trang vừa load
-                        window.onload = function () {
-                            attachVariantEvents();
-                            updateVariantTable();
-                        };
+                            // Gọi khi trang vừa load
+                            window.onload = function () {
+                                attachVariantEvents();
+                                updateVariantTable();
+                            };
         </script>
     </body>
 

@@ -43,6 +43,7 @@ public class addproduct extends HttpServlet {
         String description = request.getParameter("description");
         String brandName = request.getParameter("brandName");
         String typeName = request.getParameter("typeName");
+        Double price = Double.parseDouble(request.getParameter("price"));
 
         Product product = new Product();
         product.setProductName(productName);
@@ -52,7 +53,7 @@ public class addproduct extends HttpServlet {
 
         // Lấy thông tin biến thể
         String[] sizes = request.getParameterValues("variantSize[]");
-        String[] colors = request.getParameterValues("variantColor[]"); // Bạn nên sửa name="variantColor[]" để tách riêng
+        String[] colors = request.getParameterValues("variantColor[]");
         String[] quantities = request.getParameterValues("variantQuantity[]");
         String[] images = request.getParameterValues("variantImage[]");
 
@@ -60,7 +61,7 @@ public class addproduct extends HttpServlet {
         for (int i = 0; i < quantities.length; i++) {
             ProductVariant variant = new ProductVariant();
             variant.setQuantity(Integer.parseInt(quantities[i]));
-            variant.setPrice(0); // hoặc lấy từ form nếu có
+            variant.setPrice(price);
 
             List<VariantAttributeValue> attributes = new ArrayList<>();
 
