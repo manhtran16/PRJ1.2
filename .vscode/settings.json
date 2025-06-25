@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": false,
+  "editor.defaultFormatter": null,
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java",
+    "editor.formatOnSave": true
+  },
+  "[jsp]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  },
+  "[html]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  },
+  "prettier.enable": false
+}

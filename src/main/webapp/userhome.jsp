@@ -321,7 +321,7 @@
                     src="https://nocturnal.vn/wp-content/uploads/2024/05/1-1-1.jpg"
                     class="img-fluid"
                   />
-                  <a href="#!">
+                  <a href="displayPro.jsp">
                     <div
                       class="mask"
                       style="background-color: rgba(251, 251, 251, 0.15)"
@@ -335,7 +335,7 @@
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
                   </p>
-                  <a href="#!" class="btn btn-primary" data-mdb-ripple-init
+                  <a href="displayPro.jsp" class="btn btn-primary" data-mdb-ripple-init
                     >Thêm vào rỏ</a
                   >
                 </div>
@@ -353,7 +353,7 @@
                     src="https://nocturnal.vn/wp-content/uploads/2023/07/24-scaled.jpg"
                     class="img-fluid"
                   />
-                  <a href="#!">
+                  <a href="displayPro.jsp">
                     <div
                       class="mask"
                       style="background-color: rgba(251, 251, 251, 0.15)"
@@ -367,7 +367,7 @@
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
                   </p>
-                  <a href="#!" class="btn btn-primary" data-mdb-ripple-init
+                  <a href="displayPro.jsp" class="btn btn-primary" data-mdb-ripple-init
                     >Thêm vào rỏ</a
                   >
                 </div>
@@ -385,7 +385,7 @@
                     src="https://nocturnal.vn/wp-content/uploads/2025/04/111.jpg"
                     class="img-fluid"
                   />
-                  <a href="#!">
+                  <a href="displayPro.jsp">
                     <div
                       class="mask"
                       style="background-color: rgba(251, 251, 251, 0.15)"
@@ -399,7 +399,7 @@
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
                   </p>
-                  <a href="#!" class="btn btn-primary" data-mdb-ripple-init
+                  <a href="displayPro.jsp" class="btn btn-primary" data-mdb-ripple-init
                     >Thêm vào rỏ</a
                   >
                 </div>

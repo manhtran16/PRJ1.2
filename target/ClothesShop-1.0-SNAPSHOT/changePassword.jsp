@@ -6,6 +6,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Change Password</title>
     <link href="css/mdb.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
       .change-password-container {
         max-width: 500px;
@@ -32,9 +36,31 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     </style>
   </head>
   <body>
+    <!-- Navigation Bar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-light"
+      style="background-color: #cc66ff"
+    >
+      <div class="container">
+        <a class="navbar-brand text-white" href="userhome.jsp">
+          <i class="fas fa-tshirt me-2"></i>Clothes Shop
+        </a>
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link text-white" href="userhome.jsp">
+            <i class="fas fa-home me-1"></i>Home
+          </a>
+          <a class="nav-link text-white" href="userOrders">
+            <i class="fas fa-receipt me-1"></i>My Orders
+          </a>
+        </div>
+      </div>
+    </nav>
+
     <div class="container">
       <div class="change-password-container">
-        <h2 class="text-center mb-4">Đổi mật khẩu</h2>
+        <h2 class="text-center mb-4">
+          <i class="fas fa-key me-2"></i>Change Password
+        </h2>
 
         <!-- Display error message -->
         <c:if test="${not empty errorMessage}">
@@ -45,7 +71,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <c:if test="${not empty successMessage}">
           <div class="alert alert-success">${successMessage}</div>
         </c:if>
-
         <form method="post" action="changePassword">
           <!-- Current Password -->
           <div class="form-outline mb-3">
@@ -56,11 +81,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               class="form-control"
               required
             />
-            <label class="form-label" for="currentPassword"
-              >Current Password</label
-            >
+            <label class="form-label" for="currentPassword">
+              <i class="fas fa-lock me-1"></i>Current Password
+            </label>
           </div>
-
           <!-- New Password -->
           <div class="form-outline mb-3">
             <input
@@ -70,7 +94,22 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               class="form-control"
               required
             />
-            <label class="form-label" for="newPassword">New Password</label>
+            <label class="form-label" for="newPassword">
+              <i class="fas fa-key me-1"></i>New Password
+            </label>
+            <!-- Password Strength Indicator -->
+            <div class="mt-2">
+              <div class="progress" style="height: 4px">
+                <div
+                  id="strengthBar"
+                  class="progress-bar"
+                  style="width: 0%"
+                ></div>
+              </div>
+              <small id="strengthText" class="text-muted"
+                >Enter a password</small
+              >
+            </div>
           </div>
 
           <!-- Confirm New Password -->
@@ -82,23 +121,23 @@ uri="http://java.sun.com/jsp/jstl/core" %>
               class="form-control"
               required
             />
-            <label class="form-label" for="confirmPassword"
-              >Confirm New Password</label
-            >
+            <label class="form-label" for="confirmPassword">
+              <i class="fas fa-check-circle me-1"></i>Confirm New Password
+            </label>
           </div>
 
           <!-- Submit Button -->
           <div class="text-center">
             <button type="submit" class="btn btn-primary btn-block">
-              Change Password
+              <i class="fas fa-save me-1"></i>Change Password
             </button>
           </div>
 
           <!-- Back to Profile Link -->
           <div class="text-center mt-3">
-            <a href="userhome.jsp" class="btn btn-outline-secondary"
-              >Back to Profile</a
-            >
+            <a href="userhome.jsp" class="btn btn-outline-secondary">
+              <i class="fas fa-arrow-left me-1"></i>Back to Home
+            </a>
           </div>
         </form>
       </div>
@@ -114,9 +153,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         inputs.forEach((input) => {
           new mdb.Input(input);
         });
-      });
-
-      // Client-side password validation
+      }); // Client-side password validation
       document.querySelector("form").addEventListener("submit", function (e) {
         const newPassword = document.getElementById("newPassword").value;
         const confirmPassword =
@@ -134,6 +171,60 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           return false;
         }
       });
+
+      // Password strength indicator
+      document
+        .getElementById("newPassword")
+        .addEventListener("input", function () {
+          const password = this.value;
+          const strengthBar = document.getElementById("strengthBar");
+          const strengthText = document.getElementById("strengthText");
+
+          if (!strengthBar) return; // If strength indicator doesn't exist, skip
+
+          let strength = 0;
+          let text = "";
+          let color = "";
+
+          if (password.length >= 6) strength++;
+          if (password.length >= 8) strength++;
+          if (/[A-Z]/.test(password)) strength++;
+          if (/[0-9]/.test(password)) strength++;
+          if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+          switch (strength) {
+            case 0:
+            case 1:
+              text = "Too Weak";
+              color = "#dc3545";
+              break;
+            case 2:
+              text = "Weak";
+              color = "#fd7e14";
+              break;
+            case 3:
+              text = "Fair";
+              color = "#ffc107";
+              break;
+            case 4:
+              text = "Good";
+              color = "#20c997";
+              break;
+            case 5:
+              text = "Strong";
+              color = "#198754";
+              break;
+          }
+
+          if (strengthBar) {
+            strengthBar.style.width = strength * 20 + "%";
+            strengthBar.style.backgroundColor = color;
+          }
+          if (strengthText) {
+            strengthText.textContent = text;
+            strengthText.style.color = color;
+          }
+        });
     </script>
   </body>
 </html>

@@ -1,0 +1,19 @@
+# Ignore JSP files
+*.jsp
+
+# Ignore Java web app directories
+src/main/webapp/**
+target/**
+
+# Ignore specific file types
+*.class
+*.war
+*.jar
+
+# Ignore configuration files
+*.xml
+*.sql
+
+# Ignore CSS and JS libraries
+**/css/mdb.*
+**/js/mdb.*

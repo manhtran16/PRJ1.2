@@ -2,8 +2,10 @@ C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\dal\UserDao.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\utils\Validate.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\com\mycompany\clothesshop\resources\JakartaEE10Resource.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\OrderDetailKey.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\ProductDetailController.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Attribute.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\ProductVariant.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\UserOrdersController.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\logout.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\RatingKey.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\com\mycompany\clothesshop\JakartaRestConfiguration.java
@@ -14,11 +16,14 @@ C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\Aut
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\DBContext.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Product.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\dal\ProductDao.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\changePassword.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\ProductsController.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Brand.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Image.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Rating.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\VariantAttributeKey.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\OrderTable.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\dal\OrderDao.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\OrderDetail.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\dal\BrandDao.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\dal\TypeDao.java
