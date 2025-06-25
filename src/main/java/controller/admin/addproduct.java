@@ -41,23 +41,19 @@ public class addproduct extends HttpServlet {
         // Lấy thông tin sản phẩm từ form
         String productName = request.getParameter("productName");
         String description = request.getParameter("description");
-        String brandIdStr = request.getParameter("brandName"); // assuming brandName param holds the brand ID
+        String brandName = request.getParameter("brandName");
         String typeName = request.getParameter("typeName");
         Double price = Double.parseDouble(request.getParameter("price"));
 
         Product product = new Product();
         product.setProductName(productName);
         product.setDescription(description);
-
-        BrandDao bdao = new BrandDao();
-        Brand brand = bdao.getBrandById(Integer.parseInt(brandIdStr));
-        product.setBrand(brand);
+        product.setBrand(new Brand(brandName));
         product.setType(new Type(typeName));
 
         // Lấy thông tin biến thể
         String[] sizes = request.getParameterValues("variantSize[]");
-        String[] colors = request.getParameterValues("variantColor[]"); // Bạn nên sửa name="variantColor[]" để tách
-                                                                        // riêng
+        String[] colors = request.getParameterValues("variantColor[]");
         String[] quantities = request.getParameterValues("variantQuantity[]");
         String[] images = request.getParameterValues("variantImage[]");
 

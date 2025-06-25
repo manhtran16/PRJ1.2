@@ -1,6 +1,6 @@
 package controller.user;
 
-import dal.ProductDao;
+import repository.ProductDao;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -60,7 +60,7 @@ public class ProductsController extends HttpServlet {
 
         try {
             int productId = Integer.parseInt(productIdStr);
-            Product product = getProductById(productId);
+            Product product = productDao.getProductWithDetails(productId);
 
             if (product == null) {
                 request.setAttribute("errorMessage", "Product not found");
@@ -80,74 +80,11 @@ public class ProductsController extends HttpServlet {
         }
     }
 
-    /**
-     * Get product by ID with all related information
-     */
-    private Product getProductById(int productId) {
-        try {
-            String sql = "SELECT p.ProductID, p.ProductName, p.Description, " +
-                    "b.BrandID, b.BrandName, t.TypeID, t.TypeName " +
-                    "FROM Product p " +
-                    "LEFT JOIN Brand b ON p.BrandID = b.BrandID " +
-                    "LEFT JOIN Type t ON p.TypeID = t.TypeID " +
-                    "WHERE p.ProductID = ?";
-
-            java.sql.PreparedStatement stm = productDao.c.prepareStatement(sql);
-            stm.setInt(1, productId);
-            java.sql.ResultSet rs = stm.executeQuery();
-
-            if (rs.next()) {
-                Product product = new Product();
-                product.setProductID(rs.getInt("ProductID"));
-                product.setProductName(rs.getString("ProductName"));
-                product.setDescription(rs.getString("Description"));
-
-                // Create Brand object if exists
-                if (rs.getInt("BrandID") > 0) {
-                    model.Brand brand = new model.Brand();
-                    brand.setBrandID(rs.getInt("BrandID"));
-                    brand.setBrandName(rs.getString("BrandName"));
-                    product.setBrand(brand);
-                }
-
-                // Create Type object if exists
-                if (rs.getInt("TypeID") > 0) {
-                    model.Type type = new model.Type();
-                    type.setTypeID(rs.getInt("TypeID"));
-                    type.setTypeName(rs.getString("TypeName"));
-                    product.setType(type);
-                }
-
-                // Get product variants (for pricing)
-                getProductVariants(product, productId);
-
-                return product;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public void destroy() {
+        if (productDao != null) {
+            productDao.close();
         }
-        return null;
-    }
-
-    private void getProductVariants(Product product, int productId) {
-        try {
-            String sql = "SELECT VariantID, Price, Quantity FROM ProductVariant WHERE ProductID = ?";
-            java.sql.PreparedStatement stm = productDao.c.prepareStatement(sql);
-            stm.setInt(1, productId);
-            java.sql.ResultSet rs = stm.executeQuery();
-
-            java.util.List<model.ProductVariant> variants = new java.util.ArrayList<>();
-            while (rs.next()) {
-                model.ProductVariant variant = new model.ProductVariant();
-                variant.setVariantID(rs.getInt("VariantID"));
-                variant.setPrice(rs.getDouble("Price"));
-                variant.setQuantity(rs.getInt("Quantity"));
-                variant.setProduct(product);
-                variants.add(variant);
-            }
-            product.setVariants(variants);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        super.destroy();
     }
 }

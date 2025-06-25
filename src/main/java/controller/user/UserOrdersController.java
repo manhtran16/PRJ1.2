@@ -1,6 +1,6 @@
 package controller.user;
 
-import dal.OrderDao;
+import repository.OrderDao;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -105,5 +105,13 @@ public class UserOrdersController extends HttpServlet {
             request.setAttribute("errorMessage", "Không thể tải thông tin đơn hàng. Vui lòng thử lại.");
             response.sendRedirect("userOrders");
         }
+    }
+
+    @Override
+    public void destroy() {
+        if (orderDao != null) {
+            orderDao.close();
+        }
+        super.destroy();
     }
 }

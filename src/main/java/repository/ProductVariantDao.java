@@ -24,4 +24,10 @@ public class ProductVariantDao {
         em.persist(variant);
         em.getTransaction().commit();
     }
+
+    public void close() {
+        if (em != null && em.isOpen()) {
+            em.close();
+        }
+    }
 }

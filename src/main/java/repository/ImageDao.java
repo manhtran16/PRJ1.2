@@ -25,4 +25,10 @@ public class ImageDao {
         em.persist(image);
         em.getTransaction().commit();
     }
+
+    public void close() {
+        if (em != null && em.isOpen()) {
+            em.close();
+        }
+    }
 }

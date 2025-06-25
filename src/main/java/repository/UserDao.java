@@ -28,7 +28,7 @@ public class UserDao {
     public int checkLoginUser(String email, String password) {
         try {
             TypedQuery<String> query = em.createQuery(
-                "SELECT u.password FROM User u WHERE u.email = :email", String.class);
+                    "SELECT u.password FROM User u WHERE u.email = :email", String.class);
             query.setParameter("email", email);
             String storedPassword = query.getSingleResult();
 
@@ -48,7 +48,7 @@ public class UserDao {
     public User getUserByUserName(String userName) {
         try {
             TypedQuery<User> query = em.createQuery(
-                "SELECT u FROM User u WHERE u.userName = :userName", User.class);
+                    "SELECT u FROM User u WHERE u.userName = :userName", User.class);
             query.setParameter("userName", userName);
             return query.getSingleResult();
         } catch (NoResultException e) {
@@ -62,7 +62,7 @@ public class UserDao {
     public User getUserByEmail(String email) {
         try {
             TypedQuery<User> query = em.createQuery(
-                "SELECT u FROM User u WHERE u.email = :email", User.class);
+                    "SELECT u FROM User u WHERE u.email = :email", User.class);
             query.setParameter("email", email);
             return query.getSingleResult();
         } catch (NoResultException e) {
@@ -83,6 +83,12 @@ public class UserDao {
             if (em.getTransaction().isActive())
                 em.getTransaction().rollback();
             e.printStackTrace();
+        }
+    }
+
+    public void close() {
+        if (em != null && em.isOpen()) {
+            em.close();
         }
     }
 }

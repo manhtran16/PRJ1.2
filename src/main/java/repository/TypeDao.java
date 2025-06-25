@@ -46,7 +46,8 @@ public class TypeDao {
             em.persist(newType);
             em.getTransaction().commit();
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            if (em.getTransaction().isActive())
+                em.getTransaction().rollback();
             e.printStackTrace();
         }
     }
@@ -61,7 +62,8 @@ public class TypeDao {
             }
             em.getTransaction().commit();
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            if (em.getTransaction().isActive())
+                em.getTransaction().rollback();
             e.printStackTrace();
         }
     }
@@ -77,8 +79,15 @@ public class TypeDao {
             }
             em.getTransaction().commit();
         } catch (Exception e) {
-            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            if (em.getTransaction().isActive())
+                em.getTransaction().rollback();
             e.printStackTrace();
+        }
+    }
+
+    public void close() {
+        if (em != null && em.isOpen()) {
+            em.close();
         }
     }
 }
