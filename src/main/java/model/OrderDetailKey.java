@@ -1,69 +1,49 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
+import jakarta.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
-/**
- *
- * @author manht
- */
+@Embeddable
 public class OrderDetailKey implements Serializable {
-    private int order;
-    private int variant;
+
+    private int orderId;
+    private int variantId;
 
     public OrderDetailKey() {
     }
 
-    public OrderDetailKey(int order, int variant) {
-        this.order = order;
-        this.variant = variant;
+    public OrderDetailKey(int orderId, int variantId) {
+        this.orderId = orderId;
+        this.variantId = variantId;
     }
 
-    public int getOrder() {
-        return order;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public int getVariant() {
-        return variant;
+    public int getVariantId() {
+        return variantId;
     }
 
-    public void setVariant(int variant) {
-        this.variant = variant;
+    public void setVariantId(int variantId) {
+        this.variantId = variantId;
     }
-
-    
-    // equals, hashCode (generated)
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + this.order;
-        hash = 47 * hash + this.variant;
-        return hash;
+        return Objects.hash(orderId, variantId);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final OrderDetailKey other = (OrderDetailKey) obj;
-        if (this.order != other.order) {
-            return false;
-        }
-        return this.variant == other.variant;
+        if (this == obj) return true;
+        if (!(obj instanceof OrderDetailKey)) return false;
+        OrderDetailKey other = (OrderDetailKey) obj;
+        return orderId == other.orderId && variantId == other.variantId;
     }
 }

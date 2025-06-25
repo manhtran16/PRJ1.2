@@ -4,7 +4,7 @@
  */
 package controller.user;
 
-import dal.UserDao;
+import repository.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -72,17 +72,18 @@ public class AuthController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, 
+    protected void doPost(HttpServletRequest request,
             HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         String type = request.getParameter("type");
-        
-        if(type.equals("LOGIN")){
+
+        if (type.equals("LOGIN")) {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             postLogin(request, response, email, password);
-        } if(type.equals("REGISTER")) {
-            
+        }
+        if (type.equals("REGISTER")) {
+
             String userName = request.getParameter("userName");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
@@ -90,72 +91,73 @@ public class AuthController extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String password = request.getParameter("password");
-            User user = new User(0, userName, email, 
+            User user = new User(0, userName, email,
                     phone, address, firstName, lastName);
             postRegister(request, response, user, password);
         }
-        
+
     }
 
-    protected void postLogin(HttpServletRequest request, HttpServletResponse response,String email, String password)
+    protected void postLogin(HttpServletRequest request, HttpServletResponse response, String email, String password)
             throws ServletException, IOException {
-		try {
-			UserDao userDao = new UserDao();
-			int status = userDao.checkLoginUser(email, password);
-			switch (status) {
-			case 0:// login success
-				User user = userDao.getUserByEmail(email);
-                                HttpSession session = request.getSession();
-				session.setAttribute("user", user);
-                                if(user.getUserRole()==0){
-				response.sendRedirect("index.jsp");}
-                                else {
-                                    response.sendRedirect("admin/admin_home.jsp");
-                                }
-				break;
-			case 1:// wrong password66
-				request.setAttribute("loginStatus", 1);
-                                request.setAttribute("msg", "Wrong password");
-				request.setAttribute("email", email);
-                                
-				request.getRequestDispatcher("login.jsp").forward(request, response);
-				break;
-			case 2:// userName not found
-				request.setAttribute("loginStatus", 2);
-				request.setAttribute("email", email);
-                                request.setAttribute("msg", "Account is not exist!!!");
-				request.getRequestDispatcher("login.jsp").forward(request, response);
-				break;
+        try {
+            UserDao userDao = new UserDao();
+            int status = userDao.checkLoginUser(email, password);
+            switch (status) {
+                case 0:// login success
+                    User user = userDao.getUserByEmail(email);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
+                    if (user.getUserRole() == 0) {
+                        response.sendRedirect("index.jsp");
+                    } else {
+                        response.sendRedirect("admin/admin_home.jsp");
+                    }
+                    break;
+                case 1:// wrong password66
+                    request.setAttribute("loginStatus", 1);
+                    request.setAttribute("msg", "Wrong password");
+                    request.setAttribute("email", email);
 
-			default:
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    break;
+                case 2:// userName not found
+                    request.setAttribute("loginStatus", 2);
+                    request.setAttribute("email", email);
+                    request.setAttribute("msg", "Account is not exist!!!");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    break;
 
-				break;
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+                default:
+
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("msg", "Lỗi server. Vui lòng thử lại sau.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
-    protected void postRegister(HttpServletRequest request, 
-            HttpServletResponse response, 
+    protected void postRegister(HttpServletRequest request,
+            HttpServletResponse response,
             User user,
             String password
     )
             throws ServletException, IOException {
-        
+
         UserDao dao = new UserDao();
-        if(dao.getUserByUserName(user.getUserName())!= null){
+        if (dao.getUserByUserName(user.getUserName()) != null) {
             request.setAttribute("msg", "User is exist!!!");
             request.getRequestDispatcher("register.jsp").forward(request, response);
-        } 
-        if(dao.getUserByEmail(user.getEmail())!= null){
+        }
+        if (dao.getUserByEmail(user.getEmail()) != null) {
             request.setAttribute("msg", "Email is exist!!!");
             request.getRequestDispatcher("register.jsp").forward(request, response);
-        } 
-        else {
+        } else {
             dao.createUser(user, password);
             response.sendRedirect("login.jsp");
-            
+
         }
 
     }
