@@ -32,9 +32,6 @@ public class Product {
     private List<ProductVariant> variants = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Image> images = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings = new ArrayList<>();
 
     public Product() {
@@ -94,14 +91,6 @@ public class Product {
 
     public void setVariants(List<ProductVariant> variants) {
         this.variants = variants;
-    }
-
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
     }
 
     public List<Rating> getRatings() {

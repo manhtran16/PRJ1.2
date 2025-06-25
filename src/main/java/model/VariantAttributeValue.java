@@ -1,37 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
-@IdClass(VariantAttributeKey.class)
 public class VariantAttributeValue {
-    @Id
+
+    @EmbeddedId
+    private VariantAttributeKey id;
+
     @ManyToOne
+    @MapsId("variantId")
     @JoinColumn(name = "variantID")
     private ProductVariant variant;
 
-    @Id
     @ManyToOne
+    @MapsId("attributeId")
     @JoinColumn(name = "attributeID")
     private Attribute attribute;
 
     private String value;
 
-    public VariantAttributeValue() {
-    }
+    public VariantAttributeValue() {}
 
     public VariantAttributeValue(ProductVariant variant, Attribute attribute, String value) {
         this.variant = variant;
         this.attribute = attribute;
         this.value = value;
+        this.id = new VariantAttributeKey(variant.getVariantID(), attribute.getAttributeID());
+    }
+
+    public VariantAttributeKey getId() {
+        return id;
+    }
+
+    public void setId(VariantAttributeKey id) {
+        this.id = id;
     }
 
     public ProductVariant getVariant() {
@@ -57,6 +60,4 @@ public class VariantAttributeValue {
     public void setValue(String value) {
         this.value = value;
     }
-    
-    
 }
