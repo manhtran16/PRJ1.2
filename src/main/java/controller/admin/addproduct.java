@@ -43,6 +43,7 @@ public class addproduct extends HttpServlet {
         String description = request.getParameter("description");
         String brandIdStr = request.getParameter("brandName"); // assuming brandName param holds the brand ID
         String typeName = request.getParameter("typeName");
+        Double price = Double.parseDouble(request.getParameter("price"));
 
         Product product = new Product();
         product.setProductName(productName);
@@ -64,7 +65,7 @@ public class addproduct extends HttpServlet {
         for (int i = 0; i < quantities.length; i++) {
             ProductVariant variant = new ProductVariant();
             variant.setQuantity(Integer.parseInt(quantities[i]));
-            variant.setPrice(0); // hoặc lấy từ form nếu có
+            variant.setPrice(price);
 
             List<VariantAttributeValue> attributes = new ArrayList<>();
 
