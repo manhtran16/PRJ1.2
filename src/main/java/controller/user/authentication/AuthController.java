@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.user;
+package controller.user.authentication;
 
+import utils.Validate;
 import repository.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -110,12 +112,18 @@ public class AuthController extends HttpServlet {
             throws ServletException, IOException {
         try {
             int status = userDao.checkLoginUser(email, password);
+            String rememberLogin = request.getParameter("remember");
             switch (status) {
                 case 0:// login success
                     User user = userDao.getUserByEmail(email);
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
                     if (user.getUserRole() == 0) {
+                        if (Validate.checkString(rememberLogin)) {
+                            Cookie cookie = new Cookie("rememberUser", String.valueOf(user.getUserID()));
+                            cookie.setMaxAge(60 * 60 * 24 * 30); // 30 days
+                            response.addCookie(cookie);
+                        }
                         response.sendRedirect("index.jsp");
                     } else {
                         response.sendRedirect("admin/admin_home.jsp");

@@ -1,4 +1,4 @@
-package controller.user;
+package controller.user.product;
 
 import repository.ProductDao;
 import java.io.IOException;

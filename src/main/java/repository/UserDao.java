@@ -86,6 +86,54 @@ public class UserDao {
         }
     }
 
+    /**
+     * Verify current password for user
+     */
+    public boolean verifyCurrentPassword(int userId, String currentPassword) {
+        try {
+            TypedQuery<String> query = em.createQuery(
+                    "SELECT u.password FROM User u WHERE u.userID = :userId",
+                    String.class);
+            query.setParameter("userId", userId);
+
+            String storedPassword = query.getSingleResult();
+            return currentPassword.equals(storedPassword);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Update user password
+     */
+    public boolean updatePassword(int userId, String newPassword) {
+        try {
+            em.getTransaction().begin();
+
+            TypedQuery<User> query = em.createQuery(
+                    "SELECT u FROM User u WHERE u.userID = :userId",
+                    User.class);
+            query.setParameter("userId", userId);
+
+            User user = query.getSingleResult();
+            user.setPassword(newPassword);
+
+            em.merge(user);
+            em.getTransaction().commit();
+
+            return true;
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void close() {
         if (em != null && em.isOpen()) {
             em.close();

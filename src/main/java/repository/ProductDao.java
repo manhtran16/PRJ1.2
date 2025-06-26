@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import model.Product;
 import factory.EntityManagerFactoryProvider;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,23 +40,49 @@ public class ProductDao {
     }
 
     public Product getProductWithDetails(int productId) {
-        TypedQuery<Product> query = em.createQuery(
-                "SELECT p FROM Product p " +
-                        "LEFT JOIN FETCH p.brand " +
-                        "LEFT JOIN FETCH p.type " +
-                        "LEFT JOIN FETCH p.variants v " +
-                        "LEFT JOIN FETCH v.images " +
-                        "WHERE p.productID = :id",
-                Product.class);
-        query.setParameter("id", productId);
+        try {
+            System.out.println("ProductDao: Querying product with id = " + productId);
 
-        List<Product> results = query.getResultList();
-        return results.isEmpty() ? null : results.get(0);
+            TypedQuery<Product> query = em.createQuery(
+                    "SELECT p FROM Product p " +
+                            "LEFT JOIN FETCH p.brand " +
+                            "LEFT JOIN FETCH p.type " +
+                            "LEFT JOIN FETCH p.variants v " +
+                            "LEFT JOIN FETCH v.images " +
+                            "WHERE p.productID = :id",
+                    Product.class);
+            query.setParameter("id", productId);
+
+            List<Product> results = query.getResultList();
+            System.out.println("ProductDao: Query returned " + results.size() + " results");
+
+            return results.isEmpty() ? null : results.get(0);
+        } catch (Exception e) {
+            System.out.println("ProductDao: Exception in getProductWithDetails = " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void close() {
         if (em != null && em.isOpen()) {
             em.close();
+        }
+    }
+
+    public List<Product> getRandomProducts(int limit) {
+        try {
+            TypedQuery<Product> query = em.createQuery(
+                    "SELECT DISTINCT p FROM Product p " +
+                            "LEFT JOIN FETCH p.brand " +
+                            "LEFT JOIN FETCH p.type " +
+                            "ORDER BY FUNCTION('NEWID')",
+                    Product.class);
+            query.setMaxResults(limit);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }

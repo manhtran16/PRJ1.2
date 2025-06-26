@@ -61,11 +61,11 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
         <div class="container">
-            <a class="navbar-brand text-white" href="userhome.jsp">
+            <a class="navbar-brand text-white" href="index.jsp">
                 <i class="fas fa-tshirt me-2"></i>Clothes Store
             </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link text-white" href="userhome.jsp">
+                <a class="nav-link text-white" href="index.jsp">
                     <i class="fas fa-home me-1"></i>Home
                 </a>
                 <a class="nav-link text-white active" href="products">
@@ -100,7 +100,7 @@
                             <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
                             <h4>No Products Available</h4>
                             <p class="text-muted">We're working on adding new products. Check back soon!</p>
-                            <a href="userhome.jsp" class="btn btn-primary">
+                            <a href="index.jsp" class="btn btn-primary">
                                 <i class="fas fa-home me-1"></i>Back to Home
                             </a>
                         </div>

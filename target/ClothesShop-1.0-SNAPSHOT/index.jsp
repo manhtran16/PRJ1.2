@@ -32,8 +32,8 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <body>
     <header>
       <nav>
-        <a href="userhome.jsp">Trang chủ</a>
-        <a href="products.jsp">Sản phẩm</a>
+        <a href="index.jsp">Trang chủ</a>
+        <a href="products">Sản phẩm</a>
         <a href="about.jsp">Giới thiệu</a>
 
         <c:choose>

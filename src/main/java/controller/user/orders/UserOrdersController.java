@@ -1,4 +1,4 @@
-package controller.user;
+package controller.user.orders;
 
 import repository.OrderDao;
 import java.io.IOException;
