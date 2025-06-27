@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Product;
+import model.ProductVariant;
 
 @WebServlet("/products")
 public class ProductsController extends HttpServlet {
@@ -26,10 +27,14 @@ public class ProductsController extends HttpServlet {
 
         String action = request.getParameter("action");
         String productId = request.getParameter("id");
+        String variantId = request.getParameter("variantId");
 
         if ("detail".equals(action) && productId != null) {
             // Show product detail
             showProductDetail(request, response, productId);
+        } else if ("variant".equals(action) && variantId != null) {
+            // Show specific variant detail
+            showVariantDetail(request, response, variantId);
         } else {
             // Show products list
             showProductsList(request, response);
@@ -60,10 +65,11 @@ public class ProductsController extends HttpServlet {
 
         try {
             int productId = Integer.parseInt(productIdStr);
+            // Use getProductWithDetails to load all relationships including variants
             Product product = productDao.getProductWithDetails(productId);
 
             if (product == null) {
-                request.setAttribute("errorMessage", "Product not found");
+                request.setAttribute("errorMessage", "Product not found with ID: " + productId);
                 request.getRequestDispatcher("products.jsp").forward(request, response);
                 return;
             }
@@ -75,7 +81,43 @@ public class ProductsController extends HttpServlet {
             response.sendRedirect("products");
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "Error loading product details");
+            request.setAttribute("errorMessage", "Error loading product details: " + e.getMessage());
+            request.getRequestDispatcher("products.jsp").forward(request, response);
+        }
+    }
+
+    private void showVariantDetail(HttpServletRequest request, HttpServletResponse response, String variantIdStr)
+            throws ServletException, IOException {
+
+        if (variantIdStr == null || variantIdStr.trim().isEmpty()) {
+            response.sendRedirect("products");
+            return;
+        }
+
+        try {
+            int variantId = Integer.parseInt(variantIdStr);
+
+            // Get the variant with its product details
+            ProductVariant variant = productDao.getVariantWithDetails(variantId);
+
+            if (variant == null) {
+                request.setAttribute("errorMessage", "Variant not found with ID: " + variantId);
+                request.getRequestDispatcher("products.jsp").forward(request, response);
+                return;
+            }
+
+            // Set both variant and product information
+            request.setAttribute("selectedVariant", variant);
+            request.setAttribute("product", variant.getProduct());
+
+            // Forward to a variant detail page (we'll create this)
+            request.getRequestDispatcher("variantDetail.jsp").forward(request, response);
+
+        } catch (NumberFormatException e) {
+            response.sendRedirect("products");
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Error loading variant details: " + e.getMessage());
             request.getRequestDispatcher("products.jsp").forward(request, response);
         }
     }

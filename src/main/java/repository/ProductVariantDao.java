@@ -10,7 +10,7 @@ import model.ProductVariant;
 
 /**
  *
- * @author manht
+ * @author admin
  */
 public class ProductVariantDao {
     private EntityManager em;

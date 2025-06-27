@@ -29,6 +29,13 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+            
+            <!-- SQL Server Unicode support -->
+            <property name="hibernate.connection.useUnicode" value="true"/>
+            <property name="hibernate.connection.characterEncoding" value="UTF-8"/>
+            <property name="hibernate.jdbc.batch_size" value="20"/>
+            <property name="hibernate.order_inserts" value="true"/>
+            <property name="hibernate.order_updates" value="true"/>
 
         </properties>
     </persistence-unit>

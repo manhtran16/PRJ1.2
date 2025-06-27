@@ -1,4 +1,5 @@
 controller\user\authentication\logout.class
+controller\user\product\VariantController$VariantInfo.class
 repository\OrderDao.class
 model\OrderDetail.class
 controller\user\authentication\changePassword.class
@@ -6,15 +7,18 @@ controller\user\orders\UserOrdersController.class
 factory\EntityManagerFactoryProvider.class
 repository\BrandDao.class
 repository\ProductVariantDao.class
+controller\user\product\VariantController.class
 controller\user\authentication\DBContext.class
 model\RatingKey.class
 repository\TypeDao.class
+controller\user\product\VariantController$ColorInfo.class
 model\Type.class
 controller\admin\addproduct.class
 model\Product.class
 service\ProductService.class
 utils\Validate.class
 model\VariantAttributeValue.class
+controller\user\product\VariantController$SizeInfo.class
 model\ProductVariant.class
 model\User.class
 repository\UserDao.class
