@@ -1,19 +1,41 @@
 package model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+// File: User.java
+@Entity
+@Table(name = "[User]")
 public class User {
-	private int userID;
-	private int userRole;
-	private String userName;
-	private String email;
-	private String phoneNumber;
-	private String address;
-	private String firstName;
-	private String lastName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userID;
 
-	public User() {
-	}
+    private int userRole;
+    private String userName;
+    private String email;
+    private String phoneNumber;
+    private String address;
+    private String firstName;
+    private String lastName;
+    private String password;
 
-    public User(int userRole, String userName, String email, String phoneNumber, String address, String firstName, String lastName) {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderTable> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings = new ArrayList<>();
+
+    public User() {
+    }
+
+    public User(int userRole, String userName, String email, String phoneNumber, String address, String firstName, String lastName, String password) {
         this.userRole = userRole;
         this.userName = userName;
         this.email = email;
@@ -21,10 +43,10 @@ public class User {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.password = password;
     }
 
-    public User(int userID, int userRole, String userName, String email, String phoneNumber, String address, String firstName, String lastName) {
-        this.userID = userID;
+    public User(int userRole, String userName, String email, String phoneNumber, String address, String firstName, String lastName) {
         this.userRole = userRole;
         this.userName = userName;
         this.email = email;
@@ -98,14 +120,30 @@ public class User {
         this.lastName = lastName;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "userID=" + userID + ", userRole=" + userRole + 
-                ", userName=" + userName + ", email=" + email + 
-                ", phoneNumber=" + phoneNumber + ", address=" + 
-                address + ", firstName=" + firstName + 
-                ", lastName=" + lastName + '}';
+    public String getPassword() {
+        return password;
     }
 
-        
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<OrderTable> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderTable> orders) {
+        this.orders = orders;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+    
+    
 }
+

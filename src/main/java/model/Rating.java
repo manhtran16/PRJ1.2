@@ -4,23 +4,27 @@
  */
 package model;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+
 
 @Entity
-@IdClass(RatingKey.class)
 public class Rating {
-    @Id
+
+    @EmbeddedId
+    private RatingKey id;
+
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @MapsId("userId")
+    @JoinColumn(name = "userId")
     private User user;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "productID")
+    @MapsId("productId")
+    @JoinColumn(name = "productId")
     private Product product;
 
     private int rate;

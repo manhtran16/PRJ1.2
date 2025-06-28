@@ -5,6 +5,7 @@
 package model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,7 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int typeID;
 
+    @Column(length = 255)
     private String typeName;
 
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -39,7 +41,6 @@ public class Type {
         this.typeID = typeID;
         this.typeName = typeName;
     }
-
 
     public int getTypeID() {
         return typeID;
@@ -64,6 +65,5 @@ public class Type {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
-    
-    
+
 }

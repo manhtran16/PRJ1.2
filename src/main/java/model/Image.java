@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import jakarta.persistence.*;
@@ -22,12 +18,14 @@ public class Image {
     public Image() {
     }
 
+    public Image(String url) {
+        this.url = url;
+    }
+
     public Image(String url, ProductVariant variant) {
         this.url = url;
         this.variant = variant;
     }
-    
-    
 
     // Getters & Setters
     public int getImageID() {
@@ -53,5 +51,12 @@ public class Image {
     public void setVariant(ProductVariant variant) {
         this.variant = variant;
     }
-}
 
+    @Override
+    public String toString() {
+        return "Image{" +
+                "imageID=" + imageID +
+                ", url='" + url + '\'' +
+                '}';
+    }
+}

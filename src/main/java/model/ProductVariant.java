@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import jakarta.persistence.CascadeType;
@@ -17,6 +13,7 @@ import java.util.List;
 
 @Entity
 public class ProductVariant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int variantID;
@@ -24,7 +21,7 @@ public class ProductVariant {
     @ManyToOne
     @JoinColumn(name = "productID")
     private Product product;
-    
+
     private double price;
     private int quantity;
 
@@ -33,6 +30,9 @@ public class ProductVariant {
 
     @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails = new ArrayList<>();
+
+    @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
 
     public ProductVariant() {
     }
@@ -90,7 +90,22 @@ public class ProductVariant {
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
     }
-    
-    
-    
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductVariant{" +
+                "variantID=" + variantID +
+                ", product=" + (product != null ? product.getProductName() : "null") +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
+    }
 }
