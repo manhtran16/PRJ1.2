@@ -26,14 +26,13 @@ public class BrandDao {
         }
     }
 
-    // Lấy tên brand theo ID
-    public String getBrandById(int brandId) {
+    // Lấy brand theo ID
+    public Brand getBrandById(int brandId) {
         try {
-            Brand brand = em.find(Brand.class, brandId);
-            return brand != null ? brand.getBrandName() : "";
+            return em.find(Brand.class, brandId);
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
+            return null;
         }
     }
 

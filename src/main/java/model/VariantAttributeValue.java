@@ -28,7 +28,9 @@ public class VariantAttributeValue {
         this.variant = variant;
         this.attribute = attribute;
         this.value = value;
-        this.id = new VariantAttributeKey(variant.getVariantID(), attribute.getAttributeID());
+        if (variant != null && attribute != null) {
+            this.id = new VariantAttributeKey(variant.getVariantID(), attribute.getAttributeID());
+        }
     }
 
     public VariantAttributeKey getId() {

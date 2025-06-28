@@ -85,9 +85,20 @@ public class TypeDao {
         }
     }
 
+    // Lấy loại sản phẩm theo ID
+    public Type getTypeByID(int id) {
+        try {
+            return em.find(Type.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void close() {
         if (em != null && em.isOpen()) {
             em.close();
+
         }
     }
 }

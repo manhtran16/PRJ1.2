@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Attribute;
 import model.Brand;
+import model.Image;
 import model.Product;
 import model.ProductVariant;
 import model.VariantAttributeValue;
@@ -37,54 +38,82 @@ public class addproduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            // Lấy thông tin sản phẩm từ form
+            String productName = request.getParameter("productName");
+            String description = request.getParameter("description");
+            int brandID = Integer.parseInt(request.getParameter("brandID"));
+            int typeID = Integer.parseInt(request.getParameter("typeID"));
+            Double price = Double.parseDouble(request.getParameter("price"));
 
-        // Lấy thông tin sản phẩm từ form
-        String productName = request.getParameter("productName");
-        String description = request.getParameter("description");
-        String brandName = request.getParameter("brandName");
-        String typeName = request.getParameter("typeName");
-        Double price = Double.parseDouble(request.getParameter("price"));
+            BrandDao bdao = new BrandDao();
+            TypeDao tdao = new TypeDao();
 
-        Product product = new Product();
-        product.setProductName(productName);
-        product.setDescription(description);
-        product.setBrand(new Brand(brandName));
-        product.setType(new Type(typeName));
+            Brand brand = bdao.getBrandById(brandID);
+            Type type = tdao.getTypeByID(typeID);
+            
+            Product product = new Product();
+            product.setProductName(productName);
+            product.setDescription(description);
+            product.setBrand(brand);
+            product.setType(type);
 
-        // Lấy thông tin biến thể
-        String[] sizes = request.getParameterValues("variantSize[]");
-        String[] colors = request.getParameterValues("variantColor[]");
-        String[] quantities = request.getParameterValues("variantQuantity[]");
-        String[] images = request.getParameterValues("variantImage[]");
+            // Lấy thông tin biến thể
+            String[] sizes = request.getParameterValues("variantSize[]");
+            for (String size : sizes) {
+                System.out.println(size);
+            }
+            String[] colors = request.getParameterValues("variantColor[]");
+            for (String color : colors) {
+                System.out.println(color);
+            }
+            String[] quantities = request.getParameterValues("variantQuantity[]");
+            for (String quantity : quantities) {
+                System.out.println(quantity);
+            }
+            String[] images = request.getParameterValues("variantImage[]");
+            for (String image : images) {
+                System.out.println(image);
+            }
 
-        List<ProductVariant> variantList = new ArrayList<>();
-        for (int i = 0; i < quantities.length; i++) {
-            ProductVariant variant = new ProductVariant();
-            variant.setQuantity(Integer.parseInt(quantities[i]));
-            variant.setPrice(price);
+            List<ProductVariant> variantList = new ArrayList<>();
+            for (int i = 0; i < quantities.length; i++) {
+                ProductVariant variant = new ProductVariant();
+                variant.setQuantity(Integer.parseInt(quantities[i]));
+                variant.setPrice(price);
 
-            List<VariantAttributeValue> attributes = new ArrayList<>();
+                List<VariantAttributeValue> attributes = new ArrayList<>();
 
-            // Gán size attribute
-            Attribute sizeAttr = new Attribute();
-            sizeAttr.setAttributeID(1); // giả sử 1 là 'Size'
-            attributes.add(new VariantAttributeValue(variant, sizeAttr, sizes[i]));
+                // Gán size attribute
+                VariantAttributeValue sizeVav = new VariantAttributeValue();
+                sizeVav.setValue(sizes[i]);
+                attributes.add(sizeVav);
 
-            // Gán color attribute
-            Attribute colorAttr = new Attribute();
-            colorAttr.setAttributeID(2); // giả sử 2 là 'Color'
-            attributes.add(new VariantAttributeValue(variant, colorAttr, colors[i]));
+                // Gán color attribute
+                VariantAttributeValue colorVav = new VariantAttributeValue();
+                colorVav.setValue(colors[i]);
+                attributes.add(colorVav);
 
-            variant.setAttributeValues(attributes);
-            variantList.add(variant);
-        }
+                variant.setAttributeValues(attributes);
 
-        ProductService productService = new ProductService();
-        boolean success = productService.addFullProduct(product, variantList);
-        if (success) {
-            response.sendRedirect("productlist.jsp");
-        } else {
-            request.setAttribute("error", "Thêm sản phẩm thất bại");
+                List<Image> variantImages = new ArrayList<>();
+                Image image = new Image(images[i], variant);
+                variantImages.add(image);
+                variant.setImages(variantImages);
+
+                variantList.add(variant);
+            }
+
+            ProductService productService = new ProductService();
+            boolean success = productService.addFullProduct(product, variantList);
+            if (success) {
+                response.sendRedirect("productlist.jsp");
+            } else {
+                request.setAttribute("error", "Thêm sản phẩm thất bại");
+                request.getRequestDispatcher("/admin/add_product.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            request.setAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
             request.getRequestDispatcher("/admin/add_product.jsp").forward(request, response);
         }
     }
