@@ -1,5 +1,7 @@
 package controller.admin;
 
+import factory.EntityManagerFactoryProvider;
+import jakarta.persistence.EntityManager;
 import repository.BrandDao;
 import repository.TypeDao;
 import model.Type;
@@ -19,7 +21,7 @@ import model.ProductVariant;
 import model.VariantAttributeValue;
 import service.ProductService;
 
-@WebServlet(name = "AddProduct", urlPatterns = { "/addproduct" })
+@WebServlet(name = "AddProduct", urlPatterns = {"/addproduct"})
 public class addproduct extends HttpServlet {
 
     @Override
@@ -51,7 +53,7 @@ public class addproduct extends HttpServlet {
 
             Brand brand = bdao.getBrandById(brandID);
             Type type = tdao.getTypeByID(typeID);
-            
+
             Product product = new Product();
             product.setProductName(productName);
             product.setDescription(description);
@@ -76,38 +78,50 @@ public class addproduct extends HttpServlet {
                 System.out.println(image);
             }
 
+            EntityManager em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
+            
+            int sizeAttributeID = 2;   // ID của Attribute "Size" trong bảng Attribute
+            int colorAttributeID = 1;  // ID của Attribute "Color" trong bảng Attribute
+            
             List<ProductVariant> variantList = new ArrayList<>();
             for (int i = 0; i < quantities.length; i++) {
                 ProductVariant variant = new ProductVariant();
                 variant.setQuantity(Integer.parseInt(quantities[i]));
                 variant.setPrice(price);
+                variant.setProduct(product); // Đừng quên gán product
 
                 List<VariantAttributeValue> attributes = new ArrayList<>();
 
                 // Gán size attribute
                 VariantAttributeValue sizeVav = new VariantAttributeValue();
                 sizeVav.setValue(sizes[i]);
+                sizeVav.setAttribute(em.getReference(Attribute.class, sizeAttributeID));
+                sizeVav.setVariant(variant);
                 attributes.add(sizeVav);
 
                 // Gán color attribute
                 VariantAttributeValue colorVav = new VariantAttributeValue();
                 colorVav.setValue(colors[i]);
+                colorVav.setAttribute(em.getReference(Attribute.class, colorAttributeID));
+                colorVav.setVariant(variant);
                 attributes.add(colorVav);
 
                 variant.setAttributeValues(attributes);
 
+                // Gán ảnh
                 List<Image> variantImages = new ArrayList<>();
                 Image image = new Image(images[i], variant);
                 variantImages.add(image);
                 variant.setImages(variantImages);
 
                 variantList.add(variant);
+
             }
 
             ProductService productService = new ProductService();
             boolean success = productService.addFullProduct(product, variantList);
             if (success) {
-                response.sendRedirect("productlist.jsp");
+                response.sendRedirect("displayPro.jsp");
             } else {
                 request.setAttribute("error", "Thêm sản phẩm thất bại");
                 request.getRequestDispatcher("/admin/add_product.jsp").forward(request, response);

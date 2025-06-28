@@ -16,48 +16,56 @@ public class ProductService {
         try {
             tx.begin();
 
-            // Lưu sản phẩm
+            // Lưu sản phẩm chính
             em.persist(product);
-            
-            System.out.println("1");
+
             for (ProductVariant variant : variants) {
+                // Gán product cho variant
                 variant.setProduct(product);
-                System.out.println(variant);
-                em.persist(variant); // sinh ID
-                
-                System.out.println("2");
-                // Lưu các giá trị thuộc tính (variant-attribute-value)
-                int count=0;
-                if (variant.getAttributeValues() != null) {
-                    for (VariantAttributeValue vav : variant.getAttributeValues()) {
-                        // Lấy attribute managed từ DB
-                        System.out.println(count);
-                        if (vav.getAttribute() != null && vav.getAttribute().getAttributeID() != 0) {
-                            Attribute managedAttribute = em.find(Attribute.class, vav.getAttribute().getAttributeID());
-                            
-                            vav.setAttribute(managedAttribute); // Đảm bảo attribute là managed
-                        } else {
-                            throw new IllegalArgumentException("Thiếu attribute ID trong VariantAttributeValue");
-                        }
 
+                em.persist(variant);
+                em.flush(); // Đảm bảo variantID có
+                System.out.println("After flush - Variant ID: " + variant.getVariantID());
+                // Xử lý các giá trị thuộc tính
+                List<VariantAttributeValue> attributeValues = variant.getAttributeValues();
+                if (attributeValues != null) {
+                    for (VariantAttributeValue vav : attributeValues) {
+                        // Kiểm tra kỹ attribute trước khi sử dụng
+                        System.out.println("1");
+                        if (vav.getAttribute() == null || vav.getAttribute().getAttributeID() == 0) {
+                            throw new IllegalArgumentException("❌ Thiếu hoặc sai attribute ID trong VariantAttributeValue");
+                        }
+                        System.out.println("2");
+                        // Lấy attribute từ DB (managed)
+                        int attrId = vav.getAttribute().getAttributeID();
+                        Attribute managedAttr = em.getReference(Attribute.class, attrId);
+                        vav.setAttribute(managedAttr);
+
+                        // Gán variant
                         vav.setVariant(variant);
-
-                        // Đảm bảo id không null và có đủ giá trị
-                        if (vav.getId() == null) {
-                            vav.setId(new VariantAttributeKey(
+                        System.out.println("3");
+                        // Tạo khóa chính composite (không được null!)
+                        VariantAttributeKey key = new VariantAttributeKey(
                                 variant.getVariantID(),
-                                vav.getAttribute().getAttributeID()
-                            ));
-                        } else {
-                            vav.getId().setVariantId(variant.getVariantID());
-                            vav.getId().setAttributeId(vav.getAttribute().getAttributeID());
-                        }
-                        count ++;
-                        em.persist(vav); // Chỉ persist vav, KHÔNG persist attribute!
+                                managedAttr.getAttributeID()
+                        );
+                        vav.setId(key);
+
+                        System.out.println("4");
+                        System.out.println("=== DEBUG ===");
+                        System.out.println("Variant ID: " + variant.getVariantID());
+                        System.out.println("Attribute ID: " + vav.getAttribute().getAttributeID());
+                        System.out.println("VAV ID before persist: " + vav.getId());
+                        System.out.println("VAV Attribute: " + vav.getAttribute());
+                        System.out.println("VAV Variant: " + vav.getVariant());
+                        em.persist(vav);
+
                     }
                 }
+                // Lưu variant → sinh ID
+                System.out.println("5");
 
-                // Lưu các ảnh
+                // Lưu ảnh nếu có
                 if (variant.getImages() != null) {
                     for (Image image : variant.getImages()) {
                         image.setVariant(variant);
@@ -75,10 +83,13 @@ public class ProductService {
             for (Throwable t = e; t != null; t = t.getCause()) {
                 System.err.println("❌ Nguyên nhân: " + t.getClass().getName() + ": " + t.getMessage());
             }
-            if (tx.isActive()) tx.rollback();
+            if (tx.isActive()) {
+                tx.rollback();
+            }
             return false;
         } finally {
             em.close();
         }
     }
+
 }
