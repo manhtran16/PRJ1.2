@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import jakarta.persistence.CascadeType;
@@ -101,5 +97,15 @@ public class ProductVariant {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductVariant{" +
+                "variantID=" + variantID +
+                ", product=" + (product != null ? product.getProductName() : "null") +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
     }
 }

@@ -1,6 +1,7 @@
 model\OrderDetail.class
 factory\EntityManagerFactoryProvider.class
 repository\BrandDao.class
+repository\ProductVariantDao.class
 model\RatingKey.class
 controller\user\logout.class
 controller\user\DBContext.class
@@ -8,6 +9,7 @@ repository\TypeDao.class
 model\Type.class
 controller\admin\addproduct.class
 model\Product.class
+service\ProductService.class
 utils\Validate.class
 model\VariantAttributeValue.class
 model\ProductVariant.class
@@ -15,6 +17,7 @@ model\User.class
 repository\UserDao.class
 model\OrderTable.class
 model\Brand.class
+repository\ImageDao.class
 com\mycompany\clothesshop\JakartaRestConfiguration.class
 model\Attribute.class
 model\Image.class

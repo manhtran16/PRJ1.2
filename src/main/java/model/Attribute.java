@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +16,7 @@ public class Attribute {
 
     private String attributeName;
 
-    @OneToMany(mappedBy = "attribute", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "attribute")
     private List<VariantAttributeValue> values = new ArrayList<>();
 
     public Attribute() {
@@ -54,7 +49,13 @@ public class Attribute {
     public void setValues(List<VariantAttributeValue> values) {
         this.values = values;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Attribute{" +
+                "attributeID=" + attributeID +
+                ", attributeName='" + attributeName + '\'' +
+                '}';
+    }
 }
+
