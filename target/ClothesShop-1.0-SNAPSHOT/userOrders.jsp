@@ -1,11 +1,6 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%> <%@taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %> <%@taglib prefix="fmt"
-uri="http                        <strong class="text-primary">
-                          <fmt:formatNumber
-                            value="${requestScope['orderTotal_'.concat(order.orderID)]}"
-                            pattern="#,###"
-                          /> VNĐ
-                        </strong>sun.com/jsp/jstl/fmt" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -157,12 +152,10 @@ uri="http                        <strong class="text-primary">
                       </div>
                       <div class="col-md-3 text-end">
                         <strong class="text-primary">
-                          $<fmt:formatNumber
+                          <fmt:formatNumber
                             value="${requestScope['orderTotal_'.concat(order.orderID)]}"
-                            type="number"
-                            minFractionDigits="2"
-                            maxFractionDigits="2"
-                          />
+                            pattern="#,###"
+                          /> VNĐ
                         </strong>
                       </div>
                     </div>

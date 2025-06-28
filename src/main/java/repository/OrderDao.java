@@ -152,16 +152,19 @@ public class OrderDao {
         try {
             em.getTransaction().begin();
             int deleted = em.createQuery(
-                    "DELETE FROM OrderDetail od WHERE od.order.orderID = :orderId AND od.id.variantId = :variantId")
+                    "DELETE FROM OrderDetail od WHERE od.order.orderID = :orderId AND od.variant.variantID = :variantId")
                     .setParameter("orderId", orderId)
                     .setParameter("variantId", variantId)
                     .executeUpdate();
             em.getTransaction().commit();
+            System.out.println(
+                    "Deleted " + deleted + " cart items for orderId: " + orderId + ", variantId: " + variantId);
             return deleted > 0;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
+            System.err.println("Error removing cart item: " + e.getMessage());
             e.printStackTrace();
             return false;
         }

@@ -12,6 +12,61 @@
         .cart-table { width: 100%; margin-top: 20px; }
         .cart-table th, .cart-table td { padding: 12px; text-align: left; }
         .cart-actions button { margin: 0 5px; }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+        }
+        
+        /* Improve button styling */
+        .btn-remove {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-remove:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Quantity input styling */
+        .quantity-input {
+            width: 70px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        
+        /* Better responsive table */
+        @media (max-width: 768px) {
+            .cart-table {
+                font-size: 14px;
+            }
+            
+            .cart-table th, .cart-table td {
+                padding: 8px 4px;
+            }
+            
+            .btn-sm {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -32,6 +87,24 @@
     </nav>
     <div class="container mt-4">
         <h2>Giỏ hàng của bạn</h2>
+        
+        <!-- Display success/error messages -->
+        <c:if test="${not empty sessionScope.successMessage}">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                ${sessionScope.successMessage}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <c:remove var="successMessage" scope="session" />
+        </c:if>
+        
+        <c:if test="${not empty sessionScope.errorMessage}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                ${sessionScope.errorMessage}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <c:remove var="errorMessage" scope="session" />
+        </c:if>
+        
         <c:if test="${empty cartItems}">
             <div class="alert alert-info">Giỏ hàng trống.</div>
             <a href="products" class="btn btn-primary">Tiếp tục mua sắm</a>
@@ -60,17 +133,32 @@
                             </td>
                             <td><fmt:formatNumber value="${item.variant.price}" pattern="#,###"/></td>
                             <td>
-                                <form action="cart" method="post" style="display: inline;">
+                                <form action="cart" method="post" style="display: inline;" class="quantity-form">
                                     <input type="hidden" name="action" value="update"/>
                                     <input type="hidden" name="variantId" value="${item.variant.variantID}"/>
-                                    <input type="number" name="quantity" value="${item.orderQuantity}" min="1" max="${item.variant.quantity}" style="width:60px;" onchange="this.form.submit()"/>
+                                    <input type="number" 
+                                           name="quantity" 
+                                           value="${item.orderQuantity}" 
+                                           min="1" 
+                                           max="${item.variant.quantity}" 
+                                           class="quantity-input" 
+                                           onchange="updateQuantity(this)"
+                                           title="Số lượng tối đa: ${item.variant.quantity}"/>
                                 </form>
                             </td>
                             <td><fmt:formatNumber value="${item.variant.price * item.orderQuantity}" pattern="#,###"/></td>
                             <td>
-                                <a href="cart?action=remove&variantId=${item.variant.variantID}" class="btn btn-sm btn-danger" onclick="return confirm('Xóa sản phẩm này?')">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                <!-- Form method for removing item -->
+                                <form action="cart" method="get" style="display: inline;" onsubmit="showLoading()">
+                                    <input type="hidden" name="action" value="remove">
+                                    <input type="hidden" name="variantId" value="${item.variant.variantID}">
+                                    <button type="submit" 
+                                            class="btn btn-sm btn-danger btn-remove" 
+                                            onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')"
+                                            title="Xóa sản phẩm">
+                                        <i class="fas fa-trash"></i> Xóa
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         <c:set var="total" value="${total + (item.variant.price * item.orderQuantity)}"/>
@@ -86,10 +174,106 @@
                 </tfoot>
             </table>
             <div class="mt-3">
-                <a href="products" class="btn btn-secondary">Tiếp tục mua sắm</a>
-                <a href="userOrders?action=checkout" class="btn btn-success">Thanh toán</a>
+                <a href="products" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Tiếp tục mua sắm
+                </a>
+                
+                <!-- Form method for clearing cart -->
+                <form action="cart" method="get" style="display: inline;" onsubmit="showLoading()">
+                    <input type="hidden" name="action" value="clear">
+                    <button type="submit" 
+                            class="btn btn-warning"
+                            onclick="return confirm('Bạn có chắc chắn muốn xóa TẤT CẢ sản phẩm trong giỏ hàng?')">
+                        <i class="fas fa-trash-alt"></i> Xóa tất cả
+                    </button>
+                </form>
+                
+                <a href="userOrders?action=checkout" class="btn btn-success">
+                    <i class="fas fa-credit-card"></i> Thanh toán
+                </a>
             </div>
         </c:if>
     </div>
+    
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i> Đang xử lý...
+        </div>
+    </div>
+    
+    <!-- MDB JavaScript -->
+    <script src="js/mdb.umd.min.js"></script>
+    <script>
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'block';
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+        
+        function updateQuantity(input) {
+            const form = input.closest('.quantity-form');
+            const variantId = form.querySelector('input[name="variantId"]').value;
+            const quantity = input.value;
+            
+            if (quantity < 1) {
+                alert('Số lượng phải lớn hơn 0');
+                input.value = 1;
+                return;
+            }
+            
+            console.log('Updating quantity:', variantId, quantity);
+            showLoading();
+            form.submit();
+        }
+        
+        function removeItem(variantId) {
+            console.log('removeItem called with variantId:', variantId);
+            
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+                console.log('User confirmed removal, redirecting...');
+                const url = 'cart?action=remove&variantId=' + variantId;
+                console.log('Redirect URL:', url);
+                
+                showLoading();
+                window.location.href = url;
+            } else {
+                console.log('User cancelled removal');
+            }
+        }
+        
+        function clearCart() {
+            if (confirm('Bạn có chắc chắn muốn xóa TẤT CẢ sản phẩm trong giỏ hàng?')) {
+                console.log('Clearing cart');
+                showLoading();
+                window.location.href = 'cart?action=clear';
+            }
+        }
+        
+        // Auto-hide alerts after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    if (alert.parentNode) {
+                        alert.style.transition = 'opacity 0.5s';
+                        alert.style.opacity = '0';
+                        setTimeout(function() {
+                            if (alert.parentNode) {
+                                alert.remove();
+                            }
+                        }, 500);
+                    }
+                }, 5000);
+            });
+        });
+        
+        // Hide loading when page loads
+        window.addEventListener('load', function() {
+            hideLoading();
+        });
+    </script>
 </body>
 </html>

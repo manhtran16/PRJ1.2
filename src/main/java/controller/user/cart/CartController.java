@@ -29,6 +29,8 @@ public class CartController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String action = request.getParameter("action");
+
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute("user");
 
@@ -36,8 +38,6 @@ public class CartController extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-
-        String action = request.getParameter("action");
 
         if ("add".equals(action)) {
             handleAddToCart(request, response, currentUser);
@@ -184,12 +184,14 @@ public class CartController extends HttpServlet {
 
         try {
             String variantIdStr = request.getParameter("variantId");
+
             if (variantIdStr == null) {
                 response.sendRedirect("cart");
                 return;
             }
 
             int variantId = Integer.parseInt(variantIdStr);
+
             boolean success = cartService.removeFromCart(user, variantId);
 
             HttpSession session = request.getSession();

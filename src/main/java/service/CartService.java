@@ -141,15 +141,22 @@ public class CartService {
      */
     public boolean removeFromCart(User user, int variantId) {
         if (user == null || variantId <= 0) {
+            System.out.println("Invalid parameters - user: " + user + ", variantId: " + variantId);
             return false;
         }
 
         try {
             OrderTable cart = getOrCreateCart(user);
-            return orderDao.removeCartItem(cart.getOrderID(), variantId);
+            System.out.println("Cart found/created for user " + user.getUserID() + ": " + cart.getOrderID());
+
+            boolean result = orderDao.removeCartItem(cart.getOrderID(), variantId);
+            System.out.println("Remove cart item result: " + result);
+
+            return result;
 
         } catch (Exception e) {
             System.err.println("Error removing from cart: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

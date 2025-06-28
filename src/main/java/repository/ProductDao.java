@@ -48,17 +48,9 @@ public class ProductDao {
      */
     public Product getProductWithDetails(int productId) {
         try {
-            TypedQuery<Product> query = em.createQuery(
-                    "SELECT p FROM Product p " +
-                            "LEFT JOIN FETCH p.variants pv " +
-                            "LEFT JOIN FETCH pv.attributeValues av " +
-                            "LEFT JOIN FETCH av.attribute a " +
-                            "LEFT JOIN FETCH pv.images img " +
-                            "WHERE p.productID = :productId",
-                    Product.class);
-            query.setParameter("productId", productId);
-            return query.getSingleResult();
+            return em.find(Product.class, productId);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -79,6 +71,71 @@ public class ProductDao {
             return query.getSingleResult();
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    /**
+     * Search and filter products
+     */
+    public List<Product> searchAndFilterProducts(String searchQuery, Integer brandId, Integer typeId,
+            Double minPrice, Double maxPrice) {
+        try {
+            StringBuilder queryStr = new StringBuilder("SELECT p FROM Product p WHERE 1=1");
+
+            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                queryStr.append(" AND LOWER(p.productName) LIKE LOWER(:searchQuery)");
+            }
+
+            if (brandId != null && brandId > 0) {
+                queryStr.append(" AND p.brand.brandID = :brandId");
+            }
+
+            if (typeId != null && typeId > 0) {
+                queryStr.append(" AND p.type.typeID = :typeId");
+            }
+
+            // For price filtering, we need to join with variants
+            if (minPrice != null || maxPrice != null) {
+                queryStr.append(" AND EXISTS (SELECT v FROM ProductVariant v WHERE v.product = p");
+                if (minPrice != null) {
+                    queryStr.append(" AND v.price >= :minPrice");
+                }
+                if (maxPrice != null) {
+                    queryStr.append(" AND v.price <= :maxPrice");
+                }
+                queryStr.append(")");
+            }
+
+            queryStr.append(" ORDER BY p.productName");
+
+            TypedQuery<Product> query = em.createQuery(queryStr.toString(), Product.class);
+
+            // Set parameters
+            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                query.setParameter("searchQuery", "%" + searchQuery.trim() + "%");
+            }
+
+            if (brandId != null && brandId > 0) {
+                query.setParameter("brandId", brandId);
+            }
+
+            if (typeId != null && typeId > 0) {
+                query.setParameter("typeId", typeId);
+            }
+
+            if (minPrice != null) {
+                query.setParameter("minPrice", minPrice);
+            }
+
+            if (maxPrice != null) {
+                query.setParameter("maxPrice", maxPrice);
+            }
+
+            return query.getResultList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 

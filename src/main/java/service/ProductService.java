@@ -152,6 +152,21 @@ public class ProductService {
     }
 
     /**
+     * Search and filter products
+     */
+    public List<Product> searchAndFilterProducts(String searchQuery, Integer brandId, Integer typeId,
+            Double minPrice, Double maxPrice) {
+        try {
+            List<Product> products = productDao.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice,
+                    maxPrice);
+            return products != null ? products : new ArrayList<>();
+        } catch (Exception e) {
+            System.err.println("Error in ProductService.searchAndFilterProducts: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
      * Close resources
      */
     public void close() {

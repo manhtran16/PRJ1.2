@@ -2,6 +2,8 @@ package controller.user.product;
 
 import service.ProductService;
 import repository.RatingDao;
+import repository.BrandDao;
+import repository.TypeDao;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -14,17 +16,23 @@ import model.Product;
 import model.ProductVariant;
 import model.Rating;
 import model.User;
+import model.Brand;
+import model.Type;
 
 @WebServlet("/products")
 public class ProductsController extends HttpServlet {
 
     private ProductService productService;
     private RatingDao ratingDao;
+    private BrandDao brandDao;
+    private TypeDao typeDao;
 
     @Override
     public void init() throws ServletException {
         productService = new ProductService();
         ratingDao = new RatingDao();
+        brandDao = new BrandDao();
+        typeDao = new TypeDao();
     }
 
     @Override
@@ -50,8 +58,60 @@ public class ProductsController extends HttpServlet {
     private void showProductsList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            List<Product> products = productService.getAllProducts();
+            // Get search and filter parameters
+            String searchQuery = request.getParameter("q");
+            String brandIdStr = request.getParameter("brandId");
+            String typeIdStr = request.getParameter("typeId");
+            String minPriceStr = request.getParameter("minPrice");
+            String maxPriceStr = request.getParameter("maxPrice");
+
+            // Parse parameters
+            Integer brandId = null;
+            Integer typeId = null;
+            Double minPrice = null;
+            Double maxPrice = null;
+
+            try {
+                if (brandIdStr != null && !brandIdStr.trim().isEmpty()) {
+                    brandId = Integer.parseInt(brandIdStr);
+                }
+                if (typeIdStr != null && !typeIdStr.trim().isEmpty()) {
+                    typeId = Integer.parseInt(typeIdStr);
+                }
+                if (minPriceStr != null && !minPriceStr.trim().isEmpty()) {
+                    minPrice = Double.parseDouble(minPriceStr);
+                }
+                if (maxPriceStr != null && !maxPriceStr.trim().isEmpty()) {
+                    maxPrice = Double.parseDouble(maxPriceStr);
+                }
+            } catch (NumberFormatException e) {
+                // Ignore invalid numbers, use null values
+            }
+
+            // Get products based on search/filter or all products
+            List<Product> products;
+            if (searchQuery != null || brandId != null || typeId != null || minPrice != null || maxPrice != null) {
+                products = productService.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice, maxPrice);
+            } else {
+                products = productService.getAllProducts();
+            }
+
+            // Get brands and types for filter dropdowns
+            List<Brand> brands = brandDao.getBrand();
+            List<Type> types = typeDao.getType();
+
+            // Set attributes for JSP
             request.setAttribute("products", products);
+            request.setAttribute("brands", brands);
+            request.setAttribute("types", types);
+
+            // Preserve search/filter values in form
+            request.setAttribute("searchQuery", searchQuery);
+            request.setAttribute("selectedBrandId", brandId);
+            request.setAttribute("selectedTypeId", typeId);
+            request.setAttribute("minPrice", minPriceStr);
+            request.setAttribute("maxPrice", maxPriceStr);
+
             request.getRequestDispatcher("products.jsp").forward(request, response);
 
         } catch (Exception e) {
