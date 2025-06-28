@@ -160,7 +160,8 @@
                         
                         <!-- Add to Cart Form -->
                         <c:if test="${selectedVariant.quantity > 0}">
-                            <form action="addToCart" method="post">
+                            <form action="cart" method="post">
+                                <input type="hidden" name="action" value="add">
                                 <input type="hidden" name="variantId" value="${selectedVariant.variantID}">
                                 
                                 <div style="margin: 20px 0;">

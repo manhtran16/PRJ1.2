@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Attribute;
 import model.Brand;
 import model.Image;
 import model.Product;
@@ -51,7 +50,7 @@ public class addproduct extends HttpServlet {
 
             Brand brand = bdao.getBrandById(brandID);
             Type type = tdao.getTypeByID(typeID);
-            
+
             Product product = new Product();
             product.setProductName(productName);
             product.setDescription(description);

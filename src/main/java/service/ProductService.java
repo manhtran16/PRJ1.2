@@ -1,13 +1,84 @@
 package service;
 
-import factory.EntityManagerFactoryProvider;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import model.*;
+import repository.ProductDao;
+import model.Product;
+import model.ProductVariant;
+import model.Image;
+import model.Attribute;
+import model.VariantAttributeKey;
+import model.VariantAttributeValue;
 
 import java.util.List;
 
+import factory.EntityManagerFactoryProvider;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+
+import java.util.ArrayList;
+
+/**
+ * Product Service Layer - handles business logic for products
+ */
 public class ProductService {
+
+    private ProductDao productDao;
+
+    public ProductService() {
+        this.productDao = new ProductDao();
+    }
+
+    /**
+     * Get variant with details and validation
+     */
+    public ProductVariant getVariantWithDetails(int variantId) {
+        if (variantId <= 0) {
+            throw new IllegalArgumentException("Invalid variant ID");
+        }
+
+        ProductVariant variant = productDao.getVariantWithDetails(variantId);
+
+        // Apply business logic - check stock, validate price, etc.
+        if (variant != null) {
+            // You could add stock validation, price checks, etc. here
+        }
+
+        return variant;
+    }
+
+    /**
+     * Get all products with validation and business logic
+     */
+    public List<Product> getAllProducts() {
+        try {
+            List<Product> products = productDao.getAllProducts();
+            return products != null ? products : new ArrayList<>();
+        } catch (Exception e) {
+            System.err.println("Error in ProductService.getAllProducts: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Get product with full details for display
+     */
+    public Product getProductWithDetails(int productId) {
+        if (productId <= 0) {
+            throw new IllegalArgumentException("Invalid product ID");
+        }
+
+        Product product = productDao.getProductWithDetails(productId);
+        if (product == null) {
+            return null;
+        }
+
+        // Apply business logic - filter out inactive variants, sort variants, etc.
+        if (product.getVariants() != null) {
+            // Here you could add business rules like filtering inactive variants
+            // or sorting variants by price, popularity, etc.
+        }
+
+        return product;
+    }
 
     public boolean addFullProduct(Product product, List<ProductVariant> variants) {
         EntityManager em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
@@ -18,23 +89,21 @@ public class ProductService {
 
             // Lưu sản phẩm
             em.persist(product);
-            
-            System.out.println("1");
+
             for (ProductVariant variant : variants) {
                 variant.setProduct(product);
-                System.out.println(variant);
                 em.persist(variant); // sinh ID
-                
-                System.out.println("2");
+
                 // Lưu các giá trị thuộc tính (variant-attribute-value)
-                int count=0;
                 if (variant.getAttributeValues() != null) {
                     for (VariantAttributeValue vav : variant.getAttributeValues()) {
                         // Lấy attribute managed từ DB
-                        System.out.println(count);
                         if (vav.getAttribute() != null && vav.getAttribute().getAttributeID() != 0) {
                             Attribute managedAttribute = em.find(Attribute.class, vav.getAttribute().getAttributeID());
-                            
+                            if (managedAttribute == null) {
+                                throw new IllegalArgumentException(
+                                        "Attribute không tồn tại với ID: " + vav.getAttribute().getAttributeID());
+                            }
                             vav.setAttribute(managedAttribute); // Đảm bảo attribute là managed
                         } else {
                             throw new IllegalArgumentException("Thiếu attribute ID trong VariantAttributeValue");
@@ -45,14 +114,13 @@ public class ProductService {
                         // Đảm bảo id không null và có đủ giá trị
                         if (vav.getId() == null) {
                             vav.setId(new VariantAttributeKey(
-                                variant.getVariantID(),
-                                vav.getAttribute().getAttributeID()
-                            ));
+                                    variant.getVariantID(),
+                                    vav.getAttribute().getAttributeID()));
                         } else {
                             vav.getId().setVariantId(variant.getVariantID());
                             vav.getId().setAttributeId(vav.getAttribute().getAttributeID());
                         }
-                        count ++;
+
                         em.persist(vav); // Chỉ persist vav, KHÔNG persist attribute!
                     }
                 }
@@ -70,15 +138,25 @@ public class ProductService {
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
             System.err.println("❌ Lỗi khi thêm sản phẩm: " + e.getMessage());
-            for (Throwable t = e; t != null; t = t.getCause()) {
-                System.err.println("❌ Nguyên nhân: " + t.getClass().getName() + ": " + t.getMessage());
+            e.printStackTrace();
+            if (tx.isActive()) {
+                tx.rollback();
             }
-            if (tx.isActive()) tx.rollback();
             return false;
         } finally {
-            em.close();
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    /**
+     * Close resources
+     */
+    public void close() {
+        if (productDao != null) {
+            productDao.close();
         }
     }
 }

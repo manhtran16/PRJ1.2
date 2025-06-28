@@ -71,6 +71,9 @@
                 <a class="nav-link text-white active" href="products">
                     <i class="fas fa-shopping-bag me-1"></i>Products
                 </a>
+                <a class="nav-link text-white" href="cart">
+                    <i class="fas fa-shopping-cart me-1"></i>Cart
+                </a>
                 <a class="nav-link text-white" href="userOrders">
                     <i class="fas fa-receipt me-1"></i>My Orders
                 </a>
@@ -92,6 +95,74 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 </c:if>
+
+                <!-- Search and Filter Section -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form method="GET" action="products">
+                            <div class="row g-3">
+                                <!-- Search Box -->
+                                <div class="col-md-4">
+                                    <label for="searchQuery" class="form-label">Search Products</label>
+                                    <input type="text" class="form-control" id="searchQuery" name="q" 
+                                           value="${searchQuery}" placeholder="Enter product name...">
+                                </div>
+                                
+                                <!-- Brand Filter -->
+                                <div class="col-md-2">
+                                    <label for="brandSelect" class="form-label">Brand</label>
+                                    <select class="form-select" id="brandSelect" name="brandId">
+                                        <option value="">All Brands</option>
+                                        <c:forEach var="brand" items="${brands}">
+                                            <option value="${brand.brandID}" 
+                                                    ${selectedBrandId == brand.brandID ? 'selected' : ''}>
+                                                ${brand.brandName}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                
+                                <!-- Type Filter -->
+                                <div class="col-md-2">
+                                    <label for="typeSelect" class="form-label">Category</label>
+                                    <select class="form-select" id="typeSelect" name="typeId">
+                                        <option value="">All Categories</option>
+                                        <c:forEach var="type" items="${types}">
+                                            <option value="${type.typeID}" 
+                                                    ${selectedTypeId == type.typeID ? 'selected' : ''}>
+                                                ${type.typeName}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                
+                                <!-- Price Range -->
+                                <div class="col-md-2">
+                                    <label for="minPrice" class="form-label">Min Price (VNĐ)</label>
+                                    <input type="number" class="form-control" id="minPrice" name="minPrice" 
+                                           value="${minPrice}" placeholder="0" min="0" step="1000">
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <label for="maxPrice" class="form-label">Max Price (VNĐ)</label>
+                                    <input type="number" class="form-control" id="maxPrice" name="maxPrice" 
+                                           value="${maxPrice}" placeholder="1000000" min="0" step="1000">
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary me-2">
+                                        <i class="fas fa-search me-1"></i>Search & Filter
+                                    </button>
+                                    <a href="products" class="btn btn-outline-secondary">
+                                        <i class="fas fa-times me-1"></i>Clear Filters
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
                 <!-- Products Grid -->
                 <c:choose>

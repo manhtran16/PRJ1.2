@@ -10,10 +10,15 @@
         <!-- Tên class entity -->
         <class>model.Brand</class>
         <class>model.Type</class>
-        <class>model.ProductVariant</class>
+        <class>model.Attribute</class>
         <class>model.Product</class>
+        <class>model.ProductVariant</class>
+        <class>model.Image</class>
         <class>model.User</class>
         <class>model.OrderTable</class>
+        <class>model.OrderDetail</class>
+        <class>model.Rating</class>
+        <class>model.VariantAttributeValue</class>
         
         
         
