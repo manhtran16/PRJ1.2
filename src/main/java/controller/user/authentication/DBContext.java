@@ -1,4 +1,4 @@
-package controller.user;
+package controller.user.authentication;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ public class DBContext {
             String username = "sa";
             String pass = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            c = DriverManager.getConnection(url,username,pass);
+            c = DriverManager.getConnection(url, username, pass);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,9 +28,5 @@ public class DBContext {
         } catch (SQLException e) {
             System.out.println("Error closing connection: " + e.getMessage());
         }
-    }
-    
-    public static void main(String[] args) {
-        DBContext db = new DBContext();
     }
 }

@@ -90,6 +90,9 @@
                         <td>Password :</td>
                         <td><input type="password" name="password" /></td>
                     </tr>
+                    <tr>
+                        <td><label><input type="checkbox" name="remember"> Remember me</label></td>
+                    </tr>   
                 </tbody>
             </table>
             <input type="submit" name="type" value="LOGIN" />

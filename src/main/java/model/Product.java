@@ -1,6 +1,7 @@
 package model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +18,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productID;
 
+    @Column(name = "productName", columnDefinition = "NVARCHAR(255)")
     private String productName;
+
+    @Column(name = "description", columnDefinition = "NVARCHAR(500)")
     private String description;
 
     @ManyToOne
@@ -35,6 +39,13 @@ public class Product {
     private List<Rating> ratings = new ArrayList<>();
 
     public Product() {
+    }
+
+    // Simple constructor for basic product info only
+    public Product(int productID, String productName, String description) {
+        this.productID = productID;
+        this.productName = productName;
+        this.description = description;
     }
 
     public Product(int productID, String productName, String description, Type type, Brand brand) {
@@ -100,7 +111,5 @@ public class Product {
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
     }
-    
-    
-}
 
+}

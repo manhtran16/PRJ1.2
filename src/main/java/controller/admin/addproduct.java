@@ -19,7 +19,7 @@ import model.ProductVariant;
 import model.VariantAttributeValue;
 import service.ProductService;
 
-@WebServlet(name = "AddProduct", urlPatterns = {"/addproduct"})
+@WebServlet(name = "AddProduct", urlPatterns = { "/addproduct" })
 public class addproduct extends HttpServlet {
 
     @Override

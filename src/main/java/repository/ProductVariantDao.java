@@ -10,7 +10,7 @@ import model.ProductVariant;
 
 /**
  *
- * @author manht
+ * @author admin
  */
 public class ProductVariantDao {
     private EntityManager em;
@@ -23,5 +23,11 @@ public class ProductVariantDao {
         em.getTransaction().begin();
         em.persist(variant);
         em.getTransaction().commit();
+    }
+
+    public void close() {
+        if (em != null && em.isOpen()) {
+            em.close();
+        }
     }
 }

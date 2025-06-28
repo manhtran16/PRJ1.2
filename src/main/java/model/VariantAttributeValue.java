@@ -18,9 +18,11 @@ public class VariantAttributeValue {
     @JoinColumn(name = "attributeID")
     private Attribute attribute;
 
+    @Column(length = 100)
     private String value;
 
-    public VariantAttributeValue() {}
+    public VariantAttributeValue() {
+    }
 
     public VariantAttributeValue(ProductVariant variant, Attribute attribute, String value) {
         this.variant = variant;
