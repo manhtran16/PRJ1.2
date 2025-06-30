@@ -1,6 +1,6 @@
 <%-- 
-    Document   : uodate_product.jsp
-    Created on : Jun 28, 2025, 5:08:35 PM
+    Document   : edit_type
+    Created on : Jun 30, 2025, 11:44:13 PM
     Author     : manht
 --%>
 

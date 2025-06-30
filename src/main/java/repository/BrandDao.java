@@ -48,17 +48,19 @@ public class BrandDao {
     }
 
     // Thêm brand mới
-    public void createBrand(String brandName) {
+    public boolean createBrand(String brandName) {
         try {
             em.getTransaction().begin();
             Brand brand = new Brand();
             brand.setBrandName(brandName);
             em.persist(brand);
             em.getTransaction().commit();
+            return true;
         } catch (Exception e) {
             if (em.getTransaction().isActive())
                 em.getTransaction().rollback();
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -92,6 +94,19 @@ public class BrandDao {
             if (em.getTransaction().isActive())
                 em.getTransaction().rollback();
             e.printStackTrace();
+        }
+    }
+
+    public boolean getBrandByName(String brandName) {
+        try {
+            Long count = em.createQuery(
+                "SELECT COUNT(b) FROM Brand b WHERE LOWER(b.brandName) = :name", Long.class)
+                .setParameter("name", brandName.trim().toLowerCase())
+                .getSingleResult();
+            return count > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

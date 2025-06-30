@@ -1,4 +1,4 @@
-package controller.admin;
+package controller.admin.product;
 
 import factory.EntityManagerFactoryProvider;
 import jakarta.persistence.EntityManager;
@@ -34,7 +34,7 @@ public class addproduct extends HttpServlet {
         List<Brand> brandList = bdao.getBrand();
         request.setAttribute("typeList", typeList);
         request.setAttribute("brandList", brandList);
-        request.getRequestDispatcher("/admin/add_product.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin/product/add_product.jsp").forward(request, response);
     }
 
     @Override
@@ -121,14 +121,15 @@ public class addproduct extends HttpServlet {
             ProductService productService = new ProductService();
             boolean success = productService.addFullProduct(product, variantList);
             if (success) {
-                response.sendRedirect("displayPro.jsp");
+                request.setAttribute("msg", "Thêm sản phẩm thành công!!");
+                request.getRequestDispatcher("/admin/product/add_product.jsp").forward(request, response);
             } else {
-                request.setAttribute("error", "Thêm sản phẩm thất bại");
-                request.getRequestDispatcher("/admin/add_product.jsp").forward(request, response);
+                request.setAttribute("msg", "Thêm sản phẩm thất bại");
+                request.getRequestDispatcher("/admin/product/add_product.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            request.setAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
-            request.getRequestDispatcher("/admin/add_product.jsp").forward(request, response);
+            request.setAttribute("msg", "Đã xảy ra lỗi: " + e.getMessage());
+            request.getRequestDispatcher("/admin/product/add_product.jsp").forward(request, response);
         }
     }
 }
