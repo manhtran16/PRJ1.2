@@ -45,6 +45,16 @@
         color: #155724;
         border: 1px solid #c3e6cb;
       }
+      .status-shipped {
+        background-color: #cce5ff;
+        color: #004085;
+        border: 1px solid #b3d9ff;
+      }
+      .status-delivered {
+        background-color: #e2e3e5;
+        color: #495057;
+        border: 1px solid #ced4da;
+      }
       .empty-orders {
         text-align: center;
         padding: 60px 20px;
@@ -137,16 +147,16 @@
                         <c:choose>
                           <c:when test="${order.status == 0}">
                             <span class="status-badge status-pending">
-                              <i class="fas fa-clock me-1"></i>Pending
+                              <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
                             </span>
                           </c:when>
                           <c:when test="${order.status == 1}">
                             <span class="status-badge status-completed">
-                              <i class="fas fa-check me-1"></i>Completed
+                              <i class="fas fa-check me-1"></i>Đã thanh toán
                             </span>
                           </c:when>
                           <c:otherwise>
-                            <span class="status-badge">Unknown</span>
+                            <span class="status-badge">Status ${order.status}</span>
                           </c:otherwise>
                         </c:choose>
                       </div>

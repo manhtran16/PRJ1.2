@@ -93,15 +93,7 @@ public class OrderService {
             case 0:
                 return "Giỏ hàng";
             case 1:
-                return "Chờ xác nhận";
-            case 2:
-                return "Đã xác nhận";
-            case 3:
-                return "Đang giao hàng";
-            case 4:
-                return "Đã giao hàng";
-            case 5:
-                return "Đã hủy";
+                return "Đã thanh toán";
             default:
                 return "Không xác định";
         }

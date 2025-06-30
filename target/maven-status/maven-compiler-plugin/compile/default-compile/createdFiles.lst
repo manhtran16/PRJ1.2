@@ -28,7 +28,6 @@ controller\user\authentication\AuthController.class
 controller\user\product\ProductsController.class
 model\Brand.class
 repository\ImageDao.class
-controller\test\TestServlet.class
 service\CartService.class
 com\mycompany\clothesshop\JakartaRestConfiguration.class
 controller\user\cart\CartController.class

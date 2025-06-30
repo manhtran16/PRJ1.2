@@ -60,6 +60,9 @@ public class OrderDao {
      */
     public List<OrderDetail> getOrderDetailsByOrderId(int orderId) {
         try {
+            // Clear cache to ensure fresh data
+            em.clear();
+
             TypedQuery<OrderDetail> query = em.createQuery(
                     "SELECT od FROM OrderDetail od " +
                             "LEFT JOIN FETCH od.variant pv " +
@@ -82,7 +85,7 @@ public class OrderDao {
     public OrderDetail getCartItem(int orderId, int variantId) {
         try {
             TypedQuery<OrderDetail> query = em.createQuery(
-                    "SELECT od FROM OrderDetail od WHERE od.order.orderID = :orderId AND od.id.variantId = :variantId",
+                    "SELECT od FROM OrderDetail od WHERE od.order.orderID = :orderId AND od.variant.variantID = :variantId",
                     OrderDetail.class);
             query.setParameter("orderId", orderId);
             query.setParameter("variantId", variantId);
@@ -125,23 +128,54 @@ public class OrderDao {
      * Update cart item quantity
      */
     public boolean updateCartItemQuantity(int orderId, int variantId, int newQuantity) {
+        EntityManager updateEm = null;
         try {
-            em.getTransaction().begin();
-            int updated = em.createQuery(
-                    "UPDATE OrderDetail od SET od.orderQuantity = :quantity " +
-                            "WHERE od.order.orderID = :orderId AND od.id.variantId = :variantId")
-                    .setParameter("quantity", newQuantity)
-                    .setParameter("orderId", orderId)
-                    .setParameter("variantId", variantId)
-                    .executeUpdate();
-            em.getTransaction().commit();
-            return updated > 0;
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
+            System.out.println("=== OrderDao.updateCartItemQuantity ===");
+            System.out.println("OrderID: " + orderId + ", VariantID: " + variantId + ", NewQuantity: " + newQuantity);
+
+            // Use a new EntityManager for this update to avoid cache issues
+            updateEm = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
+
+            updateEm.getTransaction().begin();
+
+            // Find the OrderDetail entity and update it directly
+            TypedQuery<OrderDetail> findQuery = updateEm.createQuery(
+                    "SELECT od FROM OrderDetail od WHERE od.order.orderID = :orderId AND od.variant.variantID = :variantId",
+                    OrderDetail.class);
+            findQuery.setParameter("orderId", orderId);
+            findQuery.setParameter("variantId", variantId);
+
+            List<OrderDetail> results = findQuery.getResultList();
+
+            if (!results.isEmpty()) {
+                OrderDetail orderDetail = results.get(0);
+                System.out.println("Found OrderDetail - Current quantity: " + orderDetail.getOrderQuantity());
+
+                orderDetail.setOrderQuantity(newQuantity);
+                updateEm.merge(orderDetail);
+
+                System.out.println("Updated to quantity: " + newQuantity);
             }
+
+            updateEm.getTransaction().commit();
+
+            System.out.println("Entity update completed");
+
+            // Clear the main EntityManager cache to force refresh on next read
+            em.clear();
+
+            return !results.isEmpty();
+        } catch (Exception e) {
+            if (updateEm != null && updateEm.getTransaction().isActive()) {
+                updateEm.getTransaction().rollback();
+            }
+            System.err.println("Error updating cart item quantity: " + e.getMessage());
             e.printStackTrace();
             return false;
+        } finally {
+            if (updateEm != null && updateEm.isOpen()) {
+                updateEm.close();
+            }
         }
     }
 
@@ -157,8 +191,6 @@ public class OrderDao {
                     .setParameter("variantId", variantId)
                     .executeUpdate();
             em.getTransaction().commit();
-            System.out.println(
-                    "Deleted " + deleted + " cart items for orderId: " + orderId + ", variantId: " + variantId);
             return deleted > 0;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -181,7 +213,7 @@ public class OrderDao {
                     .setParameter("orderId", orderId)
                     .executeUpdate();
             em.getTransaction().commit();
-            return true;
+            return deleted > 0;
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -231,12 +263,12 @@ public class OrderDao {
     }
 
     /**
-     * Get orders by user ID (excluding cart orders)
+     * Get orders by user ID (only paid orders, status = 1)
      */
     public List<OrderTable> getOrdersByUserId(int userId) {
         try {
             TypedQuery<OrderTable> query = em.createQuery(
-                    "SELECT o FROM OrderTable o WHERE o.user.userID = :userId AND o.status > 0 ORDER BY o.orderDate DESC",
+                    "SELECT o FROM OrderTable o WHERE o.user.userID = :userId AND o.status = 1 ORDER BY o.orderDate DESC",
                     OrderTable.class);
             query.setParameter("userId", userId);
             return query.getResultList();

@@ -35,19 +35,20 @@ public class CartService {
 
         // Try to find existing cart (order with status = 0)
         OrderTable cart = orderDao.getCartByUserId(user.getUserID());
-        System.out.println(
-                "Existing cart for user " + user.getUserID() + ": " + (cart != null ? cart.getOrderID() : "null"));
 
         if (cart == null) {
             // Create new cart
-            System.out.println("Creating new cart for user: " + user.getUserID());
             cart = new OrderTable();
             cart.setUser(user);
             cart.setOrderDate(new Date(System.currentTimeMillis()));
-            cart.setStatus(0); // 0 = Cart status (temporary)
+            cart.setStatus(0); // 0 = Cart status (giỏ hàng)
 
             cart = orderDao.createOrder(cart);
-            System.out.println("New cart created with ID: " + (cart != null ? cart.getOrderID() : "null"));
+
+            // Check if cart creation failed
+            if (cart == null) {
+                throw new RuntimeException("Failed to create cart for user: " + user.getUserID());
+            }
         }
 
         return cart;
@@ -64,19 +65,14 @@ public class CartService {
         }
 
         try {
-            System.out.println("Adding to cart - User: " + user.getUserID() + ", Variant: " + variantId + ", Quantity: "
-                    + quantity);
-
             // Validate variant exists
             ProductVariant variant = productService.getVariantWithDetails(variantId);
             if (variant == null) {
                 System.err.println("Product variant not found for ID: " + variantId);
                 throw new IllegalArgumentException("Product variant not found");
             }
-            System.out.println("Variant found: " + variant.getVariantID());
 
             OrderTable cart = getOrCreateCart(user);
-            System.out.println("Cart retrieved/created with ID: " + cart.getOrderID());
 
             // Check if item already exists in cart
             OrderDetail existingItem = orderDao.getCartItem(cart.getOrderID(), variantId);
@@ -84,11 +80,9 @@ public class CartService {
             if (existingItem != null) {
                 // Update quantity
                 int newQuantity = existingItem.getOrderQuantity() + quantity;
-                System.out.println("Updating existing item quantity to: " + newQuantity);
                 return orderDao.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
             } else {
                 // Add new item - don't set the detached variant object
-                System.out.println("Adding new item to cart");
                 OrderDetail newItem = new OrderDetail();
                 newItem.setOrder(cart);
                 // Don't set variant object directly to avoid detached entity issue
@@ -100,7 +94,6 @@ public class CartService {
                 newItem.setId(key);
 
                 boolean result = orderDao.createOrderDetail(newItem);
-                System.out.println("Add new item result: " + result);
                 return result;
             }
 
@@ -116,22 +109,34 @@ public class CartService {
      */
     public boolean updateCartItem(User user, int variantId, int newQuantity) {
         if (user == null || variantId <= 0) {
+            System.err.println("Invalid parameters - user: " + user + ", variantId: " + variantId);
             return false;
         }
 
+        System.out.println("=== CART SERVICE UPDATE DEBUG ===");
+        System.out.println("User ID: " + user.getUserID());
+        System.out.println("Variant ID: " + variantId);
+        System.out.println("New Quantity: " + newQuantity);
+
         try {
             OrderTable cart = getOrCreateCart(user);
+            System.out.println("Cart ID: " + cart.getOrderID());
 
             if (newQuantity <= 0) {
                 // Remove item
+                System.out.println("Quantity <= 0, removing item");
                 return orderDao.removeCartItem(cart.getOrderID(), variantId);
             } else {
                 // Update quantity
-                return orderDao.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
+                System.out.println("Updating quantity to: " + newQuantity);
+                boolean result = orderDao.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
+                System.out.println("DAO update result: " + result);
+                return result;
             }
 
         } catch (Exception e) {
             System.err.println("Error updating cart item: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -141,16 +146,13 @@ public class CartService {
      */
     public boolean removeFromCart(User user, int variantId) {
         if (user == null || variantId <= 0) {
-            System.out.println("Invalid parameters - user: " + user + ", variantId: " + variantId);
             return false;
         }
 
         try {
             OrderTable cart = getOrCreateCart(user);
-            System.out.println("Cart found/created for user " + user.getUserID() + ": " + cart.getOrderID());
 
             boolean result = orderDao.removeCartItem(cart.getOrderID(), variantId);
-            System.out.println("Remove cart item result: " + result);
 
             return result;
 
@@ -170,9 +172,31 @@ public class CartService {
         }
 
         try {
+            System.out.println("=== getCartItems DEBUG ===");
+            System.out.println("Getting cart items for user: " + user.getUserID());
+
             OrderTable cart = getOrCreateCart(user);
+
+            if (cart == null) {
+                System.err.println("Cart is null for user: " + user.getUserID());
+                return new ArrayList<>();
+            }
+
+            System.out.println("Cart ID: " + cart.getOrderID());
+
             List<OrderDetail> items = orderDao.getOrderDetailsByOrderId(cart.getOrderID());
-            System.out.println("Cart items retrieved for user " + user.getUserID() + ": " + items.size() + " items");
+
+            if (items == null) {
+                items = new ArrayList<>();
+            }
+
+            System.out.println("Found " + items.size() + " items");
+
+            for (OrderDetail item : items) {
+                System.out.println("Item - VariantID: " + item.getVariant().getVariantID() +
+                        ", Quantity: " + item.getOrderQuantity());
+            }
+
             return items;
 
         } catch (Exception e) {
@@ -192,6 +216,12 @@ public class CartService {
 
         try {
             OrderTable cart = getOrCreateCart(user);
+
+            if (cart == null) {
+                System.err.println("Cart is null for user: " + user.getUserID());
+                return 0.0;
+            }
+
             return orderDao.getOrderTotal(cart.getOrderID());
 
         } catch (Exception e) {
@@ -228,7 +258,7 @@ public class CartService {
                 throw new IllegalArgumentException("Cart is empty");
             }
 
-            // Update cart status from 0 (cart) to 1 (pending order)
+            // Update cart status from 0 (giỏ hàng) to 1 (đã thanh toán)
             boolean updated = orderDao.updateOrderStatus(cart.getOrderID(), 1);
 
             if (updated) {

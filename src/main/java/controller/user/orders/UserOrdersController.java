@@ -92,7 +92,7 @@ public class UserOrdersController extends HttpServlet {
             }
 
             request.setAttribute("orders", orders);
-            request.setAttribute("orderService", orderService); // For status text method
+            request.setAttribute("orderService", orderService);
             request.getRequestDispatcher("userOrders.jsp").forward(request, response);
 
         } catch (Exception e) {

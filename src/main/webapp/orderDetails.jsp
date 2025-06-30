@@ -32,11 +32,16 @@
             padding: 0.5rem 1rem;
             border-radius: 50rem;
         }
-        .status-pending { background-color: #fff3cd; color: #856404; }
-        .status-processing { background-color: #cce5ff; color: #004085; }
-        .status-shipped { background-color: #e2e3e5; color: #383d41; }
-        .status-delivered { background-color: #d4edda; color: #155724; }
-        .status-cancelled { background-color: #f8d7da; color: #721c24; }
+        .status-pending { 
+            background-color: #fff3cd; 
+            color: #856404; 
+            border: 1px solid #ffeaa7;
+        }
+        .status-delivered { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb;
+        }
     </style>
 </head>
 <body>
@@ -89,33 +94,18 @@
                         </div>
                         <div class="col-md-6 text-end">
                             <c:choose>
-                                <c:when test="${order.status == 1}">
+                                <c:when test="${order.status == 0}">
                                     <span class="status-badge status-pending">
-                                        <i class="fas fa-clock me-1"></i>Chờ xử lý
+                                        <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
                                     </span>
                                 </c:when>
-                                <c:when test="${order.status == 2}">
-                                    <span class="status-badge status-processing">
-                                        <i class="fas fa-cog me-1"></i>Đang xử lý
-                                    </span>
-                                </c:when>
-                                <c:when test="${order.status == 3}">
-                                    <span class="status-badge status-shipped">
-                                        <i class="fas fa-shipping-fast me-1"></i>Đã giao vận
-                                    </span>
-                                </c:when>
-                                <c:when test="${order.status == 4}">
+                                <c:when test="${order.status == 1}">
                                     <span class="status-badge status-delivered">
-                                        <i class="fas fa-check me-1"></i>Đã giao hàng
-                                    </span>
-                                </c:when>
-                                <c:when test="${order.status == 5}">
-                                    <span class="status-badge status-cancelled">
-                                        <i class="fas fa-times me-1"></i>Đã hủy
+                                        <i class="fas fa-check me-1"></i>Đã thanh toán
                                     </span>
                                 </c:when>
                                 <c:otherwise>
-                                    <span class="status-badge">Không xác định</span>
+                                    <span class="status-badge">Status ${order.status}</span>
                                 </c:otherwise>
                             </c:choose>
                         </div>

@@ -129,6 +129,7 @@ public class AuthController extends HttpServlet {
                         response.sendRedirect("admin/admin_home.jsp");
                     }
                     break;
+                    
                 case 1:// wrong password66
                     request.setAttribute("loginStatus", 1);
                     request.setAttribute("msg", "Wrong password");
