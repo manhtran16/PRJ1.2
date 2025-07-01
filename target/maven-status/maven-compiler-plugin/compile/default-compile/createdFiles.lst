@@ -6,6 +6,7 @@ controller\user\authentication\changePassword.class
 controller\user\orders\UserOrdersController.class
 factory\EntityManagerFactoryProvider.class
 repository\BrandDao.class
+controller\user\product\IndexController.class
 repository\ProductVariantDao.class
 controller\user\product\VariantController.class
 controller\user\authentication\DBContext.class

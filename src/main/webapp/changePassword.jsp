@@ -36,11 +36,11 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
         <div class="container">
-            <a class="navbar-brand text-white" href="index.jsp">
+            <a class="navbar-brand text-white" href="index">
                 <i class="fas fa-tshirt me-2"></i>Clothes Shop
             </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link text-white" href="index.jsp">
+                <a class="nav-link text-white" href="index">
                     <i class="fas fa-home me-1"></i>Home
                 </a>
                 <a class="nav-link text-white" href="userOrders">
@@ -108,7 +108,7 @@
 
                 <!-- Back to Profile Link -->
                 <div class="text-center mt-3">
-                    <a href="index.jsp" class="btn btn-outline-secondary">
+                    <a href="index" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i>Back to Home
                     </a>
                 </div>

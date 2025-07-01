@@ -6,6 +6,7 @@ import repository.BrandDao;
 import repository.TypeDao;
 import java.io.IOException;
 import java.util.List;
+import java.util.Collections;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -95,6 +96,9 @@ public class ProductsController extends HttpServlet {
             } else {
                 products = productService.getAllProducts();
             }
+
+            // Shuffle products for random display
+            Collections.shuffle(products);
 
             // Get brands and types for filter dropdowns
             List<Brand> brands = brandDao.getBrand();

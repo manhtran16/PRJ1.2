@@ -16,7 +16,6 @@ C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Type.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\VariantAttributeValue.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\OrderDao.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\rating\RatingController.java
-C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\utils\DatabaseConnectionTest.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\ProductDao.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\RatingDao.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\orders\UserOrdersController.java
@@ -29,6 +28,7 @@ C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\service\OrderServic
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\product\ProductDetailController.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\test\TestServlet.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\BrandDao.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\product\IndexController.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\ProductVarriantValue.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\cart\CartController.java
 C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Brand.java

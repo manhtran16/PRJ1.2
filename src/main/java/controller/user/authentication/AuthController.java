@@ -124,12 +124,12 @@ public class AuthController extends HttpServlet {
                             cookie.setMaxAge(60 * 60 * 24 * 30); // 30 days
                             response.addCookie(cookie);
                         }
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("index");
                     } else {
                         response.sendRedirect("admin/admin_home.jsp");
                     }
                     break;
-                    
+
                 case 1:// wrong password66
                     request.setAttribute("loginStatus", 1);
                     request.setAttribute("msg", "Wrong password");

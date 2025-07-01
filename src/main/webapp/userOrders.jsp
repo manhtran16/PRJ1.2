@@ -74,11 +74,11 @@
       style="background-color: #cc66ff"
     >
       <div class="container">
-        <a class="navbar-brand text-white" href="index.jsp">
+        <a class="navbar-brand text-white" href="index">
           <i class="fas fa-tshirt me-2"></i>Clothes Shop
         </a>
         <div class="navbar-nav ms-auto">
-          <a class="nav-link text-white" href="index.jsp">
+          <a class="nav-link text-white" href="index">
             <i class="fas fa-home me-1"></i>Home
           </a>
           <a class="nav-link text-white" href="products.jsp">
@@ -96,7 +96,7 @@
         <div class="col-12">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h2><i class="fas fa-receipt me-2"></i>My Orders</h2>
-            <a href="index.jsp" class="btn btn-outline-primary">
+            <a href="index" class="btn btn-outline-primary">
               <i class="fas fa-arrow-left me-1"></i>Back to Home
             </a>
           </div>

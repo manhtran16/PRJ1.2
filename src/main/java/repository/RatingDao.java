@@ -21,7 +21,7 @@ public class RatingDao {
     public List<Rating> getRatingsByProductId(int productId) {
         try {
             TypedQuery<Rating> query = em.createQuery(
-                    "SELECT r FROM Rating r WHERE r.product.productID = ? ORDER BY r.ratingId DESC",
+                    "SELECT r FROM Rating r WHERE r.product.productID = ?1 ORDER BY r.ratingId DESC",
                     Rating.class);
             query.setParameter(1, productId);
             return query.getResultList();
@@ -35,7 +35,7 @@ public class RatingDao {
     public Double getAverageRatingByProductId(int productId) {
         try {
             TypedQuery<Double> query = em.createQuery(
-                    "SELECT AVG(r.rate) FROM Rating r WHERE r.product.productID = ?",
+                    "SELECT AVG(r.rate) FROM Rating r WHERE r.product.productID = ?1",
                     Double.class);
             query.setParameter(1, productId);
             Double result = query.getSingleResult();
@@ -50,7 +50,7 @@ public class RatingDao {
     public Long getTotalRatingsByProductId(int productId) {
         try {
             TypedQuery<Long> query = em.createQuery(
-                    "SELECT COUNT(r) FROM Rating r WHERE r.product.productID = ?",
+                    "SELECT COUNT(r) FROM Rating r WHERE r.product.productID = ?1",
                     Long.class);
             query.setParameter(1, productId);
             return query.getSingleResult();
@@ -64,7 +64,7 @@ public class RatingDao {
     public boolean hasUserRatedProduct(int userId, int productId) {
         try {
             TypedQuery<Long> query = em.createQuery(
-                    "SELECT COUNT(r) FROM Rating r WHERE r.user.userID = ? AND r.product.productID = ?",
+                    "SELECT COUNT(r) FROM Rating r WHERE r.user.userID = ?1 AND r.product.productID = ?2",
                     Long.class);
             query.setParameter(1, userId);
             query.setParameter(2, productId);
@@ -114,7 +114,7 @@ public class RatingDao {
             em.getTransaction().begin();
 
             TypedQuery<Rating> query = em.createQuery(
-                    "SELECT r FROM Rating r WHERE r.user.userID = ? AND r.product.productID = ?",
+                    "SELECT r FROM Rating r WHERE r.user.userID = ?1 AND r.product.productID = ?2",
                     Rating.class);
             query.setParameter(1, userId);
             query.setParameter(2, productId);
@@ -145,7 +145,7 @@ public class RatingDao {
     public Rating getUserRatingForProduct(int userId, int productId) {
         try {
             TypedQuery<Rating> query = em.createQuery(
-                    "SELECT r FROM Rating r WHERE r.user.userID = ? AND r.product.productID = ?",
+                    "SELECT r FROM Rating r WHERE r.user.userID = ?1 AND r.product.productID = ?2",
                     Rating.class);
             query.setParameter(1, userId);
             query.setParameter(2, productId);
