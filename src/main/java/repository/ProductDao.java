@@ -11,10 +11,10 @@ import java.util.ArrayList;
 /**
  * Product Data Access Object
  */
-public class ProductDao {
+public class ProductDAO {
     private EntityManager em;
 
-    public ProductDao() {
+    public ProductDAO() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 

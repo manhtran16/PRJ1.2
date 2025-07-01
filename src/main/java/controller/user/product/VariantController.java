@@ -6,18 +6,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import repository.ProductDao;
+import repository.ProductDAO;
 import model.Product;
 import model.ProductVariant;
 
 @WebServlet(name = "VariantController", urlPatterns = { "/variant" })
 public class VariantController extends HttpServlet {
 
-    private ProductDao productDao;
+    private ProductDAO productDao;
 
     @Override
     public void init() throws ServletException {
-        productDao = new ProductDao();
+        productDao = new ProductDAO();
     }
 
     @Override

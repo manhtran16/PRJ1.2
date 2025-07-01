@@ -6,18 +6,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import repository.RatingDao;
+import repository.RatingDAO;
 import model.User;
 import java.io.IOException;
 
 @WebServlet("/user/rating")
 public class RatingController extends HttpServlet {
 
-    private RatingDao ratingDao;
+    private RatingDAO ratingDao;
 
     @Override
     public void init() throws ServletException {
-        ratingDao = new RatingDao();
+        ratingDao = new RatingDAO();
     }
 
     @Override

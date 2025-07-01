@@ -7,11 +7,11 @@ import java.util.List;
 import model.User;
 import factory.EntityManagerFactoryProvider;
 
-public class UserDao {
+public class UserDAO {
 
     private EntityManager em;
 
-    public UserDao() {
+    public UserDAO() {
         em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 

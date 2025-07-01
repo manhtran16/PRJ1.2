@@ -1,6 +1,6 @@
 package service;
 
-import repository.ProductDao;
+import repository.ProductDAO;
 import model.Product;
 import model.ProductVariant;
 import model.Image;
@@ -21,10 +21,10 @@ import java.util.ArrayList;
  */
 public class ProductService {
 
-    private ProductDao productDao;
+    private ProductDAO productDao;
 
     public ProductService() {
-        this.productDao = new ProductDao();
+        this.productDao = new ProductDAO();
     }
 
     /**

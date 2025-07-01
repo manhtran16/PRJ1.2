@@ -12,7 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import repository.ProductDao;
+import repository.ProductDAO;
 import model.Product;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -65,7 +65,7 @@ public class IndexController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("DEBUG: IndexController doGet() called");
-        ProductDao productDao = new ProductDao();
+        ProductDAO productDao = new ProductDAO();
         List<Product> allProducts = productDao.getAllProducts();
         Collections.shuffle(allProducts);
         List<Product> randomProducts = allProducts.stream()

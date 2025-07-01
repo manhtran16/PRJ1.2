@@ -12,11 +12,11 @@ import model.Image;
  *
  * @author manht
  */
-public class ImageDao {
+public class ImageDAO {
 
     private EntityManager em;
 
-    public ImageDao() {
+    public ImageDAO() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 

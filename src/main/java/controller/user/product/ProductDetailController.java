@@ -1,7 +1,7 @@
 package controller.user.product;
 
 import service.ProductService;
-import repository.RatingDao;
+import repository.RatingDAO;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -18,12 +18,12 @@ import model.User;
 public class ProductDetailController extends HttpServlet {
 
     private ProductService productService;
-    private RatingDao ratingDao;
+    private RatingDAO ratingDao;
 
     @Override
     public void init() throws ServletException {
         productService = new ProductService();
-        ratingDao = new RatingDao();
+        ratingDao = new RatingDAO();
     }
 
     @Override

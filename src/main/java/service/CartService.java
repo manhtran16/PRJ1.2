@@ -1,6 +1,6 @@
 package service;
 
-import repository.OrderDao;
+import repository.OrderDAO;
 import model.OrderTable;
 import model.OrderDetail;
 import model.OrderDetailKey;
@@ -16,11 +16,11 @@ import java.util.ArrayList;
  */
 public class CartService {
 
-    private OrderDao orderDao;
+    private OrderDAO orderDao;
     private ProductService productService;
 
     public CartService() {
-        this.orderDao = new OrderDao();
+        this.orderDao = new OrderDAO();
         this.productService = new ProductService();
     }
 

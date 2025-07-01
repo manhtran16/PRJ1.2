@@ -7,11 +7,11 @@ import factory.EntityManagerFactoryProvider;
 
 import java.util.List;
 
-public class TypeDao {
+public class TypeDAO {
 
     private EntityManager em;
 
-    public TypeDao() {
+    public TypeDAO() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
