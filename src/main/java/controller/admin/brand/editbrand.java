@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Brand;
-import repository.BrandDao;
+import repository.BrandDAO;
 import service.BrandService;
 
 /**
@@ -62,7 +62,7 @@ public class editbrand extends HttpServlet {
         int brandId = Integer.parseInt(brandIdStr);
 
         // Lấy brand từ DB
-        BrandDao brandDao = new BrandDao();
+        BrandDAO brandDao = new BrandDAO();
         Brand brand = brandDao.getBrandById(brandId);
 
         // Gửi tên brand sang JSP
@@ -99,7 +99,7 @@ public class editbrand extends HttpServlet {
             error = "Có lỗi xảy ra khi cập nhật thương hiệu.";
         }
         // Lấy lại brand mới nhất để hiển thị
-        BrandDao brandDao = new BrandDao();
+        BrandDAO brandDao = new BrandDAO();
         brand = brandDao.getBrandById(brandId);
         request.setAttribute("brand", brand);
         request.setAttribute("error", error);

@@ -157,6 +157,105 @@
                 max-width: 100%;
             }
         }
+        
+        /* Rating Styles */
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .average-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rating-score {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffc107;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .star {
+            font-size: 1.2em;
+            color: #ddd;
+        }
+        
+        .star.filled {
+            color: #ffc107;
+        }
+        
+        .rating-count {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        .rating-input {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .rating-input input[type="radio"] {
+            display: none;
+        }
+        
+        .star-label {
+            font-size: 1.5em;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .rating-input input[type="radio"]:checked + .star-label {
+            color: #ffc107;
+        }
+        
+        .rating-input input[type="radio"]:hover + .star-label {
+            color: #ffc107;
+        }
+        
+        /* Highlight stars from left to right when hovering */
+        .rating-input:hover .star-label {
+            color: #ddd;
+        }
+        
+        .rating-input input[type="radio"]:hover + .star-label,
+        .rating-input input[type="radio"]:hover ~ input[type="radio"] + .star-label {
+            color: #ffc107;
+        }
+        
+        .rating-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        
+        .rating-item:last-child {
+            border-bottom: none;
+        }
+        
+        .rating-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .rating-comment {
+            margin-top: 8px;
+            color: #555;
+        }
+        
+        .rating-item.hidden {
+            display: none;
+        }
     </style>
   </head>
   <body>
@@ -397,7 +496,7 @@
                                                                 📋 Chi tiết
                                                             </a>
                                                             <br/>
-                                                            <a href="addToCart?variantId=${variant.variantID}&quantity=1" 
+                                                            <a href="cart?action=add&variantId=${variant.variantID}&quantity=1" 
                                                                class="btn-cart"
                                                                onclick="return confirm('Thêm sản phẩm này vào giỏ hàng?');">
                                                                 🛒 Thêm giỏ
@@ -435,6 +534,137 @@
            
         </div>
         <!--Grid row-->   
+        
+        <!-- Ratings Section -->
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Đánh giá sản phẩm</h4>
+                        <div class="rating-summary">
+                            <c:if test="${totalRatings > 0}">
+                                <div class="average-rating">
+                                    <span class="rating-score">${String.format("%.1f", averageRating)}</span>
+                                    <div class="rating-stars">
+                                        <c:forEach var="i" begin="1" end="5">
+                                            <c:choose>
+                                                <c:when test="${i <= averageRating}">
+                                                    <span class="star filled">★</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="star">☆</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                    </div>
+                                    <span class="rating-count">(${totalRatings} đánh giá)</span>
+                                </div>
+                            </c:if>
+                            <c:if test="${totalRatings == 0}">
+                                <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                            </c:if>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <!-- Rating Form -->
+                        <c:if test="${not empty sessionScope.user}">
+                            <div class="rating-form mb-4">
+                                <h5>
+                                    <c:choose>
+                                        <c:when test="${not empty userRating}">
+                                            Cập nhật đánh giá của bạn
+                                        </c:when>
+                                        <c:otherwise>
+                                            Đánh giá sản phẩm này
+                                        </c:otherwise>
+                                    </c:choose>
+                                </h5>
+                                
+                                <form action="user/rating" method="post">
+                                    <input type="hidden" name="productId" value="${product.productID}">
+                                    <input type="hidden" name="action" value="${not empty userRating ? 'update' : 'add'}">
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Đánh giá (1-5 sao):</label>
+                                        <div class="rating-input">
+                                            <c:forEach var="i" begin="1" end="5">
+                                                <input type="radio" name="rate" value="${i}" id="star${i}" 
+                                                       ${(not empty userRating && userRating.rate == i) ? 'checked' : ''}>
+                                                <label for="star${i}" class="star-label">★</label>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="comment" class="form-label">Nhận xét:</label>
+                                        <textarea class="form-control" id="comment" name="comment" rows="3" 
+                                                  placeholder="Chia sẻ nhận xét của bạn về sản phẩm...">${not empty userRating ? userRating.comment : ''}</textarea>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">
+                                        <c:choose>
+                                            <c:when test="${not empty userRating}">
+                                                Cập nhật đánh giá
+                                            </c:when>
+                                            <c:otherwise>
+                                                Gửi đánh giá
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </button>
+                                </form>
+                            </div>
+                        </c:if>
+                        
+                        <c:if test="${empty sessionScope.user}">
+                            <div class="alert alert-info">
+                                <a href="login.jsp">Đăng nhập</a> để có thể đánh giá sản phẩm này.
+                            </div>
+                        </c:if>
+                        
+                        <!-- Display Ratings -->
+                        <div class="ratings-list">
+                            <h5>Tất cả đánh giá</h5>
+                            <c:if test="${not empty ratings}">
+                                <c:forEach var="rating" items="${ratings}" varStatus="status">
+                                    <div class="rating-item ${status.index >= 5 ? 'hidden' : ''}">
+                                        <div class="rating-header">
+                                            <strong>${rating.user.firstName} ${rating.user.lastName}</strong>
+                                            <div class="rating-stars">
+                                                <c:forEach var="i" begin="1" end="5">
+                                                    <c:choose>
+                                                        <c:when test="${i <= rating.rate}">
+                                                            <span class="star filled">★</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="star">☆</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                        <c:if test="${not empty rating.comment}">
+                                            <p class="rating-comment">${rating.comment}</p>
+                                        </c:if>
+                                    </div>
+                                </c:forEach>
+                                
+                                <c:if test="${fn:length(ratings) > 5}">
+                                    <button type="button" class="btn btn-outline-primary" id="showMoreRatings">
+                                        Xem thêm đánh giá
+                                    </button>
+                                </c:if>
+                            </c:if>
+                            
+                            <c:if test="${empty ratings}">
+                                <p>Chưa có đánh giá nào.</p>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 <!--Main layout-->
     <hr class="text-dark" />
 
@@ -471,6 +701,94 @@
   </div>
   <!-- Copyright -->
 </footer>
+
+<script>
+// Rating star interaction
+document.addEventListener('DOMContentLoaded', function() {
+    const ratingInputs = document.querySelectorAll('.rating-input input[type="radio"]');
+    const starLabels = document.querySelectorAll('.star-label');
+    
+    // Handle rating star clicks
+    ratingInputs.forEach((input, index) => {
+        input.addEventListener('change', function() {
+            const selectedValue = parseInt(this.value);
+            // Update visual stars - fill from left to right up to selected value
+            starLabels.forEach((label, labelIndex) => {
+                const starValue = labelIndex + 1;
+                if (starValue <= selectedValue) {
+                    label.style.color = '#ffc107';
+                } else {
+                    label.style.color = '#ddd';
+                }
+            });
+        });
+        
+        // Handle hover effects
+        input.addEventListener('mouseenter', function() {
+            const hoverValue = parseInt(this.value);
+            starLabels.forEach((label, labelIndex) => {
+                const starValue = labelIndex + 1;
+                if (starValue <= hoverValue) {
+                    label.style.color = '#ffc107';
+                } else {
+                    label.style.color = '#ddd';
+                }
+            });
+        });
+    });
+    
+    // Handle mouse leave to restore original state
+    const ratingContainer = document.querySelector('.rating-input');
+    if (ratingContainer) {
+        ratingContainer.addEventListener('mouseleave', function() {
+            const checkedInput = document.querySelector('.rating-input input[type="radio"]:checked');
+            if (checkedInput) {
+                const checkedValue = parseInt(checkedInput.value);
+                starLabels.forEach((label, labelIndex) => {
+                    const starValue = labelIndex + 1;
+                    if (starValue <= checkedValue) {
+                        label.style.color = '#ffc107';
+                    } else {
+                        label.style.color = '#ddd';
+                    }
+                });
+            } else {
+                // No selection, reset all stars
+                starLabels.forEach(label => {
+                    label.style.color = '#ddd';
+                });
+            }
+        });
+    }
+    
+    // Handle show more ratings
+    const showMoreBtn = document.getElementById('showMoreRatings');
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener('click', function() {
+            const hiddenRatings = document.querySelectorAll('.rating-item.hidden');
+            hiddenRatings.forEach(item => {
+                item.classList.remove('hidden');
+            });
+            showMoreBtn.style.display = 'none';
+        });
+    }
+    
+    // Initialize existing rating stars
+    const checkedInput = document.querySelector('.rating-input input[type="radio"]:checked');
+    if (checkedInput) {
+        const checkedValue = parseInt(checkedInput.value);
+        starLabels.forEach((label, labelIndex) => {
+            const starValue = labelIndex + 1;
+            if (starValue <= checkedValue) {
+                label.style.color = '#ffc107';
+            } else {
+                label.style.color = '#ddd';
+            }
+        });
+    }
+});
+</script>
+
 </body>
 </html>
 

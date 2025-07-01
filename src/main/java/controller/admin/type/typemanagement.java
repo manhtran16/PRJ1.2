@@ -13,10 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Brand;
 import model.Type;
-import repository.BrandDao;
-import repository.TypeDao;
+import repository.TypeDAO;
 
 /**
  *
@@ -61,7 +59,7 @@ public class typemanagement extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
-        TypeDao tdao = new TypeDao();
+        TypeDAO tdao = new TypeDAO();
         List<Type> typeList = tdao.getType();
         System.out.println("Số brand lấy được: " + typeList.size());
         request.setAttribute("typeList", typeList);

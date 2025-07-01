@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Brand;
-import repository.BrandDao;
+import repository.BrandDAO;
 
 /**
  *
@@ -59,7 +59,7 @@ public class brandmanagement extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
-        BrandDao bdao = new BrandDao();
+        BrandDAO bdao = new BrandDAO();
         List<Brand> brandList = bdao.getBrand();
         System.out.println("Số brand lấy được: " + brandList.size());
         request.setAttribute("brandList", brandList);

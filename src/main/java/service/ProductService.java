@@ -1,13 +1,84 @@
 package service;
 
-import factory.EntityManagerFactoryProvider;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import model.*;
+import repository.ProductDAO;
+import model.Product;
+import model.ProductVariant;
+import model.Image;
+import model.Attribute;
+import model.VariantAttributeKey;
+import model.VariantAttributeValue;
 
 import java.util.List;
 
+import factory.EntityManagerFactoryProvider;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+
+import java.util.ArrayList;
+
+/**
+ * Product Service Layer - handles business logic for products
+ */
 public class ProductService {
+
+    private ProductDAO productDao;
+
+    public ProductService() {
+        this.productDao = new ProductDAO();
+    }
+
+    /**
+     * Get variant with details and validation
+     */
+    public ProductVariant getVariantWithDetails(int variantId) {
+        if (variantId <= 0) {
+            throw new IllegalArgumentException("Invalid variant ID");
+        }
+
+        ProductVariant variant = productDao.getVariantWithDetails(variantId);
+
+        // Apply business logic - check stock, validate price, etc.
+        if (variant != null) {
+            // You could add stock validation, price checks, etc. here
+        }
+
+        return variant;
+    }
+
+    /**
+     * Get all products with validation and business logic
+     */
+    public List<Product> getAllProducts() {
+        try {
+            List<Product> products = productDao.getAllProducts();
+            return products != null ? products : new ArrayList<>();
+        } catch (Exception e) {
+            System.err.println("Error in ProductService.getAllProducts: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Get product with full details for display
+     */
+    public Product getProductWithDetails(int productId) {
+        if (productId <= 0) {
+            throw new IllegalArgumentException("Invalid product ID");
+        }
+
+        Product product = productDao.getProductWithDetails(productId);
+        if (product == null) {
+            return null;
+        }
+
+        // Apply business logic - filter out inactive variants, sort variants, etc.
+        if (product.getVariants() != null) {
+            // Here you could add business rules like filtering inactive variants
+            // or sorting variants by price, popularity, etc.
+        }
+
+        return product;
+    }
 
     public boolean addFullProduct(Product product, List<ProductVariant> variants) {
         EntityManager em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
@@ -22,6 +93,7 @@ public class ProductService {
             for (ProductVariant variant : variants) {
                 // Gán product cho variant
                 variant.setProduct(product);
+
 
                 em.persist(variant);
                 em.flush(); // Đảm bảo variantID có
@@ -43,23 +115,19 @@ public class ProductService {
 
                         // Gán variant
                         vav.setVariant(variant);
-                        System.out.println("3");
-                        // Tạo khóa chính composite (không được null!)
-                        VariantAttributeKey key = new VariantAttributeKey(
-                                variant.getVariantID(),
-                                managedAttr.getAttributeID()
-                        );
-                        vav.setId(key);
 
-                        System.out.println("4");
-                        System.out.println("=== DEBUG ===");
-                        System.out.println("Variant ID: " + variant.getVariantID());
-                        System.out.println("Attribute ID: " + vav.getAttribute().getAttributeID());
-                        System.out.println("VAV ID before persist: " + vav.getId());
-                        System.out.println("VAV Attribute: " + vav.getAttribute());
-                        System.out.println("VAV Variant: " + vav.getVariant());
-                        em.persist(vav);
 
+                        // Đảm bảo id không null và có đủ giá trị
+                        if (vav.getId() == null) {
+                            vav.setId(new VariantAttributeKey(
+                                    variant.getVariantID(),
+                                    vav.getAttribute().getAttributeID()));
+                        } else {
+                            vav.getId().setVariantId(variant.getVariantID());
+                            vav.getId().setAttributeId(vav.getAttribute().getAttributeID());
+                        }
+
+                        em.persist(vav); // Chỉ persist vav, KHÔNG persist attribute!
                     }
                 }
                 // Lưu variant → sinh ID
@@ -78,17 +146,41 @@ public class ProductService {
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
             System.err.println("❌ Lỗi khi thêm sản phẩm: " + e.getMessage());
-            for (Throwable t = e; t != null; t = t.getCause()) {
-                System.err.println("❌ Nguyên nhân: " + t.getClass().getName() + ": " + t.getMessage());
-            }
+            e.printStackTrace();
             if (tx.isActive()) {
                 tx.rollback();
             }
+
             return false;
         } finally {
-            em.close();
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    /**
+     * Search and filter products
+     */
+    public List<Product> searchAndFilterProducts(String searchQuery, Integer brandId, Integer typeId,
+            Double minPrice, Double maxPrice) {
+        try {
+            List<Product> products = productDao.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice,
+                    maxPrice);
+            return products != null ? products : new ArrayList<>();
+        } catch (Exception e) {
+            System.err.println("Error in ProductService.searchAndFilterProducts: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Close resources
+     */
+    public void close() {
+        if (productDao != null) {
+            productDao.close();
         }
     }
 

@@ -4,7 +4,7 @@
  */
 package service;
 
-import repository.TypeDao;
+import repository.TypeDAO;
 
 /**
  *
@@ -15,7 +15,7 @@ public class TypeService {
         if (typeName == null || typeName.trim().isEmpty()) {
             throw new IllegalArgumentException("Tên thương hiệu không được để trống!");
         }
-        TypeDao typeDao = new TypeDao();
+        TypeDAO typeDao = new TypeDAO();
         if (typeDao.getTypeByName(typeName)) {
             throw new IllegalArgumentException("Thương hiệu này đã tồn tại!");
         }

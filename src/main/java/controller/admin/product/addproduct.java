@@ -2,8 +2,8 @@ package controller.admin.product;
 
 import factory.EntityManagerFactoryProvider;
 import jakarta.persistence.EntityManager;
-import repository.BrandDao;
-import repository.TypeDao;
+import repository.BrandDAO;
+import repository.TypeDAO;
 import model.Type;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,9 +28,9 @@ public class addproduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Forward to the add product form
-        TypeDao tdao = new TypeDao();
+        TypeDAO tdao = new TypeDAO();
         List<Type> typeList = tdao.getType();
-        BrandDao bdao = new BrandDao();
+        BrandDAO bdao = new BrandDAO();
         List<Brand> brandList = bdao.getBrand();
         request.setAttribute("typeList", typeList);
         request.setAttribute("brandList", brandList);
@@ -48,8 +48,8 @@ public class addproduct extends HttpServlet {
             int typeID = Integer.parseInt(request.getParameter("typeID"));
             Double price = Double.parseDouble(request.getParameter("price"));
 
-            BrandDao bdao = new BrandDao();
-            TypeDao tdao = new TypeDao();
+            BrandDAO bdao = new BrandDAO();
+            TypeDAO tdao = new TypeDAO();
 
             Brand brand = bdao.getBrandById(brandID);
             Type type = tdao.getTypeByID(typeID);

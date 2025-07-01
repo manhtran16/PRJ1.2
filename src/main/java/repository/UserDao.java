@@ -7,11 +7,11 @@ import java.util.List;
 import model.User;
 import factory.EntityManagerFactoryProvider;
 
-public class UserDao {
+public class UserDAO {
 
     private EntityManager em;
 
-    public UserDao() {
+    public UserDAO() {
         em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
@@ -131,6 +131,21 @@ public class UserDao {
             }
             e.printStackTrace();
             return false;
+        }
+    }
+
+    /**
+     * Get total number of customers (users)
+     */
+    public long getTotalCustomers() {
+        try {
+            TypedQuery<Long> query = em.createQuery(
+                "SELECT COUNT(u) FROM User u", Long.class
+            );
+            return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 

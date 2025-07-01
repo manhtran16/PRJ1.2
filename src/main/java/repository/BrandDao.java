@@ -7,11 +7,11 @@ import factory.EntityManagerFactoryProvider;
 
 import java.util.List;
 
-public class BrandDao {
+public class BrandDAO {
 
     private EntityManager em;
 
-    public BrandDao() {
+    public BrandDAO() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 

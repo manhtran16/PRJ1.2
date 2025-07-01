@@ -1,6 +1,7 @@
 package controller.user.orders;
 
-import repository.OrderDao;
+import service.OrderService;
+import service.CartService;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -16,11 +17,13 @@ import model.User;
 @WebServlet("/userOrders")
 public class UserOrdersController extends HttpServlet {
 
-    private OrderDao orderDao;
+    private OrderService orderService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
-        orderDao = new OrderDao();
+        this.orderService = new OrderService();
+        this.cartService = new CartService();
     }
 
     @Override
@@ -39,8 +42,40 @@ public class UserOrdersController extends HttpServlet {
 
         if ("viewDetails".equals(action)) {
             viewOrderDetails(request, response, currentUser);
+        } else if ("checkout".equals(action)) {
+            handleCheckout(request, response, currentUser);
         } else {
             listUserOrders(request, response, currentUser);
+        }
+    }
+
+    /**
+     * Handle checkout process
+     */
+    private void handleCheckout(HttpServletRequest request, HttpServletResponse response, User user)
+            throws ServletException, IOException {
+
+        try {
+            // Convert cart to order
+            OrderTable order = cartService.checkoutCart(user);
+
+            if (order != null) {
+                // Set success message
+                HttpSession session = request.getSession();
+                session.setAttribute("successMessage", "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID());
+
+                // Redirect to order details
+                response.sendRedirect("userOrders?action=viewDetails&orderId=" + order.getOrderID());
+            } else {
+                request.setAttribute("errorMessage", "Không thể đặt hàng. Vui lòng thử lại.");
+                response.sendRedirect("cart");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Checkout error: " + e.getMessage());
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Lỗi trong quá trình đặt hàng: " + e.getMessage());
+            response.sendRedirect("cart");
         }
     }
 
@@ -48,16 +83,16 @@ public class UserOrdersController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            List<OrderTable> orders = orderDao.getOrdersByUserId(user.getUserID());
+            List<OrderTable> orders = orderService.getUserOrders(user.getUserID());
 
             // Calculate totals for each order
             for (OrderTable order : orders) {
-                double total = orderDao.getOrderTotal(order.getOrderID());
+                double total = orderService.getOrderTotal(order.getOrderID());
                 request.setAttribute("orderTotal_" + order.getOrderID(), total);
             }
 
             request.setAttribute("orders", orders);
-            request.setAttribute("orderDao", orderDao); // For status text method
+            request.setAttribute("orderService", orderService);
             request.getRequestDispatcher("userOrders.jsp").forward(request, response);
 
         } catch (Exception e) {
@@ -80,7 +115,7 @@ public class UserOrdersController extends HttpServlet {
             int orderId = Integer.parseInt(orderIdStr);
 
             // Get order information
-            OrderTable order = orderDao.getOrderById(orderId);
+            OrderTable order = orderService.getOrderById(orderId);
             if (order == null || order.getUser().getUserID() != user.getUserID()) {
                 request.setAttribute("errorMessage", "Mặt hàng không tồn tại hoặc không thuộc về bạn");
                 response.sendRedirect("userOrders");
@@ -88,13 +123,13 @@ public class UserOrdersController extends HttpServlet {
             }
 
             // Get order details
-            List<OrderDetail> orderDetails = orderDao.getOrderDetailsByOrderId(orderId);
-            double orderTotal = orderDao.getOrderTotal(orderId);
+            List<OrderDetail> orderDetails = orderService.getOrderDetails(orderId);
+            double orderTotal = orderService.getOrderTotal(orderId);
 
             request.setAttribute("order", order);
             request.setAttribute("orderDetails", orderDetails);
             request.setAttribute("orderTotal", orderTotal);
-            request.setAttribute("orderDao", orderDao);
+            request.setAttribute("orderService", orderService);
 
             request.getRequestDispatcher("orderDetails.jsp").forward(request, response);
 
@@ -109,8 +144,11 @@ public class UserOrdersController extends HttpServlet {
 
     @Override
     public void destroy() {
-        if (orderDao != null) {
-            orderDao.close();
+        if (orderService != null) {
+            orderService.close();
+        }
+        if (cartService != null) {
+            cartService.close();
         }
         super.destroy();
     }
