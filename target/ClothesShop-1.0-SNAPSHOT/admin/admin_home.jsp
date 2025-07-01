@@ -237,7 +237,7 @@
     <div class="menu-section">
         <div class="menu-form-wrapper">
             <form class="menu-form">
-                <a href="../index.jsp" class="menu-item"><i class="fas fa-home"></i> User Home</a>
+                <a href="index.jsp" class="menu-item"><i class="fas fa-home"></i> User Home</a>
                 <a href="${pageContext.request.contextPath}/productmanagement" class="menu-item"><i class="fas fa-box"></i> Product Management</a>
                 <a href="${pageContext.request.contextPath}/brandmanagement" class="menu-item"><i class="fas fa-tags"></i> Brand Management</a>
                 <a href="${pageContext.request.contextPath}/typemanagement" class="menu-item"><i class="fas fa-list"></i> Type Management</a>

@@ -21,6 +21,7 @@ model\Rating.class
 model\VariantAttributeKey.class
 controller\user\authentication\logout.class
 controller\admin\brand\brandmanagement.class
+controller\admin\admindashboar\admindashboard.class
 controller\admin\product\productmanagement.class
 model\OrderDetail.class
 controller\user\orders\UserOrdersController.class
@@ -35,6 +36,7 @@ utils\Validate.class
 model\VariantAttributeValue.class
 repository\ImageDAO.class
 model\OrderTable.class
+service\admin\DashboardService.class
 controller\admin\type\addtype.class
 controller\admin\brand\addbrand.class
 repository\ProductVariantDAO.class
