@@ -33,11 +33,26 @@ public class ProductDAO {
      */
     public List<Product> getAllProducts() {
         try {
+            // First, get products with variants
             TypedQuery<Product> query = em.createQuery(
-                    "SELECT p FROM Product p ORDER BY p.productName",
+                    "SELECT DISTINCT p FROM Product p " +
+                            "LEFT JOIN FETCH p.variants " +
+                            "ORDER BY p.productName",
                     Product.class);
-            return query.getResultList();
+            List<Product> products = query.getResultList();
+
+            // Then fetch images for each variant
+            for (Product product : products) {
+                if (product.getVariants() != null) {
+                    for (ProductVariant variant : product.getVariants()) {
+                        // This will trigger lazy loading of images
+                        variant.getImages().size();
+                    }
+                }
+            }
+            return products;
         } catch (Exception e) {
+            System.err.println("ERROR in getAllProducts: " + e.getMessage());
             e.printStackTrace();
             return new ArrayList<>();
         }

@@ -3,7 +3,6 @@ C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\OrderService
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\RatingKey.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\factory\EntityManagerFactoryProvider.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Brand.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\utils\DatabaseConnectionTest.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\OrderTable.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\brand\addbrand.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\cart\CartController.java
@@ -12,6 +11,7 @@ C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\ProductVariant
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\authentication\AuthController.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\VariantAttributeKey.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\ProductService.java
+C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\product\IndexController.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\TypeService.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\OrderDetailKey.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Rating.java
@@ -30,7 +30,6 @@ C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\OrderDAO.
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\BrandDAO.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\ImageDAO.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\product\ProductDetailController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\test\TestServlet.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\authentication\logout.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\TypeDAO.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\User.java

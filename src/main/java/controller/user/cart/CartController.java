@@ -108,7 +108,10 @@ public class CartController extends HttpServlet {
             String variantIdStr = request.getParameter("variantId");
             String quantityStr = request.getParameter("quantity");
 
+            System.out.println("DEBUG: Adding to cart - variantId: " + variantIdStr + ", quantity: " + quantityStr);
+
             if (variantIdStr == null || quantityStr == null) {
+                System.out.println("DEBUG: Missing parameters");
                 HttpSession session = request.getSession();
                 session.setAttribute("errorMessage", "Missing product information.");
                 response.sendRedirect("products");
@@ -118,7 +121,11 @@ public class CartController extends HttpServlet {
             int variantId = Integer.parseInt(variantIdStr);
             int quantity = Integer.parseInt(quantityStr);
 
+            System.out.println("DEBUG: Parsed - variantId: " + variantId + ", quantity: " + quantity);
+
             boolean success = cartService.addToCart(user, variantId, quantity);
+
+            System.out.println("DEBUG: Add to cart result: " + success);
 
             HttpSession session = request.getSession();
             if (success) {

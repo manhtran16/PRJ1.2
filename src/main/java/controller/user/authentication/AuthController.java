@@ -124,7 +124,7 @@ public class AuthController extends HttpServlet {
                             cookie.setMaxAge(60 * 60 * 24 * 30); // 30 days
                             response.addCookie(cookie);
                         }
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("index");
                     } else {
                         response.sendRedirect(request.getContextPath() + "/admindashboard");
                     }
