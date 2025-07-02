@@ -4,8 +4,10 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Change Password</title>
-    <link href="css/mdb.min.css" rel="stylesheet">
+    <title>Đổi mật khẩu</title>
+    <link href="../css/mdb.min.css" rel="stylesheet">
+    <link href="../css/core-style.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .change-password-container {
@@ -36,15 +38,21 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
         <div class="container">
-            <a class="navbar-brand text-white" href="index">
+            <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/products">
                 <i class="fas fa-tshirt me-2"></i>Clothes Shop
             </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link text-white" href="index">
-                    <i class="fas fa-home me-1"></i>Home
+                <a class="nav-link text-white" href="${pageContext.request.contextPath}/products">
+                    <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
                 </a>
-                <a class="nav-link text-white" href="userOrders">
-                    <i class="fas fa-receipt me-1"></i>My Orders
+                <a class="nav-link text-white" href="${pageContext.request.contextPath}/userOrders">
+                    <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
+                </a>
+                <a class="nav-link text-white" href="${pageContext.request.contextPath}/cart">
+                    <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
+                </a>
+                <a class="nav-link text-white active" href="${pageContext.request.contextPath}/userProfile">
+                    <i class="fas fa-user me-1"></i>Tài khoản
                 </a>
             </div>
         </div>
@@ -53,8 +61,12 @@
     <div class="container">
         <div class="change-password-container">
             <h2 class="text-center mb-4">
-                <i class="fas fa-key me-2"></i>Change Password
+                <i class="fas fa-key me-2"></i>Đổi mật khẩu
             </h2>
+
+            <!-- Clear any cart-related messages -->
+            <c:remove var="successMessage" scope="session" />
+            <c:remove var="errorMessage" scope="session" />
 
             <!-- Display error message -->
             <c:if test="${not empty error}">
@@ -66,12 +78,12 @@
                 <div class="alert alert-success">${success}</div>
             </c:if>
 
-            <form method="post" action="changepassword">
+            <form method="post" action="${pageContext.request.contextPath}/changepassword">
                 <!-- Current Password -->
                 <div class="form-outline mb-3">
                     <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
                     <label class="form-label" for="currentPassword">
-                        <i class="fas fa-lock me-1"></i>Current Password
+                        <i class="fas fa-lock me-1"></i>Mật khẩu hiện tại
                     </label>
                 </div>
 
@@ -79,7 +91,7 @@
                 <div class="form-outline mb-3">
                     <input type="password" id="newPassword" name="newPassword" class="form-control" required>
                     <label class="form-label" for="newPassword">
-                        <i class="fas fa-key me-1"></i>New Password
+                        <i class="fas fa-key me-1"></i>Mật khẩu mới
                     </label>
                     
                     <!-- Password Strength Indicator -->
@@ -87,7 +99,7 @@
                         <div class="progress" style="height: 4px;">
                             <div id="strengthBar" class="progress-bar" style="width: 0%;"></div>
                         </div>
-                        <small id="strengthText" class="text-muted">Enter a password</small>
+                        <small id="strengthText" class="text-muted">Nhập mật khẩu</small>
                     </div>
                 </div>
 
@@ -95,21 +107,21 @@
                 <div class="form-outline mb-4">
                     <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
                     <label class="form-label" for="confirmPassword">
-                        <i class="fas fa-check-circle me-1"></i>Confirm New Password
+                        <i class="fas fa-check-circle me-1"></i>Xác nhận mật khẩu mới
                     </label>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block">
-                        <i class="fas fa-save me-1"></i>Change Password
+                        <i class="fas fa-save me-1"></i>Đổi mật khẩu
                     </button>
                 </div>
 
                 <!-- Back to Profile Link -->
                 <div class="text-center mt-3">
-                    <a href="index" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-1"></i>Back to Home
+                    <a href="userProfile" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i>Quay về trang cá nhân
                     </a>
                 </div>
             </form>
@@ -117,7 +129,7 @@
     </div>
 
     <!-- MDB JavaScript -->
-    <script src="js/mdb.umd.min.js"></script>
+    <script src="../js/mdb.umd.min.js"></script>
     <script>
         // Initialize MDB form elements
         document.addEventListener('DOMContentLoaded', function() {
@@ -135,13 +147,13 @@
 
             if (newPassword !== confirmPassword) {
                 e.preventDefault();
-                alert('New password and confirmation do not match!');
+                alert('Mật khẩu mới và xác nhận mật khẩu không khớp!');
                 return false;
             }
 
             if (newPassword.length < 6) {
                 e.preventDefault();
-                alert('New password must be at least 6 characters long!');
+                alert('Mật khẩu mới phải có ít nhất 6 ký tự!');
                 return false;
             }
         });
@@ -167,23 +179,23 @@
             switch (strength) {
                 case 0:
                 case 1:
-                    text = 'Too Weak';
+                    text = 'Quá yếu';
                     color = '#dc3545';
                     break;
                 case 2:
-                    text = 'Weak';
+                    text = 'Yếu';
                     color = '#fd7e14';
                     break;
                 case 3:
-                    text = 'Fair';
+                    text = 'Trung bình';
                     color = '#ffc107';
                     break;
                 case 4:
-                    text = 'Good';
+                    text = 'Tốt';
                     color = '#20c997';
                     break;
                 case 5:
-                    text = 'Strong';
+                    text = 'Mạnh';
                     color = '#198754';
                     break;
             }

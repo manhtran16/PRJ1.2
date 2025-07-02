@@ -144,8 +144,8 @@
                     <div class="user-content">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <a href="userProfile.jsp">Tài khoản</a>
-                                <a href="userOrders.jsp">Đơn hàng</a>
+                                <a href="userProfile">Tài khoản</a>
+                                <a href="userOrders">Đơn hàng</a>
                                 <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                             </c:when>
                             <c:otherwise>
@@ -389,7 +389,7 @@
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area mb-30">
                         <ul class="footer_widget_menu">
-                            <li><a href="userOrders.jsp">Trạng thái đơn hàng</a></li>
+                            <li><a href="userOrders">Trạng thái đơn hàng</a></li>
                             <li><a href="#">Tùy chọn thanh toán</a></li>
                             <li><a href="#">Hướng dẫn</a></li>
                             <li><a href="#">Chính sách bảo mật</a></li>

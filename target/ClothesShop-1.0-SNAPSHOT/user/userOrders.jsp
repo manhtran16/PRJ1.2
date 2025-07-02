@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>My Orders - Clothes Shop</title>
-    <link href="css/mdb.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/css/mdb.min.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -74,18 +74,21 @@
       style="background-color: #cc66ff"
     >
       <div class="container">
-        <a class="navbar-brand text-white" href="index">
+        <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/index">
           <i class="fas fa-tshirt me-2"></i>Clothes Shop
         </a>
         <div class="navbar-nav ms-auto">
-          <a class="nav-link text-white" href="index">
-            <i class="fas fa-home me-1"></i>Home
+          <a class="nav-link text-white" href="${pageContext.request.contextPath}/products">
+            <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
           </a>
-          <a class="nav-link text-white" href="products.jsp">
-            <i class="fas fa-shopping-bag me-1"></i>Products
+          <a class="nav-link text-white active" href="${pageContext.request.contextPath}/userOrders">
+            <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
           </a>
-          <a class="nav-link text-white active" href="userOrders">
-            <i class="fas fa-receipt me-1"></i>My Orders
+          <a class="nav-link text-white" href="${pageContext.request.contextPath}/cart">
+            <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
+          </a>
+          <a class="nav-link text-white" href="${pageContext.request.contextPath}/userProfile">
+            <i class="fas fa-user me-1"></i>Tài khoản
           </a>
         </div>
       </div>
@@ -95,9 +98,9 @@
       <div class="row">
         <div class="col-12">
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="fas fa-receipt me-2"></i>My Orders</h2>
-            <a href="index" class="btn btn-outline-primary">
-              <i class="fas fa-arrow-left me-1"></i>Back to Home
+            <h2><i class="fas fa-receipt me-2"></i>Đơn hàng của tôi</h2>
+            <a href="${pageContext.request.contextPath}/products" class="btn btn-outline-primary">
+              <i class="fas fa-arrow-left me-1"></i>Tiếp tục mua sắm
             </a>
           </div>
 
@@ -123,7 +126,7 @@
                 <i class="fas fa-shopping-cart"></i>
                 <h4>No Orders Found</h4>
                 <p class="mb-4">You haven't placed any orders yet.</p>
-                <a href="products.jsp" class="btn btn-primary">
+                <a href="${pageContext.request.contextPath}/products" class="btn btn-primary">
                   <i class="fas fa-shopping-bag me-1"></i>Start Shopping
                 </a>
               </div>
@@ -184,7 +187,7 @@
                       </div>
                       <div class="col-md-4 text-end">
                         <a
-                          href="userOrders?action=viewDetails&orderId=${order.orderID}"
+                          href="${pageContext.request.contextPath}/userOrders?action=viewDetails&orderId=${order.orderID}"
                           class="btn btn-outline-primary btn-sm"
                         >
                           <i class="fas fa-eye me-1"></i>View Details

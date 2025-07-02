@@ -7,6 +7,7 @@ model\RatingKey.class
 repository\OrderDAO.class
 model\Product.class
 utils\PasswordUtils.class
+controller\user\profile\UserProfileController.class
 model\ProductVariant.class
 model\User.class
 controller\user\product\ProductDetailController.class
