@@ -9,12 +9,15 @@ import model.VariantAttributeKey;
 import model.VariantAttributeValue;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import factory.EntityManagerFactoryProvider;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.ArrayList;
+import model.Brand;
+import model.Type;
 
 /**
  * Product Service Layer - handles business logic for products
@@ -51,6 +54,14 @@ public class ProductService {
     public List<Product> getAllProducts() {
         try {
             List<Product> products = productDao.getAllProducts();
+            // Đảm bảo mỗi product đều load variants (nếu cần)
+            if (products != null) {
+                for (Product p : products) {
+                    if (p.getVariants() == null) {
+                        p.setVariants(new ArrayList<>());
+                    }
+                }
+            }
             return products != null ? products : new ArrayList<>();
         } catch (Exception e) {
             System.err.println("Error in ProductService.getAllProducts: " + e.getMessage());
@@ -94,7 +105,6 @@ public class ProductService {
                 // Gán product cho variant
                 variant.setProduct(product);
 
-
                 em.persist(variant);
                 em.flush(); // Đảm bảo variantID có
                 System.out.println("After flush - Variant ID: " + variant.getVariantID());
@@ -105,7 +115,8 @@ public class ProductService {
                         // Kiểm tra kỹ attribute trước khi sử dụng
                         System.out.println("1");
                         if (vav.getAttribute() == null || vav.getAttribute().getAttributeID() == 0) {
-                            throw new IllegalArgumentException("❌ Thiếu hoặc sai attribute ID trong VariantAttributeValue");
+                            throw new IllegalArgumentException(
+                                    "❌ Thiếu hoặc sai attribute ID trong VariantAttributeValue");
                         }
                         System.out.println("2");
                         // Lấy attribute từ DB (managed)
@@ -115,7 +126,6 @@ public class ProductService {
 
                         // Gán variant
                         vav.setVariant(variant);
-
 
                         // Đảm bảo id không null và có đủ giá trị
                         if (vav.getId() == null) {
@@ -168,11 +178,34 @@ public class ProductService {
         try {
             List<Product> products = productDao.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice,
                     maxPrice);
+            // Đảm bảo mỗi product đều load variants (nếu cần)
+            if (products != null) {
+                for (Product p : products) {
+                    if (p.getVariants() == null) {
+                        p.setVariants(new ArrayList<>());
+                    }
+                }
+            }
             return products != null ? products : new ArrayList<>();
         } catch (Exception e) {
             System.err.println("Error in ProductService.searchAndFilterProducts: " + e.getMessage());
             return new ArrayList<>();
         }
+    }
+
+    /**
+     * Tìm kiếm sản phẩm theo tên (dùng cho update product)
+     */
+    public List<Product> searchProductsByName(String productName) {
+        if (productName == null || productName.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        // Có thể tối ưu bằng truy vấn DAO, nhưng nếu chưa có thì lọc từ getAllProducts
+        List<Product> allProducts = getAllProducts();
+        String lower = productName.trim().toLowerCase();
+        return allProducts.stream()
+                .filter(p -> p.getProductName() != null && p.getProductName().toLowerCase().contains(lower))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -184,4 +217,83 @@ public class ProductService {
         }
     }
 
+    public boolean updateFullProduct(
+            int productId,
+            String productName,
+            String description,
+            String[] variantIds,
+            String[] variantPrices,
+            String[] variantQuantities,
+            jakarta.servlet.http.HttpServletRequest request) {
+        EntityManager em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+
+            // Lấy sản phẩm từ DB
+            Product product = em.find(Product.class, productId);
+            if (product == null)
+                throw new IllegalArgumentException("Không tìm thấy sản phẩm!");
+
+            // Cập nhật thông tin sản phẩm (KHÔNG cập nhật type, brand)
+            product.setProductName(productName);
+            product.setDescription(description);
+
+            em.merge(product);
+
+            // Cập nhật các biến thể
+            for (int i = 0; i < variantIds.length; i++) {
+                if (variantIds[i] == null || variantIds[i].isEmpty())
+                    continue;
+                int variantId = Integer.parseInt(variantIds[i]);
+                double price = Double.parseDouble(variantPrices[i]);
+                int quantity = Integer.parseInt(variantQuantities[i]);
+
+                ProductVariant variant = em.find(ProductVariant.class, variantId);
+                if (variant == null)
+                    continue;
+
+                variant.setPrice(price);
+                variant.setQuantity(quantity);
+
+                // Cập nhật thuộc tính biến thể
+                String[] attrValues = request.getParameterValues("variantAttrValues_" + i);
+                String[] attrIds = request.getParameterValues("variantAttrIds_" + i);
+
+                if (attrValues != null && attrIds != null && attrValues.length == attrIds.length) {
+                    List<VariantAttributeValue> vavList = variant.getAttributeValues();
+                    for (int j = 0; j < attrIds.length; j++) {
+                        int attrId = Integer.parseInt(attrIds[j]);
+                        String value = attrValues[j];
+
+                        // Tìm VariantAttributeValue tương ứng
+                        VariantAttributeValue vav = null;
+                        for (VariantAttributeValue item : vavList) {
+                            if (item.getAttribute().getAttributeID() == attrId) {
+                                vav = item;
+                                break;
+                            }
+                        }
+                        if (vav != null) {
+                            vav.setValue(value);
+                            em.merge(vav);
+                        }
+                    }
+                }
+
+                em.merge(variant);
+            }
+
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx.isActive())
+                tx.rollback();
+            return false;
+        } finally {
+            em.close();
+        }
+    }
 }

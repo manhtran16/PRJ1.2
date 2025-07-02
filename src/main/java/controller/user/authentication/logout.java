@@ -78,7 +78,11 @@ public class logout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Xóa toàn bộ session
+        }
+        response.sendRedirect("index.jsp"); // chuyển về trang chủ hoặc login
     }
 
     /**

@@ -231,7 +231,11 @@
 <body>
     <div class="admin-header">
         <i class="fas fa-user-shield"></i> ADMIN DASHBOARD
-        <button class="logout-btn"><i class="fas fa-sign-out-alt"></i>&nbsp; Logout</button>
+        <form action="${pageContext.request.contextPath}/logout" method="post" style="display:inline;">
+            <button type="submit" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>&nbsp; Logout
+            </button>
+        </form>
     </div>
 
     <div class="menu-section">

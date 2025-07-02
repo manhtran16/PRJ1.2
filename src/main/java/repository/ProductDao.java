@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * Product Data Access Object
  */
 public class ProductDAO {
+
     private EntityManager em;
 
     public ProductDAO() {
@@ -21,6 +22,12 @@ public class ProductDAO {
     public void add(Product product) {
         em.getTransaction().begin();
         em.persist(product);
+        em.getTransaction().commit();
+    }
+
+    public void update(Product product) {
+        em.getTransaction().begin();
+        em.merge(product);
         em.getTransaction().commit();
     }
 
@@ -35,9 +42,9 @@ public class ProductDAO {
         try {
             // First, get products with variants
             TypedQuery<Product> query = em.createQuery(
-                    "SELECT DISTINCT p FROM Product p " +
-                            "LEFT JOIN FETCH p.variants " +
-                            "ORDER BY p.productName",
+                    "SELECT DISTINCT p FROM Product p "
+                    + "LEFT JOIN FETCH p.variants "
+                    + "ORDER BY p.productName",
                     Product.class);
             List<Product> products = query.getResultList();
 
@@ -76,11 +83,11 @@ public class ProductDAO {
     public ProductVariant getVariantWithDetails(int variantId) {
         try {
             TypedQuery<ProductVariant> query = em.createQuery(
-                    "SELECT pv FROM ProductVariant pv " +
-                            "LEFT JOIN FETCH pv.product p " +
-                            "LEFT JOIN FETCH pv.attributeValues av " +
-                            "LEFT JOIN FETCH av.attribute a " +
-                            "WHERE pv.variantID = :variantId",
+                    "SELECT pv FROM ProductVariant pv "
+                    + "LEFT JOIN FETCH pv.product p "
+                    + "LEFT JOIN FETCH pv.attributeValues av "
+                    + "LEFT JOIN FETCH av.attribute a "
+                    + "WHERE pv.variantID = :variantId",
                     ProductVariant.class);
             query.setParameter("variantId", variantId);
             return query.getSingleResult();
@@ -160,7 +167,7 @@ public class ProductDAO {
     public long getTotalProducts() {
         try {
             TypedQuery<Long> query = em.createQuery(
-                "SELECT COUNT(p) FROM Product p", Long.class
+                    "SELECT COUNT(p) FROM Product p", Long.class
             );
             return query.getSingleResult();
         } catch (Exception e) {

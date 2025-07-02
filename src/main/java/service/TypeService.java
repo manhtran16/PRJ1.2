@@ -5,6 +5,7 @@
 package service;
 
 import repository.TypeDAO;
+import model.Type;
 
 /**
  *
@@ -21,4 +22,24 @@ public class TypeService {
         }
         return typeDao.createType(typeName.trim());
     }
+
+    public boolean editType(int typeId, String newTypeName) {
+        if (newTypeName == null || newTypeName.trim().isEmpty()) {
+            return false;
+        }
+        TypeDAO typeDao = new TypeDAO();
+        if (typeDao.getTypeByName(newTypeName)) {
+            Type current = typeDao.getTypeByID(typeId);
+            if (current == null || !current.getTypeName().equalsIgnoreCase(newTypeName.trim())) {
+                return false;
+            }
+        }
+        try {
+            typeDao.updateType(typeId, newTypeName.trim());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

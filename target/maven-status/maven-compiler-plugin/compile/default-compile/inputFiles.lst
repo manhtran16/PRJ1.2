@@ -6,6 +6,7 @@ C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Brand.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\OrderTable.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\brand\addbrand.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\cart\CartController.java
+C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\type\edittype.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Image.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\ProductVariant.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\authentication\AuthController.java
@@ -30,6 +31,7 @@ C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\OrderDAO.
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\BrandDAO.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\ImageDAO.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\product\ProductDetailController.java
+C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\product\updateproduct.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\authentication\logout.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\TypeDAO.java
 C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\User.java

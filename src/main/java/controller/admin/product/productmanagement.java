@@ -12,7 +12,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Product;
+import model.ProductVariant;
 import model.User;
+import model.VariantAttributeValue;
+import service.ProductService;
 
 /**
  *
@@ -71,7 +76,30 @@ public class productmanagement extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        ProductService productService = new ProductService();
+
+        String productName = request.getParameter("productName");
+        // Nếu không tìm kiếm, hiển thị tất cả sản phẩm
+        if (productName == null || productName.trim().isEmpty()) {
+            List<Product> productList = productService.getAllProducts();
+
+            for (Product p : productList) {
+                for (ProductVariant v : p.getVariants()) {
+                    System.out.println("Variant ID: " + v.getVariantID());
+                    for (VariantAttributeValue vav : v.getAttributeValues()) {
+                        System.out.println("  " + vav.getAttribute().getAttributeName() + ": " + vav.getValue());
+                    }
+                }
+            }
+
+            request.setAttribute("productList", productList);
+        } else {
+            // Tìm kiếm sản phẩm theo tên
+            List<Product> searchResults = productService.searchProductsByName(productName);
+            request.setAttribute("searchResults", searchResults);
+        }
+        // Forward về trang quản lý sản phẩm để hiển thị kết quả
+        request.getRequestDispatcher("/admin/product/product_management.jsp").forward(request, response);
     }
 
     /** 

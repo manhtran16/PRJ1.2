@@ -149,7 +149,10 @@
                             <td>${type.typeID}</td>
                             <td>${type.typeName}</td>
                             <td>
-                                <button class="action-btn" title="Sửa"><i class="fas fa-edit"></i></button>
+                                <form action="${pageContext.request.contextPath}/edittype" method="get" style="display:inline;">
+                                    <input type="hidden" name="typeID" value="${type.typeID}" />
+                                    <button type="submit" class="action-btn" title="Sửa"><i class="fas fa-edit"></i></button>
+                                </form>
                                 <button class="action-btn" title="Xóa"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>

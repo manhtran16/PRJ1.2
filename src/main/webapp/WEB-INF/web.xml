@@ -7,9 +7,17 @@
         <servlet-name>edittype</servlet-name>
         <servlet-class>controller.admin.type.edittype</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateproduct</servlet-name>
+        <servlet-class>controller.admin.product.updateproduct</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>edittype</servlet-name>
         <url-pattern>/edittype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateproduct</servlet-name>
+        <url-pattern>/updateproduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
