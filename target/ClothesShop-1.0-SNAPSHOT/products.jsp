@@ -182,9 +182,19 @@
                                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                                     <div class="card product-card h-100">
                                         <!-- Product Image -->
-                                        <img src="https://via.placeholder.com/300x250?text=Product+Image" 
-                                             class="product-image" 
-                                             alt="${product.productName}">
+                                        <c:choose>
+                                            <c:when test="${not empty product.variants and not empty product.variants[0].images and not empty product.variants[0].images[0].url}">
+                                                <img src="${product.variants[0].images[0].url}" 
+                                                     class="product-image" 
+                                                     alt="${product.productName}"
+                                                     onerror="this.src='https://via.placeholder.com/300x250?text=No+Image';">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="https://via.placeholder.com/300x250?text=No+Image" 
+                                                     class="product-image" 
+                                                     alt="${product.productName}">
+                                            </c:otherwise>
+                                        </c:choose>
                                         
                                         <!-- Product Details -->
                                         <div class="card-body d-flex flex-column">

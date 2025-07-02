@@ -115,6 +115,7 @@ public class ProductDAO {
 
             return product;
         } catch (Exception e) {
+            System.err.println("ERROR in getProductWithDetails: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
