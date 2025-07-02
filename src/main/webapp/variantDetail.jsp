@@ -10,9 +10,9 @@
     <title>Chi tiết variant - ${product.productName}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-    <link rel="stylesheet" href="css/mdb.min.css" />
-    <link rel="stylesheet" href="css/core-style.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mdb.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css" />
     <style>
         .variant-card {
             border: 2px solid #007bff;
@@ -59,10 +59,10 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body">
             <div class="container-fluid">
-                <a href="products" class="navbar-brand">Cloth Store</a>
+                <a href="${pageContext.request.contextPath}/products" class="navbar-brand">Cloth Store</a>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="products">Trang chủ</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/products">Trang chủ</a>
                     </li>
                 </ul>
             </div>
@@ -73,7 +73,7 @@
         <div class="container mt-5">
             
             <!-- Back button -->
-            <a href="products?action=detail&id=${product.productID}" class="back-btn">
+            <a href="${pageContext.request.contextPath}/products?action=detail&id=${product.productID}" class="back-btn">
                 <i class="fas fa-arrow-left"></i> Quay lại sản phẩm
             </a>
             
@@ -162,7 +162,7 @@
                         
                         <!-- Add to Cart Form -->
                         <c:if test="${selectedVariant.quantity > 0}">
-                            <form action="cart" method="post">
+                            <form action="${pageContext.request.contextPath}/cart" method="post">
                                 <input type="hidden" name="action" value="add">
                                 <input type="hidden" name="variantId" value="${selectedVariant.variantID}">
                                 
@@ -181,7 +181,7 @@
                         
                         <!-- Other Variants Link -->
                         <div style="margin-top: 30px; text-align: center;">
-                            <a href="products?action=detail&id=${product.productID}" 
+                            <a href="${pageContext.request.contextPath}/products?action=detail&id=${product.productID}" 
                                style="color: #007bff; text-decoration: none; font-weight: bold;">
                                 <i class="fas fa-list"></i> Xem tất cả phiên bản khác
                             </a>

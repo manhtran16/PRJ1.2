@@ -276,6 +276,88 @@ public class CartService {
     }
 
     /**
+     * Checkout only selected items from cart
+     */
+    public OrderTable checkoutSelectedItems(User user, Integer[] selectedVariantIds) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        if (selectedVariantIds == null || selectedVariantIds.length == 0) {
+            throw new IllegalArgumentException("Selected variant IDs cannot be null or empty");
+        }
+
+        try {
+            OrderTable cart = getOrCreateCart(user);
+            List<OrderDetail> cartItems = getCartItems(user);
+
+            if (cartItems.isEmpty()) {
+                throw new IllegalArgumentException("Cart is empty");
+            }
+
+            // Filter cart items to only include selected variants
+            List<OrderDetail> selectedItems = new ArrayList<>();
+            for (OrderDetail item : cartItems) {
+                for (Integer variantId : selectedVariantIds) {
+                    if (item.getVariant().getVariantID() == variantId.intValue()) {
+                        selectedItems.add(item);
+                        break;
+                    }
+                }
+            }
+
+            if (selectedItems.isEmpty()) {
+                throw new IllegalArgumentException("No selected items found in cart");
+            }
+
+            // Create a new order for selected items
+            OrderTable newOrder = new OrderTable();
+            newOrder.setUser(user);
+            newOrder.setOrderDate(new Date(System.currentTimeMillis()));
+            newOrder.setStatus(1); // Confirmed order
+
+            // Save the new order and get the created order with ID
+            OrderTable savedOrder = orderDAO.createOrder(newOrder);
+            if (savedOrder == null) {
+                throw new RuntimeException("Failed to create new order");
+            }
+
+            // Move selected items to the new order
+            for (OrderDetail selectedItem : selectedItems) {
+                // Create new order detail for the new order
+                OrderDetail newDetail = new OrderDetail();
+                OrderDetailKey newKey = new OrderDetailKey();
+                newKey.setOrderId(savedOrder.getOrderID());
+                newKey.setVariantId(selectedItem.getVariant().getVariantID());
+
+                newDetail.setId(newKey);
+                newDetail.setOrder(savedOrder);
+                newDetail.setVariant(selectedItem.getVariant());
+                newDetail.setOrderQuantity(selectedItem.getOrderQuantity());
+
+                // Add to new order
+                boolean detailAdded = orderDAO.createOrderDetail(newDetail);
+                if (!detailAdded) {
+                    throw new RuntimeException(
+                            "Failed to add order detail for variant " + selectedItem.getVariant().getVariantID());
+                }
+
+                // Remove from cart
+                OrderDetailKey cartKey = selectedItem.getId();
+                boolean removedFromCart = orderDAO.removeCartItem(cartKey.getOrderId(), cartKey.getVariantId());
+                if (!removedFromCart) {
+                    System.err.println("Warning: Failed to remove item from cart for variant "
+                            + selectedItem.getVariant().getVariantID());
+                }
+            }
+
+            return newOrder;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Selected checkout failed: " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Clear cart (remove all items)
      */
     public boolean clearCart(User user) {

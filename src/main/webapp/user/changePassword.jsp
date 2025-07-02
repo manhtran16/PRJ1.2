@@ -38,20 +38,20 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
         <div class="container">
-            <a class="navbar-brand text-white" href="../products">
+            <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/products">
                 <i class="fas fa-tshirt me-2"></i>Clothes Shop
             </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link text-white" href="../products">
+                <a class="nav-link text-white" href="${pageContext.request.contextPath}/products">
                     <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
                 </a>
-                <a class="nav-link text-white" href="../userOrders">
+                <a class="nav-link text-white" href="${pageContext.request.contextPath}/userOrders">
                     <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
                 </a>
-                <a class="nav-link text-white" href="../cart">
+                <a class="nav-link text-white" href="${pageContext.request.contextPath}/cart">
                     <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
                 </a>
-                <a class="nav-link text-white active" href="../userProfile">
+                <a class="nav-link text-white active" href="${pageContext.request.contextPath}/userProfile">
                     <i class="fas fa-user me-1"></i>Tài khoản
                 </a>
             </div>
@@ -78,7 +78,7 @@
                 <div class="alert alert-success">${success}</div>
             </c:if>
 
-            <form method="post" action="../changepassword">
+            <form method="post" action="${pageContext.request.contextPath}/changepassword">
                 <!-- Current Password -->
                 <div class="form-outline mb-3">
                     <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>

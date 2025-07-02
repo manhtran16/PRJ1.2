@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.OrderDetail;
+import model.OrderTable;
 import model.User;
 
 @WebServlet("/cart")
@@ -69,6 +70,8 @@ public class CartController extends HttpServlet {
             handleAddToCart(request, response, currentUser);
         } else if ("update".equals(action)) {
             handleUpdateCart(request, response, currentUser);
+        } else if ("checkoutSelected".equals(action)) {
+            handleCheckoutSelected(request, response, currentUser);
         } else {
             displayCart(request, response, currentUser);
         }
@@ -242,6 +245,55 @@ public class CartController extends HttpServlet {
             e.printStackTrace();
             HttpSession session = request.getSession();
             session.setAttribute("errorMessage", "Error clearing cart: " + e.getMessage());
+            response.sendRedirect("cart");
+        }
+    }
+
+    /**
+     * Handle checkout for selected items
+     */
+    private void handleCheckoutSelected(HttpServletRequest request, HttpServletResponse response, User user)
+            throws ServletException, IOException {
+
+        try {
+            String[] selectedVariants = request.getParameterValues("selectedVariants");
+
+            if (selectedVariants == null || selectedVariants.length == 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("errorMessage", "Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+                response.sendRedirect("cart");
+                return;
+            }
+
+            // Convert string array to integer array
+            Integer[] variantIds = new Integer[selectedVariants.length];
+            for (int i = 0; i < selectedVariants.length; i++) {
+                variantIds[i] = Integer.parseInt(selectedVariants[i]);
+            }
+
+            // Convert selected cart items to order
+            OrderTable order = cartService.checkoutSelectedItems(user, variantIds);
+
+            if (order != null) {
+                // Set success message
+                HttpSession session = request.getSession();
+                session.setAttribute("successMessage",
+                        "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID() +
+                                " (" + selectedVariants.length + " sản phẩm)");
+
+                // Redirect to order details
+                response.sendRedirect("userOrders?action=viewDetails&orderId=" + order.getOrderID());
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("errorMessage", "Không thể đặt hàng. Vui lòng thử lại.");
+                response.sendRedirect("cart");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Selected checkout error: " + e.getMessage());
+            e.printStackTrace();
+            HttpSession session = request.getSession();
+            session.setAttribute("errorMessage", "Lỗi trong quá trình đặt hàng: " + e.getMessage());
             response.sendRedirect("cart");
         }
     }

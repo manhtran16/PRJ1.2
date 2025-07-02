@@ -49,6 +49,31 @@ public class UserOrdersController extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("user");
+
+        if (currentUser == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        String action = request.getParameter("action");
+
+        if ("checkoutSelected".equals(action)) {
+            handleSelectedCheckout(request, response, currentUser);
+        } else if ("processCheckout".equals(action)) {
+            // Handle other checkout actions if needed
+            handleCheckout(request, response, currentUser);
+        } else {
+            // Default to GET behavior
+            doGet(request, response);
+        }
+    }
+
     /**
      * Handle checkout process
      */
@@ -75,6 +100,52 @@ public class UserOrdersController extends HttpServlet {
             System.err.println("Checkout error: " + e.getMessage());
             e.printStackTrace();
             request.setAttribute("errorMessage", "Lỗi trong quá trình đặt hàng: " + e.getMessage());
+            response.sendRedirect("cart");
+        }
+    }
+
+    /**
+     * Handle checkout for selected items only
+     */
+    private void handleSelectedCheckout(HttpServletRequest request, HttpServletResponse response, User user)
+            throws ServletException, IOException {
+
+        try {
+            String[] selectedVariants = request.getParameterValues("selectedVariants");
+
+            if (selectedVariants == null || selectedVariants.length == 0) {
+                request.getSession().setAttribute("errorMessage", "Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+                response.sendRedirect("cart");
+                return;
+            }
+
+            // Convert string array to integer array
+            Integer[] variantIds = new Integer[selectedVariants.length];
+            for (int i = 0; i < selectedVariants.length; i++) {
+                variantIds[i] = Integer.parseInt(selectedVariants[i]);
+            }
+
+            // Convert selected cart items to order
+            OrderTable order = cartService.checkoutSelectedItems(user, variantIds);
+
+            if (order != null) {
+                // Set success message
+                HttpSession session = request.getSession();
+                session.setAttribute("successMessage",
+                        "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID() +
+                                " (" + selectedVariants.length + " sản phẩm)");
+
+                // Redirect to order details
+                response.sendRedirect("userOrders?action=viewDetails&orderId=" + order.getOrderID());
+            } else {
+                request.getSession().setAttribute("errorMessage", "Không thể đặt hàng. Vui lòng thử lại.");
+                response.sendRedirect("cart");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Selected checkout error: " + e.getMessage());
+            e.printStackTrace();
+            request.getSession().setAttribute("errorMessage", "Lỗi trong quá trình đặt hàng: " + e.getMessage());
             response.sendRedirect("cart");
         }
     }
