@@ -15,6 +15,7 @@
                 font-family: Arial, sans-serif;
                 background-color: #f2f2f2;
                 display: flex;
+                flex-direction: column; /* Changed to column to stack elements vertically */
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
@@ -52,8 +53,14 @@
                 font-weight: bold;
             }
 
-            input[type="submit"] {
+            .button-container {
                 margin-top: 15px;
+                display: flex;
+                gap: 10px;
+            }
+
+            input[type="submit"],
+            .register-button {
                 padding: 10px 20px;
                 font-size: 16px;
                 color: #fff;
@@ -61,14 +68,18 @@
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
-                width: 100%;
+                flex: 1;
+                text-align: center;
+                text-decoration: none;
+                box-sizing: border-box;
             }
 
-            input[type="submit"]:hover {
+            input[type="submit"]:hover,
+            .register-button:hover {
                 background-color: #2980b9;
             }
 
-            p {
+            .login-title { /* Added a class for the login title */
                 text-align: center;
                 font-size: 18px;
                 margin-bottom: 20px;
@@ -77,9 +88,7 @@
         </style>
     </head>
     <body>
-        <f:view>
-        <p>Login side</p>
-        <form action="auth" method="POST">
+        <p class="login-title">Login side</p> <form action="auth" method="POST">
             <table>
                 <tbody>
                     <tr>
@@ -92,9 +101,10 @@
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" name="type" value="LOGIN" />
+            <div class="button-container">
+                <input type="submit" name="type" value="LOGIN" />
+                <a href="register.html" class="register-button">Register</a>
+            </div>
         </form>
-        <h2>${requestScope.msg}</h2>
-        </f:view>
     </body>
 </html>

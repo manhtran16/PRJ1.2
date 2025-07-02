@@ -1,4 +1,3 @@
-
 <%-- 
     Document   : home
     Created on : Jun 3, 2025, 11:29:10 AM
@@ -9,374 +8,701 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>CLoth store</title>
-        <style>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-            nav {
-                background-color: #cc66ff;
-                padding: 10px 30px;
-            }
-        </style>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            />
-        <!-- Google Fonts Roboto -->
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-            />
-        <!-- MDB -->
-        <link rel="stylesheet" href="css/mdb.min.css" />
-    </head>
-    <body>
-        <header>
-            <nav>
-                <a href="userhome.jsp">Trang chủ</a>
-                <a href="products.jsp">Sản phẩm</a>
-                <a href="about.jsp">Giới thiệu</a>
+    <!-- Title  -->
+    <title>Essence - Fashion Ecommerce Template</title>
 
-                <c:choose>
-                    <c:when test="${not empty sessionScope.user}">
-                        <a href="logout">Đăng xuất</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="login.jsp">Đăng nhập</a>
-                        <a href="register.jsp">Đăng kí</a>
-                    </c:otherwise>
-                </c:choose>
-            </nav>
-            <nav class="navbar navbar-expand-lg bg-body">
-                <div class="container-fluid">
-                    <button
-                        data-mdb-collapse-init
-                        class="navbar-toggler"
-                        type="button"
-                        data-mdb-target="#navbarExample01"
-                        aria-controls="navbarExample01"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                        >
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarExample01">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item active">
-                                <h1 class="nav-link" style="color:rgb(3, 3, 89); font-size:large;"><strong>CLOTHES STORE</strong></h1>
-                        </ul>
-                        <ul class="navbar-nav d-flex flex-row">
-                            <!-- Icons -->
-                            <li class="nav-item me-3 me-lg-0">
-                                <a class="nav-link" href="invoice.jsp">
-                                    <span class="badge badge-pill bg-danger">1</span>
-                                    <span><i class="fas fa-shopping-cart"></i></span>
-                                </a>
+    <!-- Favicon  -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="css/core-style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/userhome.css">
+</head>
+
+<body>
+    <!-- ##### Header Area Start ##### -->
+    <header class="header_area">
+        <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
+            <!-- Classy Menu -->
+            <nav class="classy-navbar" id="essenceNav">
+                <!-- Logo -->
+                <a class="nav-brand" href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                <!-- Navbar Toggler -->
+                <div class="classy-navbar-toggler">
+                    <span class="navbarToggler"><span></span><span></span><span></span></span>
+                </div>
+                <!-- Menu -->
+                <div class="classy-menu">
+                    <!-- close btn -->
+                    <div class="classycloseIcon">
+                        <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                    </div>
+                    <!-- Nav Start -->
+                    <div class="classynav">
+                        <ul>
+                            <li><a href="#">Shop</a>
+                                <div class="megamenu">
+                                    <ul class="single-mega cn-col-4">
+                                        <li class="title">Women's Collection</li>
+                                        <li><a href="shop.html">Dresses</a></li>
+                                        <li><a href="shop.html">Blouses &amp; Shirts</a></li>
+                                        <li><a href="shop.html">T-shirts</a></li>
+                                        <li><a href="shop.html">Rompers</a></li>
+                                        <li><a href="shop.html">Bras &amp; Panties</a></li>
+                                    </ul>
+                                    <ul class="single-mega cn-col-4">
+                                        <li class="title">Men's Collection</li>
+                                        <li><a href="shop.html">T-Shirts</a></li>
+                                        <li><a href="shop.html">Polo</a></li>
+                                        <li><a href="shop.html">Shirts</a></li>
+                                        <li><a href="shop.html">Jackets</a></li>
+                                        <li><a href="shop.html">Trench</a></li>
+                                    </ul>
+                                    <ul class="single-mega cn-col-4">
+                                        <li class="title">Kid's Collection</li>
+                                        <li><a href="shop.html">Dresses</a></li>
+                                        <li><a href="shop.html">Shirts</a></li>
+                                        <li><a href="shop.html">T-shirts</a></li>
+                                        <li><a href="shop.html">Jackets</a></li>
+                                        <li><a href="shop.html">Trench</a></li>
+                                    </ul>
+                                    <div class="single-mega cn-col-4">
+                                        <img src="img/bg-img/bg-6.jpg" alt="">
+                                    </div>
+                                </div>
                             </li>
-                            <li class="nav-item me-3 me-lg-0">
-                                <a class="nav-link" href="#">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                            </li>
-                            <!-- Icon dropdown -->
-                            <li class="nav-item me-3 me-lg-0 dropdown">
-                                <a
-                                    data-mdb-dropdown-init
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="navbarDropdown"
-                                    role="button"
-                                    aria-expanded="false"
-                                    >
-                                    <i class="fas fa-user"></i>
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                    </li>
-                                    <li><hr class="dropdown-divider" /></li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </li>
+                            <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="shop.html">Shop</a></li>
+                                    <li><a href="checkout.html">Checkout</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
                                 </ul>
                             </li>
+                            <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </div>
+                    <!-- Nav End -->
                 </div>
             </nav>
-            <!-- Navbar -->
 
-            <!-- Background image -->
-            <div
-                class="p-5 text-center bg-image"
-                style="
-                background-image: url('https://suno.vn/blog/wp-content/uploads/2016/10/denledphasowroom.jpg');
-                height: 500px;
-                "
-                >
-                <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <div class="text-white">
-                            <h1 class="mb-3" style="color:red">SAFE CUỐI THÁNG</h1>
-                            <h4 class="mb-3">SALE OFF 50%</h4>
-                            <a data-mdb-ripple-init class="btn btn-outline-light btn-lg" href="#!" role="button"
-                               >Call to action</a
-                            >
+            <!-- Header Meta Data -->
+            <div class="header-meta d-flex clearfix justify-content-end">
+                <!-- Search Area -->
+                <div class="search-area">
+                    <form action="#" method="post">
+                        <input type="search" name="search" id="headerSearch" placeholder="Type for search">
+                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+                <!-- Favourite Area -->
+                <div class="favourite-area">
+                    <a href="#"><img src="img/core-img/heart.svg" alt=""></a>
+                </div>
+                <!-- User Login Info -->
+                <div class="user-login-info">
+                    <a href="#"><img src="img/core-img/user.svg" alt=""></a>
+                    <div class="user-content">
+                        <a href="#">Register</a>
+                        <a href="#">Log in</a>
+
+                    </div>
+                </div>
+                <!-- Cart Area -->
+                <div class="cart-area">
+                    <a href="#" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Right Side Cart Area ##### -->
+    <div class="right-side-cart-area">
+
+        <!-- Cart Button -->
+        <div class="cart-button">
+            <a href="#" id="rightSideCart"><img src="img/core-img/bag.svg" alt=""> <span>3</span></a>
+        </div>
+
+        <div class="cart-content d-flex">
+
+            <!-- Cart List Area -->
+            <div class="cart-list">
+                <!-- Single Cart Item -->
+                <div class="single-cart-item">
+                    <a href="#" class="product-image">
+                        <img src="img/product-img/product-1.jpg" class="cart-thumb" alt="">
+                        <!-- Cart Item Desc -->
+                        <div class="cart-item-desc">
+                            <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
+                            <span class="badge">Mango</span>
+                            <h6>Button Through Strap Mini Dress</h6>
+                            <p class="size">Size: S</p>
+                            <p class="color">Color: Red</p>
+                            <p class="price">$45.00</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Single Cart Item -->
+                <div class="single-cart-item">
+                    <a href="#" class="product-image">
+                        <img src="img/product-img/product-2.jpg" class="cart-thumb" alt="">
+                        <!-- Cart Item Desc -->
+                        <div class="cart-item-desc">
+                            <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
+                            <span class="badge">Mango</span>
+                            <h6>Button Through Strap Mini Dress</h6>
+                            <p class="size">Size: S</p>
+                            <p class="color">Color: Red</p>
+                            <p class="price">$45.00</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Single Cart Item -->
+                <div class="single-cart-item">
+                    <a href="#" class="product-image">
+                        <img src="img/product-img/product-3.jpg" class="cart-thumb" alt="">
+                        <!-- Cart Item Desc -->
+                        <div class="cart-item-desc">
+                            <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
+                            <span class="badge">Mango</span>
+                            <h6>Button Through Strap Mini Dress</h6>
+                            <p class="size">Size: S</p>
+                            <p class="color">Color: Red</p>
+                            <p class="price">$45.00</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-amount-summary">
+
+                <h2>Summary</h2>
+                <ul class="summary-table">
+                    <li><span>subtotal:</span> <span>$274.00</span></li>
+                    <li><span>delivery:</span> <span>Free</span></li>
+                    <li><span>discount:</span> <span>-15%</span></li>
+                    <li><span>total:</span> <span>$232.00</span></li>
+                </ul>
+                <div class="checkout-btn mt-100">
+                    <a href="checkout.html" class="btn essence-btn">check out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Right Side Cart End ##### -->
+
+    <!-- ##### Welcome Area Start ##### -->
+    <section class="welcome_area bg-img background-overlay" style="background-image: url(img/bg-img/bg-1.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="hero-content">
+                        <h6>asoss</h6>
+                        <h2>New Collection</h2>
+                        <a href="#" class="btn essence-btn">view collection</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Welcome Area End ##### -->
+
+    <!-- ##### Top Catagory Area Start ##### -->
+    <div class="top_catagory_area section-padding-80 clearfix">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Single Catagory -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+                        style="background-image: url(img/bg-img/bg-2.jpg);">
+                        <div class="catagory-content">
+                            <a href="#">Clothing</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Catagory -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+                        style="background-image: url(img/bg-img/bg-3.jpg);">
+                        <div class="catagory-content">
+                            <a href="#">Shoes</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Catagory -->
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
+                        style="background-image: url(img/bg-img/bg-4.jpg);">
+                        <div class="catagory-content">
+                            <a href="#">Accessories</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Background image -->
-        </header>
+        </div>
+    </div>
+    <!-- ##### Top Catagory Area End ##### -->
 
-        <!-- Categories -->
-        <main class="mt-5">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                    <div class="container-fluid">
-                        <button
-                            data-mdb-collapse-init
-                            class="navbar-toggler"
-                            type="button"
-                            data-mdb-target="#navbarTogglerDemo01"
-                            aria-controls="navbarTogglerDemo01"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                            >
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                            <a class="navbar-brand" href="#">Loại</a>
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Trang phục nam</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Trang phục nữ</a
-                                    >
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Trang phục trẻ em </a
-                                    >
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"
-                                       >Phụ kiện</a
-                                    >
-                                </li>
+    <!-- ##### CTA Area Start ##### -->
+    <div class="cta-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="cta-content bg-img background-overlay"
+                        style="background-image: url(img/bg-img/bg-5.jpg);">
+                        <div class="h-100 d-flex align-items-center justify-content-end">
+                            <div class="cta--text">
+                                <h6>-60%</h6>
+                                <h2>Global Sale</h2>
+                                <a href="#" class="btn essence-btn">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### CTA Area End ##### -->
+
+    <!-- ##### New Arrivals Area Start ##### -->
+    <section class="new_arrivals_area section-padding-80 clearfix"> 
+        <!-- Popular item -->
+        <div class="related-product">
+            <div class="row">
+                <!-- Title -->
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h3 class="title">Sản phẩm phổ biến</h3>
+                    </div>
+                </div>
+                <!-- Single Product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="img/product-img/product-1.jpg" alt="">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="img/product-img/product-2.jpg" alt="">
+                            <!-- Favourite -->
+                            <div class="product-favourite">
+                                <a href="#" class="favme fa fa-heart"></a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <span>topshop</span>
+                            <a href="single-product-details.html">
+                                <h6>Knot Front Mini Dress</h6>
+                            </a>
+                            <p class="product-price"><span class="old-price">$75.00</span> $55.00</p>
+
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <!-- Add to Cart -->
+                                <div class="add-to-cart-btn">
+                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="img/product-img/product-2.jpg" alt="">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="img/product-img/product-3.jpg" alt="">
+
+                            <!-- Favourite -->
+                            <div class="product-favourite">
+                                <a href="#" class="favme fa fa-heart"></a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <span>topshop</span>
+                            <a href="single-product-details.html">
+                                <h6>Knot Front Mini Dress</h6>
+                            </a>
+                            <p class="product-price">$80.00</p>
+
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <!-- Add to Cart -->
+                                <div class="add-to-cart-btn">
+                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="img/product-img/product-3.jpg" alt="">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="img/product-img/product-4.jpg" alt="">
+
+                            <!-- Favourite -->
+                            <div class="product-favourite">
+                                <a href="#" class="favme fa fa-heart"></a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <span>topshop</span>
+                            <a href="single-product-details.html">
+                                <h6>Knot Front Mini Dress</h6>
+                            </a>
+                            <p class="product-price">$80.00</p>
+
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <!-- Add to Cart -->
+                                <div class="add-to-cart-btn">
+                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="img/product-img/product-4.jpg" alt="">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="img/product-img/product-5.jpg" alt="">
+
+                            <!-- Favourite -->
+                            <div class="product-favourite">
+                                <a href="#" class="favme fa fa-heart"></a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <span>topshop</span>
+                            <a href="single-product-details.html">
+                                <h6>Knot Front Mini Dress</h6>
+                            </a>
+                            <p class="product-price">$80.00</p>
+
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <!-- Add to Cart -->
+                                <div class="add-to-cart-btn">
+                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="img/product-img/product-5.jpg" alt="">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="img/product-img/product-6.jpg" alt="">
+
+
+                            <!-- Favourite -->
+                            <div class="product-favourite">
+                                <a href="#" class="favme fa fa-heart"></a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <span>topshop</span>
+                            <a href="single-product-details.html">
+                                <h6>Knot Front Mini Dress</h6>
+                            </a>
+                            <p class="product-price"><span class="old-price">$75.00</span> $55.00</p>
+
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <!-- Add to Cart -->
+                                <div class="add-to-cart-btn">
+                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="img/product-img/product-6.jpg" alt="">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="img/product-img/product-7.jpg" alt="">
+
+                            <!-- Favourite -->
+                            <div class="product-favourite">
+                                <a href="#" class="favme fa fa-heart"></a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <span>topshop</span>
+                            <a href="single-product-details.html">
+                                <h6>Knot Front Mini Dress</h6>
+                            </a>
+                            <p class="product-price">$80.00</p>
+
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <!-- Add to Cart -->
+                                <div class="add-to-cart-btn">
+                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="img/product-img/product-7.jpg" alt="">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="img/product-img/product-8.jpg" alt="">
+
+                            <!-- Product Badge -->
+                            <div class="product-badge new-badge">
+                                <span>New</span>
+                            </div>
+
+                            <!-- Favourite -->
+                            <div class="product-favourite">
+                                <a href="#" class="favme fa fa-heart"></a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <span>topshop</span>
+                            <a href="single-product-details.html">
+                                <h6>Knot Front Mini Dress</h6>
+                            </a>
+                            <p class="product-price">$80.00</p>
+
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <!-- Add to Cart -->
+                                <div class="add-to-cart-btn">
+                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Single Product -->
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="img/product-img/product-8.jpg" alt="">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="img/product-img/product-9.jpg" alt="">
+
+                            <!-- Favourite -->
+                            <div class="product-favourite">
+                                <a href="#" class="favme fa fa-heart"></a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <span>topshop</span>
+                            <a href="single-product-details.html">
+                                <h6>Knot Front Mini Dress</h6>
+                            </a>
+                            <p class="product-price">$80.00</p>
+
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <!-- Add to Cart -->
+                                <div class="add-to-cart-btn">
+                                    <a href="#" class="btn essence-btn">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+    </section>
+    <!-- ##### New Arrivals Area End ##### -->
+
+    <!-- ##### Brands Area Start ##### -->
+    <div class="brands-area d-flex align-items-center justify-content-between">
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand1.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand2.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand3.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand4.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand5.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand6.png" alt="">
+        </div>
+    </div>
+    <!-- ##### Brands Area End ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer_area clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- Single Widget Area -->
+                <div class="col-12 col-md-6">
+                    <div class="single_widget_area d-flex mb-30">
+                        <!-- Logo -->
+                        <div class="footer-logo mr-50">
+                            <a href="#"><img src="img/core-img/logo2.png" alt=""></a>
+                        </div>
+                        <!-- Footer Menu -->
+                        <div class="footer_menu">
+                            <ul>
+                                <li><a href="shop.html">Shop</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="contact.html">Contact</a></li>
                             </ul>
-                            <form class="d-flex input-group w-auto">
-                                <input
-                                    type="search"
-                                    class="form-control"
-                                    placeholder="Type query"
-                                    aria-label="Search"
-                                    />
-                                <button
-                                    data-mdb-ripple-init
-                                    class="btn btn-outline-primary"
-                                    type="button"
-                                    data-mdb-ripple-color="dark"
-                                    >
-                                    Search
-                                </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Widget Area -->
+                <div class="col-12 col-md-6">
+                    <div class="single_widget_area mb-30">
+                        <ul class="footer_widget_menu">
+                            <li><a href="#">Order Status</a></li>
+                            <li><a href="#">Payment Options</a></li>
+                            <li><a href="#">Shipping and Delivery</a></li>
+                            <li><a href="#">Guides</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Use</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row align-items-end">
+                <!-- Single Widget Area -->
+                <div class="col-12 col-md-6">
+                    <div class="single_widget_area">
+                        <div class="footer_heading mb-30">
+                            <h6>Subscribe</h6>
+                        </div>
+                        <div class="subscribtion_form">
+                            <form action="#" method="post">
+                                <input type="email" name="mail" class="mail" placeholder="Your email here">
+                                <button type="submit" class="submit"><i class="fa fa-long-arrow-right"
+                                        aria-hidden="true"></i></button>
                             </form>
                         </div>
                     </div>
-                </nav>
-
-                <!-- Product section-->
-                <section class="text-center mb-4">
-                    <div class="row" style="margin-top:15px">
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <div class="card">
-                                <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                                    <img src="https://nocturnal.vn/wp-content/uploads/2025/05/Dark-blue-scaled.jpg" class="img-fluid"/>
-                                    <a href="displayPro.jsp">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6>320,000</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Thêm vào rỏ</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <div class="card">
-                                <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                                    <img src="https://nocturnal.vn/wp-content/uploads/2024/10/1.jpg" class="img-fluid"/>
-                                    <a href="displayPro.jsp">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6>320,000</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Thêm vào rỏ</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <div class="card">
-                                <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                                    <img src="https://nocturnal.vn/wp-content/uploads/2024/05/2-2-scaled.jpg" class="img-fluid"/>
-                                    <a href="displayPro.jsp">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6>320,000</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Thêm vào rỏ</a>
-                                </div>
-                            </div>
+                </div>
+                <!-- Single Widget Area -->
+                <div class="col-12 col-md-6">
+                    <div class="single_widget_area">
+                        <div class="footer_social_area">
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i
+                                    class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i
+                                    class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i
+                                    class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Pinterest"><i
+                                    class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i
+                                    class="fa fa-youtube-play" aria-hidden="true"></i></a>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <div class="card">
-                                <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                                    <img src="https://nocturnal.vn/wp-content/uploads/2024/05/1-1-1.jpg" class="img-fluid"/>
-                                    <a href="#!">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6>320,000</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Thêm vào rỏ</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <div class="card">
-                                <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                                    <img src="https://nocturnal.vn/wp-content/uploads/2023/07/24-scaled.jpg" class="img-fluid"/>
-                                    <a href="#!">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6>320,000</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Thêm vào rỏ</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <div class="card">
-                                <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                                    <img src="https://nocturnal.vn/wp-content/uploads/2025/04/111.jpg" class="img-fluid"/>
-                                    <a href="#!">
-                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6>320,000</h6>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#!" class="btn btn-primary" data-mdb-ripple-init>Thêm vào rỏ</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </div>
             </div>
-        </main>
-        <footer class="text-center bg-body-tertiary">
-            <!-- Grid container -->
-            <div class="container pt-4">
-                <!-- Section: Social media -->
-                <section class="mb-4">
-                    <!-- Facebook -->
-                    <a
-                        data-mdb-ripple-init
-                        class="btn btn-link btn-floating btn-lg text-body m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                        ><i class="fab fa-facebook-f"></i
-                        ></a>
 
-                    <!-- Twitter -->
-                    <a
-                        data-mdb-ripple-init
-                        class="btn btn-link btn-floating btn-lg text-body m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                        ><i class="fab fa-twitter"></i
-                        ></a>
-
-                    <!-- Google -->
-                    <a
-                        data-mdb-ripple-init
-                        class="btn btn-link btn-floating btn-lg text-body m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                        ><i class="fab fa-google"></i
-                        ></a>
-
-                    <!-- Instagram -->
-                    <a
-                        data-mdb-ripple-init
-                        class="btn btn-link btn-floating btn-lg text-body m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                        ><i class="fab fa-instagram"></i
-                        ></a>
-
-                    <!-- Linkedin -->
-                    <a
-                        data-mdb-ripple-init
-                        class="btn btn-link btn-floating btn-lg text-body m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                        ><i class="fab fa-linkedin"></i
-                        ></a>
-                    <!-- Github -->
-                    <a
-                        data-mdb-ripple-init
-                        class="btn btn-link btn-floating btn-lg text-body m-1"
-                        href="#!"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                        ><i class="fab fa-github"></i
-                        ></a>
-                </section>
-                <!-- Section: Social media -->
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i
+                            class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                            target="_blank">Colorlib</a>, distributed by <a href="https://themewagon.com/"
+                            target="_blank">ThemeWagon</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
             </div>
-            <!-- Grid container -->
 
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-                © 2020 Copyright:
-                <a class="text-body" href="https://mdbootstrap.com/">Cloth store</a>
-            </div>
-            <!-- Copyright -->
-        </footer>
-    </body>
+        </div>
+    </footer>
+    <!-- ##### Footer Area End ##### -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Plugins js -->
+    <script src="js/plugins.js"></script>
+    <!-- Classy Nav js -->
+    <script src="js/classy-nav.min.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
+
+</body>
+
 </html>
-
-
