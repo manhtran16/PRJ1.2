@@ -23,8 +23,14 @@ public class changePassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // Clear any cart-related messages
+        HttpSession session = request.getSession();
+        session.removeAttribute("successMessage");
+        session.removeAttribute("errorMessage");
+
         // Forward to change password form
-        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+        request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
     }
 
     @Override
@@ -46,27 +52,27 @@ public class changePassword extends HttpServlet {
         try {
             // Validate input
             if (currentPassword == null || currentPassword.trim().isEmpty()) {
-                request.setAttribute("error", "Current password is required");
-                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                request.setAttribute("error", "Vui lòng nhập mật khẩu hiện tại");
+                request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
                 return;
             }
 
             if (newPassword == null || newPassword.trim().isEmpty()) {
-                request.setAttribute("error", "New password is required");
-                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                request.setAttribute("error", "Vui lòng nhập mật khẩu mới");
+                request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
                 return;
             }
 
             if (!newPassword.equals(confirmPassword)) {
-                request.setAttribute("error", "New passwords do not match");
-                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                request.setAttribute("error", "Mật khẩu mới và xác nhận không khớp");
+                request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
                 return;
             }
 
             // Verify current password
             if (!userDao.verifyCurrentPassword(user.getUserID(), currentPassword)) {
-                request.setAttribute("error", "Current password is incorrect");
-                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                request.setAttribute("error", "Mật khẩu hiện tại không đúng");
+                request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
                 return;
             }
 
@@ -74,17 +80,17 @@ public class changePassword extends HttpServlet {
             boolean success = userDao.updatePassword(user.getUserID(), newPassword);
 
             if (success) {
-                request.setAttribute("success", "Password changed successfully!");
-                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                request.setAttribute("success", "Đổi mật khẩu thành công!");
+                request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
             } else {
-                request.setAttribute("error", "Failed to change password. Please try again.");
-                request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+                request.setAttribute("error", "Không thể đổi mật khẩu. Vui lòng thử lại.");
+                request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "An error occurred while changing password: " + e.getMessage());
-            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
+            request.setAttribute("error", "Có lỗi xảy ra khi đổi mật khẩu: " + e.getMessage());
+            request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
         }
     }
 

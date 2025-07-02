@@ -24,16 +24,16 @@ import model.Type;
 public class ProductsController extends HttpServlet {
 
     private ProductService productService;
-    private RatingDAO ratingDao;
-    private BrandDAO brandDao;
-    private TypeDAO typeDao;
+    private RatingDAO ratingDAO;
+    private BrandDAO brandDAO;
+    private TypeDAO typeDAO;
 
     @Override
     public void init() throws ServletException {
         productService = new ProductService();
-        ratingDao = new RatingDAO();
-        brandDao = new BrandDAO();
-        typeDao = new TypeDAO();
+        ratingDAO = new RatingDAO();
+        brandDAO = new BrandDAO();
+        typeDAO = new TypeDAO();
     }
 
     @Override
@@ -101,8 +101,8 @@ public class ProductsController extends HttpServlet {
             Collections.shuffle(products);
 
             // Get brands and types for filter dropdowns
-            List<Brand> brands = brandDao.getBrand();
-            List<Type> types = typeDao.getType();
+            List<Brand> brands = brandDAO.getBrand();
+            List<Type> types = typeDAO.getType();
 
             // Set attributes for JSP
             request.setAttribute("products", products);
@@ -145,16 +145,16 @@ public class ProductsController extends HttpServlet {
             }
 
             // Get rating information for the product
-            List<Rating> ratings = ratingDao.getRatingsByProductId(productId);
-            Double averageRating = ratingDao.getAverageRatingByProductId(productId);
-            Long totalRatings = ratingDao.getTotalRatingsByProductId(productId);
+            List<Rating> ratings = ratingDAO.getRatingsByProductId(productId);
+            Double averageRating = ratingDAO.getAverageRatingByProductId(productId);
+            Long totalRatings = ratingDAO.getTotalRatingsByProductId(productId);
 
             // Check if current user has rated this product
             HttpSession session = request.getSession();
             User currentUser = (User) session.getAttribute("user");
             Rating userRating = null;
             if (currentUser != null) {
-                userRating = ratingDao.getUserRatingForProduct(currentUser.getUserID(), productId);
+                userRating = ratingDAO.getUserRatingForProduct(currentUser.getUserID(), productId);
             }
 
             request.setAttribute("product", product);

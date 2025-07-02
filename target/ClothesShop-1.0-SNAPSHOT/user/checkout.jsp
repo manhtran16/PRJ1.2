@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
-    <link rel="stylesheet" href="css/mdb.min.css" />
+    <link rel="stylesheet" href="../css/mdb.min.css" />
+    <link rel="stylesheet" href="../css/core-style.css" />
+    <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
     <header>
@@ -153,10 +155,10 @@
               </div>
               
               <div class="text-center mt-4">
-                <a href="products" class="btn btn-primary me-2">
+                <a href="../products" class="btn btn-primary me-2">
                   <i class="fas fa-shopping-bag"></i> Tiếp tục mua sắm
                 </a>
-                <a href="userOrders" class="btn btn-outline-secondary">
+                <a href="../userOrders" class="btn btn-outline-secondary">
                   <i class="fas fa-list"></i> Xem đơn hàng của tôi
                 </a>
               </div>
@@ -174,7 +176,7 @@
       <c:if test="${empty cart}">
         <div class="alert alert-warning text-center">
           <h5>Giỏ hàng trống!</h5>
-          <a href="products" class="btn btn-primary">Tiếp tục mua sắm</a>
+          <a href="../products" class="btn btn-primary">Tiếp tục mua sắm</a>
         </div>
       </c:if>
       
@@ -186,7 +188,7 @@
                 <h5>Thông tin giao hàng</h5>
               </div>
               <div class="card-body">
-                <form action="userOrders" method="post">
+                <form action="../userOrders" method="post">
                     <input type="hidden" name="action" value="processCheckout">
                   <div class="row">
                     <div class="col-md-6 mb-3">

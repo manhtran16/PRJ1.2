@@ -13,11 +13,11 @@ import model.ProductVariant;
 @WebServlet(name = "VariantController", urlPatterns = { "/variant" })
 public class VariantController extends HttpServlet {
 
-    private ProductDAO productDao;
+    private ProductDAO productDAO;
 
     @Override
     public void init() throws ServletException {
-        productDao = new ProductDAO();
+        productDAO = new ProductDAO();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class VariantController extends HttpServlet {
             int variantId = Integer.parseInt(variantIdStr);
 
             // Get variant details with all relationships loaded
-            ProductVariant variant = productDao.getVariantWithDetails(variantId);
+            ProductVariant variant = productDAO.getVariantWithDetails(variantId);
 
             if (variant == null) {
                 request.setAttribute("errorMessage", "Không tìm thấy phiên bản sản phẩm này.");

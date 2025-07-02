@@ -11,10 +11,10 @@ import java.util.ArrayList;
  */
 public class OrderService {
 
-    private OrderDAO orderDao;
+    private OrderDAO orderDAO;
 
     public OrderService() {
-        this.orderDao = new OrderDAO();
+        this.orderDAO = new OrderDAO();
     }
 
     /**
@@ -26,7 +26,7 @@ public class OrderService {
         }
 
         try {
-            return orderDao.getOrdersByUserId(userId);
+            return orderDAO.getOrdersByUserId(userId);
         } catch (Exception e) {
             System.err.println("Error getting user orders: " + e.getMessage());
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class OrderService {
         }
 
         try {
-            return orderDao.getOrderById(orderId);
+            return orderDAO.getOrderById(orderId);
         } catch (Exception e) {
             System.err.println("Error getting order by ID: " + e.getMessage());
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class OrderService {
         }
 
         try {
-            return orderDao.getOrderDetailsByOrderId(orderId);
+            return orderDAO.getOrderDetailsByOrderId(orderId);
         } catch (Exception e) {
             System.err.println("Error getting order details: " + e.getMessage());
             e.printStackTrace();
@@ -77,7 +77,7 @@ public class OrderService {
         }
 
         try {
-            return orderDao.getOrderTotal(orderId);
+            return orderDAO.getOrderTotal(orderId);
         } catch (Exception e) {
             System.err.println("Error calculating order total: " + e.getMessage());
             e.printStackTrace();
@@ -108,7 +108,7 @@ public class OrderService {
         }
 
         try {
-            return orderDao.updateOrderStatus(orderId, newStatus);
+            return orderDAO.updateOrderStatus(orderId, newStatus);
         } catch (Exception e) {
             System.err.println("Error updating order status: " + e.getMessage());
             e.printStackTrace();
@@ -120,8 +120,8 @@ public class OrderService {
      * Close resources
      */
     public void close() {
-        if (orderDao != null) {
-            orderDao.close();
+        if (orderDAO != null) {
+            orderDAO.close();
         }
     }
 }

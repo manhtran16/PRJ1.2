@@ -89,12 +89,12 @@ public class CartController extends HttpServlet {
             request.setAttribute("cartTotal", cartTotal);
             request.setAttribute("cartItemCount", itemCount);
 
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+            request.getRequestDispatcher("user/cart.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Unable to load cart. Please try again.");
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+            request.getRequestDispatcher("user/cart.jsp").forward(request, response);
         }
     }
 

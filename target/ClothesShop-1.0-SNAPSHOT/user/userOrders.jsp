@@ -78,14 +78,17 @@
           <i class="fas fa-tshirt me-2"></i>Clothes Shop
         </a>
         <div class="navbar-nav ms-auto">
-          <a class="nav-link text-white" href="index">
-            <i class="fas fa-home me-1"></i>Home
+          <a class="nav-link text-white" href="products">
+            <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
           </a>
-          <a class="nav-link text-white" href="products.jsp">
-            <i class="fas fa-shopping-bag me-1"></i>Products
+          <a class="nav-link text-white active" href="../userOrders">
+            <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
           </a>
-          <a class="nav-link text-white active" href="userOrders">
-            <i class="fas fa-receipt me-1"></i>My Orders
+          <a class="nav-link text-white" href="cart">
+            <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
+          </a>
+          <a class="nav-link text-white" href="userProfile">
+            <i class="fas fa-user me-1"></i>Tài khoản
           </a>
         </div>
       </div>
@@ -95,9 +98,9 @@
       <div class="row">
         <div class="col-12">
           <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="fas fa-receipt me-2"></i>My Orders</h2>
-            <a href="index" class="btn btn-outline-primary">
-              <i class="fas fa-arrow-left me-1"></i>Back to Home
+            <h2><i class="fas fa-receipt me-2"></i>Đơn hàng của tôi</h2>
+            <a href="../products" class="btn btn-outline-primary">
+              <i class="fas fa-arrow-left me-1"></i>Tiếp tục mua sắm
             </a>
           </div>
 

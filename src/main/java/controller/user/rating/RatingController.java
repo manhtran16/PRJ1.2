@@ -13,11 +13,11 @@ import java.io.IOException;
 @WebServlet("/user/rating")
 public class RatingController extends HttpServlet {
 
-    private RatingDAO ratingDao;
+    private RatingDAO ratingDAO;
 
     @Override
     public void init() throws ServletException {
-        ratingDao = new RatingDAO();
+        ratingDAO = new RatingDAO();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class RatingController extends HttpServlet {
                 return;
             }
 
-            boolean success = ratingDao.addRating(user.getUserID(), productId, rate, comment);
+            boolean success = ratingDAO.addRating(user.getUserID(), productId, rate, comment);
 
             if (success) {
                 request.setAttribute("success", "Thank you for your rating!");
@@ -90,7 +90,7 @@ public class RatingController extends HttpServlet {
                 return;
             }
 
-            boolean success = ratingDao.updateRating(user.getUserID(), productId, rate, comment);
+            boolean success = ratingDAO.updateRating(user.getUserID(), productId, rate, comment);
 
             if (success) {
                 request.setAttribute("success", "Your rating has been updated!");

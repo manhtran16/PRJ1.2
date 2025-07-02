@@ -93,12 +93,12 @@ public class UserOrdersController extends HttpServlet {
 
             request.setAttribute("orders", orders);
             request.setAttribute("orderService", orderService);
-            request.getRequestDispatcher("userOrders.jsp").forward(request, response);
+            request.getRequestDispatcher("user/userOrders.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Unable to load orders. Please try again.");
-            request.getRequestDispatcher("userOrders.jsp").forward(request, response);
+            request.getRequestDispatcher("user/userOrders.jsp").forward(request, response);
         }
     }
 
@@ -131,7 +131,7 @@ public class UserOrdersController extends HttpServlet {
             request.setAttribute("orderTotal", orderTotal);
             request.setAttribute("orderService", orderService);
 
-            request.getRequestDispatcher("orderDetails.jsp").forward(request, response);
+            request.getRequestDispatcher("user/orderDetails.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
             response.sendRedirect("userOrders");

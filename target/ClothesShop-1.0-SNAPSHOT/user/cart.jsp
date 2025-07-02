@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Giỏ hàng</title>
-        <link href="css/mdb.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/mdb.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <style>
             .cart-table {
@@ -59,15 +59,21 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
             <div class="container">
-                <a class="navbar-brand text-white" href="products">
+                <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/products">
                     <i class="fas fa-tshirt me-2"></i>Cloth Store
                 </a>
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link text-white" href="products">
+                    <a class="nav-link text-white" href="${pageContext.request.contextPath}/products">
                         <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
                     </a>
-                    <a class="nav-link text-white active" href="cart">
+                    <a class="nav-link text-white active" href="${pageContext.request.contextPath}/cart">
                         <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
+                    </a>
+                    <a class="nav-link text-white" href="${pageContext.request.contextPath}/userOrders">
+                        <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
+                    </a>
+                    <a class="nav-link text-white" href="${pageContext.request.contextPath}/userProfile">
+                        <i class="fas fa-user me-1"></i>Tài khoản
                     </a>
                 </div>
             </div>
@@ -94,7 +100,7 @@
 
             <c:if test="${empty cartItems}">
                 <div class="alert alert-info">Giỏ hàng trống.</div>
-                <a href="products" class="btn btn-primary">Tiếp tục mua sắm</a>
+                <a href="${pageContext.request.contextPath}/products" class="btn btn-primary">Tiếp tục mua sắm</a>
             </c:if>
             <c:if test="${not empty cartItems}">
                 <table class="table cart-table">
@@ -120,7 +126,7 @@
                                 </td>
                                 <td><fmt:formatNumber value="${item.variant.price}" pattern="#,###"/></td>
                                 <td>
-                                    <form action="cart" method="post" style="display: inline;" class="quantity-form">
+                                    <form action="${pageContext.request.contextPath}/cart" method="post" style="display: inline;" class="quantity-form">
                                         <input type="hidden" name="action" value="update"/>
                                         <input type="hidden" name="variantId" value="${item.variant.variantID}"/>
                                         <input type="number" 
@@ -136,7 +142,7 @@
                                 <td><fmt:formatNumber value="${item.variant.price * item.orderQuantity}" pattern="#,###"/></td>
                                 <td>
                                     <!-- Form method for removing item -->
-                                    <form action="cart" method="get" style="display: inline;">
+                                    <form action="${pageContext.request.contextPath}/cart" method="get" style="display: inline;">
                                         <input type="hidden" name="action" value="remove">
                                         <input type="hidden" name="variantId" value="${item.variant.variantID}">
                                         <button type="submit" 
@@ -161,12 +167,12 @@
                     </tfoot>
                 </table>
                 <div class="mt-3">
-                    <a href="products" class="btn btn-secondary">
+                    <a href="${pageContext.request.contextPath}/products" class="btn btn-secondary">
                         <i class="fas fa-arrow-left"></i> Tiếp tục mua sắm
                     </a>
 
                     <!-- Form method for clearing cart -->
-                    <form action="cart" method="get" style="display: inline;">
+                    <form action="${pageContext.request.contextPath}/cart" method="get" style="display: inline;">
                         <input type="hidden" name="action" value="clear">
                         <button type="submit" 
                                 class="btn btn-warning"
@@ -175,7 +181,7 @@
                         </button>
                     </form>
 
-                    <a href="userOrders?action=checkout" class="btn btn-success">
+                    <a href="${pageContext.request.contextPath}/userOrders?action=checkout" class="btn btn-success">
                         <i class="fas fa-credit-card"></i> Thanh toán
                     </a>
                 </div>
@@ -183,6 +189,6 @@
         </div>
 
         <!-- MDB JavaScript -->
-        <script src="js/mdb.umd.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/mdb.umd.min.js"></script>
     </body>
 </html>

@@ -48,15 +48,21 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
         <div class="container">
-            <a class="navbar-brand text-white" href="products">
+            <a class="navbar-brand text-white" href="../products">
                 <i class="fas fa-tshirt me-2"></i>Clothes Store
             </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link text-white" href="products">
+                <a class="nav-link text-white" href="../products">
                     <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
                 </a>
-                <a class="nav-link text-white active" href="userOrders">
+                <a class="nav-link text-white active" href="../userOrders">
                     <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
+                </a>
+                <a class="nav-link text-white" href="../cart">
+                    <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
+                </a>
+                <a class="nav-link text-white" href="../userProfile">
+                    <i class="fas fa-user me-1"></i>Tài khoản
                 </a>
             </div>
         </div>
@@ -65,7 +71,7 @@
     <div class="container mt-4">
         <!-- Back Button -->
         <div class="mb-3">
-            <a href="userOrders" class="btn btn-outline-secondary">
+            <a href="../userOrders" class="btn btn-outline-secondary">
                 <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách đơn hàng
             </a>
         </div>

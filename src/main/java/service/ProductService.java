@@ -21,10 +21,10 @@ import java.util.ArrayList;
  */
 public class ProductService {
 
-    private ProductDAO productDao;
+    private ProductDAO productDAO;
 
     public ProductService() {
-        this.productDao = new ProductDAO();
+        this.productDAO = new ProductDAO();
     }
 
     /**
@@ -35,7 +35,7 @@ public class ProductService {
             throw new IllegalArgumentException("Invalid variant ID");
         }
 
-        ProductVariant variant = productDao.getVariantWithDetails(variantId);
+        ProductVariant variant = productDAO.getVariantWithDetails(variantId);
 
         // Apply business logic - check stock, validate price, etc.
         if (variant != null) {
@@ -50,7 +50,7 @@ public class ProductService {
      */
     public List<Product> getAllProducts() {
         try {
-            List<Product> products = productDao.getAllProducts();
+            List<Product> products = productDAO.getAllProducts();
             return products != null ? products : new ArrayList<>();
         } catch (Exception e) {
             System.err.println("Error in ProductService.getAllProducts: " + e.getMessage());
@@ -66,7 +66,7 @@ public class ProductService {
             throw new IllegalArgumentException("Invalid product ID");
         }
 
-        Product product = productDao.getProductWithDetails(productId);
+        Product product = productDAO.getProductWithDetails(productId);
         if (product == null) {
             return null;
         }
@@ -157,7 +157,7 @@ public class ProductService {
     public List<Product> searchAndFilterProducts(String searchQuery, Integer brandId, Integer typeId,
             Double minPrice, Double maxPrice) {
         try {
-            List<Product> products = productDao.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice,
+            List<Product> products = productDAO.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice,
                     maxPrice);
             return products != null ? products : new ArrayList<>();
         } catch (Exception e) {
@@ -170,8 +170,8 @@ public class ProductService {
      * Close resources
      */
     public void close() {
-        if (productDao != null) {
-            productDao.close();
+        if (productDAO != null) {
+            productDAO.close();
         }
     }
 }

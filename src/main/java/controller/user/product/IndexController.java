@@ -65,8 +65,8 @@ public class IndexController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("DEBUG: IndexController doGet() called");
-        ProductDAO productDao = new ProductDAO();
-        List<Product> allProducts = productDao.getAllProducts();
+        ProductDAO productDAO = new ProductDAO();
+        List<Product> allProducts = productDAO.getAllProducts();
         Collections.shuffle(allProducts);
         List<Product> randomProducts = allProducts.stream()
                 .limit(6)
