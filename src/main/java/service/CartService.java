@@ -1,6 +1,7 @@
 package service;
 
 import repository.OrderDAO;
+import repository.ProductVariantDAO;
 import model.OrderTable;
 import model.OrderDetail;
 import model.OrderDetailKey;
@@ -18,10 +19,12 @@ public class CartService {
 
     private OrderDAO orderDAO;
     private ProductService productService;
+    private ProductVariantDAO productVariantDAO;
 
     public CartService() {
         this.orderDAO = new OrderDAO();
         this.productService = new ProductService();
+        this.productVariantDAO = new ProductVariantDAO();
     }
 
     /**
@@ -258,6 +261,18 @@ public class CartService {
                 throw new IllegalArgumentException("Cart is empty");
             }
 
+            // Check and update stock for all items first
+            for (OrderDetail item : cartItems) {
+                int variantId = item.getVariant().getVariantID();
+                int orderQuantity = item.getOrderQuantity();
+
+                boolean stockUpdated = productVariantDAO.updateStock(variantId, orderQuantity);
+                if (!stockUpdated) {
+                    throw new RuntimeException("Failed to update stock for variant " + variantId +
+                            ". Insufficient stock or variant not found.");
+                }
+            }
+
             // Update cart status from 0 (giỏ hàng) to 1 (đã thanh toán)
             boolean updated = orderDAO.updateOrderStatus(cart.getOrderID(), 1);
 
@@ -287,7 +302,6 @@ public class CartService {
         }
 
         try {
-            OrderTable cart = getOrCreateCart(user);
             List<OrderDetail> cartItems = getCartItems(user);
 
             if (cartItems.isEmpty()) {
@@ -321,32 +335,48 @@ public class CartService {
                 throw new RuntimeException("Failed to create new order");
             }
 
-            // Move selected items to the new order
+            // Move selected items to the new order and update stock
             for (OrderDetail selectedItem : selectedItems) {
+                int variantId = selectedItem.getVariant().getVariantID();
+                int orderQuantity = selectedItem.getOrderQuantity();
+
+                System.out.println("=== STOCK UPDATE DEBUG ===");
+                System.out.println("Processing variant ID: " + variantId);
+                System.out.println("Order quantity: " + orderQuantity);
+                System.out.println("Current stock before update: " + selectedItem.getVariant().getQuantity());
+
+                // Check and update stock first
+                boolean stockUpdated = productVariantDAO.updateStock(variantId, orderQuantity);
+                System.out.println("Stock update result: " + stockUpdated);
+
+                if (!stockUpdated) {
+                    throw new RuntimeException("Failed to update stock for variant " + variantId +
+                            ". Insufficient stock or variant not found.");
+                }
+
                 // Create new order detail for the new order
                 OrderDetail newDetail = new OrderDetail();
                 OrderDetailKey newKey = new OrderDetailKey();
                 newKey.setOrderId(savedOrder.getOrderID());
-                newKey.setVariantId(selectedItem.getVariant().getVariantID());
+                newKey.setVariantId(variantId);
 
                 newDetail.setId(newKey);
                 newDetail.setOrder(savedOrder);
                 newDetail.setVariant(selectedItem.getVariant());
-                newDetail.setOrderQuantity(selectedItem.getOrderQuantity());
+                newDetail.setOrderQuantity(orderQuantity);
 
                 // Add to new order
                 boolean detailAdded = orderDAO.createOrderDetail(newDetail);
                 if (!detailAdded) {
                     throw new RuntimeException(
-                            "Failed to add order detail for variant " + selectedItem.getVariant().getVariantID());
+                            "Failed to add order detail for variant " + variantId);
                 }
 
                 // Remove from cart
                 OrderDetailKey cartKey = selectedItem.getId();
                 boolean removedFromCart = orderDAO.removeCartItem(cartKey.getOrderId(), cartKey.getVariantId());
                 if (!removedFromCart) {
-                    System.err.println("Warning: Failed to remove item from cart for variant "
-                            + selectedItem.getVariant().getVariantID());
+                    System.err.println("Warning: Failed to remove item from cart for variant " + variantId);
                 }
             }
 
@@ -400,6 +430,9 @@ public class CartService {
         }
         if (productService != null) {
             productService.close();
+        }
+        if (productVariantDAO != null) {
+            productVariantDAO.close();
         }
     }
 }

@@ -72,6 +72,23 @@
     <main class="mt-5 pt-4">
         <div class="container mt-5">
             
+            <!-- Display success/error messages -->
+            <c:if test="${not empty sessionScope.successMessage}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    ${sessionScope.successMessage}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <c:remove var="successMessage" scope="session" />
+            </c:if>
+
+            <c:if test="${not empty sessionScope.errorMessage}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    ${sessionScope.errorMessage}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <c:remove var="errorMessage" scope="session" />
+            </c:if>
+            
             <!-- Back button -->
             <a href="${pageContext.request.contextPath}/products?action=detail&id=${product.productID}" class="back-btn">
                 <i class="fas fa-arrow-left"></i> Quay lại sản phẩm
@@ -165,6 +182,7 @@
                             <form action="${pageContext.request.contextPath}/cart" method="post">
                                 <input type="hidden" name="action" value="add">
                                 <input type="hidden" name="variantId" value="${selectedVariant.variantID}">
+                                <input type="hidden" name="returnUrl" value="variant?variantId=${selectedVariant.variantID}">
                                 
                                 <div style="margin: 20px 0;">
                                     <label for="quantity" style="font-weight: bold;">Số lượng:</label>
@@ -182,8 +200,12 @@
                         <!-- Other Variants Link -->
                         <div style="margin-top: 30px; text-align: center;">
                             <a href="${pageContext.request.contextPath}/products?action=detail&id=${product.productID}" 
-                               style="color: #007bff; text-decoration: none; font-weight: bold;">
+                               style="color: #007bff; text-decoration: none; font-weight: bold; margin-right: 15px;">
                                 <i class="fas fa-list"></i> Xem tất cả phiên bản khác
+                            </a>
+                            <a href="${pageContext.request.contextPath}/cart" 
+                               style="color: #28a745; text-decoration: none; font-weight: bold;">
+                                <i class="fas fa-shopping-cart"></i> Xem giỏ hàng
                             </a>
                         </div>
                         
@@ -196,9 +218,29 @@
     <!-- Footer -->
     <footer style="margin-top: 50px; padding: 20px 0; background-color: #f8f9fa;">
         <div class="text-center">
-            <p>&copy; 2025 Cloth Store. All rights reservedHello.</p>
+            <p>&copy; 2025 Cloth Store. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="${pageContext.request.contextPath}/js/mdb.umd.min.js"></script>
+    <script>
+        // Auto-hide alerts after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    if (alert.classList.contains('show')) {
+                        alert.classList.remove('show');
+                        alert.classList.add('fade');
+                        setTimeout(function() {
+                            alert.remove();
+                        }, 500);
+                    }
+                }, 5000);
+            });
+        });
+    </script>
 
 </body>
 </html>

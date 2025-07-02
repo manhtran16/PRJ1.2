@@ -339,11 +339,27 @@
   
 </header>
 <main>
-<!--Main layout-->
-<main class="mt-5 pt-4">
-    <div class="container mt-5">
+<!--Main layout-->    <main class="mt-5 pt-4">
+        <div class="container mt-5">
 
-        <!--Grid row-->
+            <!-- Display success/error messages -->
+            <c:if test="${not empty sessionScope.successMessage}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    ${sessionScope.successMessage}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <c:remove var="successMessage" scope="session" />
+            </c:if>
+
+            <c:if test="${not empty sessionScope.errorMessage}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    ${sessionScope.errorMessage}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <c:remove var="errorMessage" scope="session" />
+            </c:if>
+
+            <!--Grid row-->
         <div class="row">
             <!--Grid column-->
             <div class="col-md-6 mb-4">
@@ -443,25 +459,25 @@
                                 <h4>🎨 ${color}</h4>
                                 
                                 <div class="size-variants">
-                                    <%-- Find all variants with this color --%>
+        
                                     <c:forEach var="variant" items="${product.variants}">
                                         <c:set var="variantColor" value="Mặc định" />
                                         <c:set var="variantSize" value="" />
                                         
-                                        <%-- Get color and size from attributes --%>
+                                
                                         <c:forEach var="attrValue" items="${variant.attributeValues}">
-                                            <%-- Check for color attribute (flexible matching) --%>
+                                         
                                             <c:set var="attrNameLower" value="${fn:toLowerCase(attrValue.attribute.attributeName)}" />
                                             <c:if test="${attrNameLower == 'color' || attrNameLower == 'màu sắc' || attrNameLower == 'mau sac' || fn:contains(attrNameLower, 'color') || fn:contains(attrNameLower, 'màu')}">
                                                 <c:set var="variantColor" value="${attrValue.value}" />
                                             </c:if>
-                                            <%-- Check for size attribute (flexible matching) --%>
+                                           
                                             <c:if test="${attrNameLower == 'size' || attrNameLower == 'kích thước' || attrNameLower == 'kich thuoc' || fn:contains(attrNameLower, 'size') || fn:contains(attrNameLower, 'kích')}">
                                                 <c:set var="variantSize" value="${attrValue.value}" />
                                             </c:if>
                                         </c:forEach>
                                         
-                                        <%-- If this variant matches current color, display it --%>
+                                      
                                         <c:if test="${variantColor == color}">
                                             <div class="size-variant-card">
                                                 <div class="size-title">
@@ -478,7 +494,7 @@
                                                 <c:choose>
                                                     <c:when test="${variant.quantity > 0}">
                                                         <p class="variant-stock stock-available" style="margin: 5px 0;">
-                                                            ✅ Còn: ${variant.quantity}
+                                                            ✅ Còn: <strong>${variant.quantity}</strong> sản phẩm
                                                         </p>
                                                     </c:when>
                                                     <c:otherwise>
@@ -703,6 +719,22 @@
 </footer>
 
 <script>
+// Auto-hide alerts after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function(alert) {
+        setTimeout(function() {
+            if (alert.classList.contains('show')) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(function() {
+                    alert.remove();
+                }, 500);
+            }
+        }, 5000);
+    });
+});
+
 // Rating star interaction
 document.addEventListener('DOMContentLoaded', function() {
     const ratingInputs = document.querySelectorAll('.rating-input input[type="radio"]');

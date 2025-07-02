@@ -1,56 +1,56 @@
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\authentication\changePassword.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\OrderService.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\RatingKey.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\factory\EntityManagerFactoryProvider.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Brand.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\OrderTable.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\brand\addbrand.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\cart\CartController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\type\edittype.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Image.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\ProductVariant.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\authentication\AuthController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\VariantAttributeKey.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\ProductService.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\product\IndexController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\TypeService.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\OrderDetailKey.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Rating.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\orders\UserOrdersController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\UserDAO.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\brand\editbrand.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\ProductVarriantValue.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\ProductDAO.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\admin\DashboardService.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\com\mycompany\clothesshop\resources\JakartaEE10Resource.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\ProductVariantDAO.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\product\addproduct.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\RatingDAO.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\type\typemanagement.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\OrderDAO.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\BrandDAO.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\ImageDAO.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\product\ProductDetailController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\product\updateproduct.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\authentication\logout.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\repository\TypeDAO.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\User.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\product\productmanagement.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\admindashboar\admindashboard.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\BrandService.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\VariantAttributeValue.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\utils\PasswordUtils.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\utils\Validate.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Type.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\service\CartService.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\authentication\DBContext.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\product\VariantController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\OrderDetail.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\brand\brandmanagement.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\product\ProductsController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\profile\UserProfileController.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Product.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\model\Attribute.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\com\mycompany\clothesshop\JakartaRestConfiguration.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\admin\type\addtype.java
-C:\Users\manht\Downloads\Ki_4\PRJ\ClothesShop\src\main\java\controller\user\rating\RatingController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\utils\Validate.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\authentication\changePassword.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\com\mycompany\clothesshop\resources\JakartaEE10Resource.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\OrderDetailKey.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\TypeDAO.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\type\addtype.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\RatingKey.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\factory\EntityManagerFactoryProvider.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\VariantAttributeValue.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\service\admin\DashboardService.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\rating\RatingController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\ProductDAO.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\RatingDAO.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\orders\UserOrdersController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\authentication\logout.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\authentication\AuthController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\type\typemanagement.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\service\OrderService.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\ProductVarriantValue.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\cart\CartController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\product\addproduct.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Image.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\VariantAttributeKey.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\authentication\DBContext.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\OrderDetail.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\product\updateproduct.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\ImageDAO.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\profile\UserProfileController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\brand\editbrand.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Attribute.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\brand\addbrand.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\ProductVariant.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\ProductVariantDAO.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\utils\PasswordUtils.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\com\mycompany\clothesshop\JakartaRestConfiguration.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\service\ProductService.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Type.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\OrderDAO.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\product\productmanagement.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\admindashboar\admindashboard.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\product\VariantController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\brand\brandmanagement.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\product\ProductsController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Product.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\product\ProductDetailController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\BrandDAO.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\user\product\IndexController.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\controller\admin\type\edittype.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Brand.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\Rating.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\OrderTable.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\service\TypeService.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\service\CartService.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\repository\UserDAO.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\model\User.java
+C:\Users\Admin\Documents\Hoc Java\PRJ_H\PRJ1.2\src\main\java\service\BrandService.java

@@ -137,8 +137,14 @@ public class CartController extends HttpServlet {
                 session.setAttribute("errorMessage", "Không thể thêm sản phẩm vào giỏ hàng.");
             }
 
-            // Redirect to prevent double submission
-            response.sendRedirect("cart");
+            // Check if there's a return URL to redirect back to original page
+            String returnUrl = request.getParameter("returnUrl");
+            if (returnUrl != null && !returnUrl.trim().isEmpty()) {
+                response.sendRedirect(returnUrl);
+            } else {
+                // Default redirect to cart
+                response.sendRedirect("cart");
+            }
 
         } catch (NumberFormatException e) {
             HttpSession session = request.getSession();
