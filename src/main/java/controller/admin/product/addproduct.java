@@ -27,7 +27,6 @@ public class addproduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Forward to the add product form
         TypeDAO tdao = new TypeDAO();
         List<Type> typeList = tdao.getType();
         BrandDAO bdao = new BrandDAO();
@@ -41,7 +40,6 @@ public class addproduct extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Lấy thông tin sản phẩm từ form
             String productName = request.getParameter("productName");
             String description = request.getParameter("description");
             int brandID = Integer.parseInt(request.getParameter("brandID"));
@@ -60,7 +58,6 @@ public class addproduct extends HttpServlet {
             product.setBrand(brand);
             product.setType(type);
 
-            // Lấy thông tin biến thể
             String[] sizes = request.getParameterValues("variantSize[]");
             for (String size : sizes) {
                 System.out.println(size);
@@ -88,18 +85,16 @@ public class addproduct extends HttpServlet {
                 ProductVariant variant = new ProductVariant();
                 variant.setQuantity(Integer.parseInt(quantities[i]));
                 variant.setPrice(price);
-                variant.setProduct(product); // Đừng quên gán product
+                variant.setProduct(product); 
 
                 List<VariantAttributeValue> attributes = new ArrayList<>();
 
-                // Gán size attribute
                 VariantAttributeValue sizeVav = new VariantAttributeValue();
                 sizeVav.setValue(sizes[i]);
                 sizeVav.setAttribute(em.getReference(Attribute.class, sizeAttributeID));
                 sizeVav.setVariant(variant);
                 attributes.add(sizeVav);
 
-                // Gán color attribute
                 VariantAttributeValue colorVav = new VariantAttributeValue();
                 colorVav.setValue(colors[i]);
                 colorVav.setAttribute(em.getReference(Attribute.class, colorAttributeID));
@@ -108,7 +103,6 @@ public class addproduct extends HttpServlet {
 
                 variant.setAttributeValues(attributes);
 
-                // Gán ảnh
                 List<Image> variantImages = new ArrayList<>();
                 Image image = new Image(images[i], variant);
                 variantImages.add(image);
@@ -121,7 +115,7 @@ public class addproduct extends HttpServlet {
             ProductService productService = new ProductService();
             boolean success = productService.addFullProduct(product, variantList);
             if (success) {
-                request.setAttribute("msg", "Thêm sản phẩm thành công!!");
+                request.setAttribute("success", "Thêm sản phẩm thành công!");
                 request.getRequestDispatcher("/admin/product/add_product.jsp").forward(request, response);
             } else {
                 request.setAttribute("msg", "Thêm sản phẩm thất bại");

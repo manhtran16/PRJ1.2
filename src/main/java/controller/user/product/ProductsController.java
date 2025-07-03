@@ -45,13 +45,10 @@ public class ProductsController extends HttpServlet {
         String variantId = request.getParameter("variantId");
 
         if ("detail".equals(action) && productId != null) {
-            // Show product detail
             showProductDetail(request, response, productId);
         } else if ("variant".equals(action) && variantId != null) {
-            // Show specific variant detail
             showVariantDetail(request, response, variantId);
         } else {
-            // Show products list
             showProductsList(request, response);
         }
     }
@@ -59,14 +56,12 @@ public class ProductsController extends HttpServlet {
     private void showProductsList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Get search and filter parameters
             String searchQuery = request.getParameter("q");
             String brandIdStr = request.getParameter("brandId");
             String typeIdStr = request.getParameter("typeId");
             String minPriceStr = request.getParameter("minPrice");
             String maxPriceStr = request.getParameter("maxPrice");
 
-            // Parse parameters
             Integer brandId = null;
             Integer typeId = null;
             Double minPrice = null;
@@ -86,10 +81,9 @@ public class ProductsController extends HttpServlet {
                     maxPrice = Double.parseDouble(maxPriceStr);
                 }
             } catch (NumberFormatException e) {
-                // Ignore invalid numbers, use null values
+                e.printStackTrace();
             }
 
-            // Get products based on search/filter or all products
             List<Product> products;
             if (searchQuery != null || brandId != null || typeId != null || minPrice != null || maxPrice != null) {
                 products = productService.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice, maxPrice);
@@ -97,19 +91,15 @@ public class ProductsController extends HttpServlet {
                 products = productService.getAllProducts();
             }
 
-            // Shuffle products for random display
             Collections.shuffle(products);
 
-            // Get brands and types for filter dropdowns
             List<Brand> brands = brandDAO.getBrand();
             List<Type> types = typeDAO.getType();
 
-            // Set attributes for JSP
             request.setAttribute("products", products);
             request.setAttribute("brands", brands);
             request.setAttribute("types", types);
 
-            // Preserve search/filter values in form
             request.setAttribute("searchQuery", searchQuery);
             request.setAttribute("selectedBrandId", brandId);
             request.setAttribute("selectedTypeId", typeId);
@@ -135,7 +125,6 @@ public class ProductsController extends HttpServlet {
 
         try {
             int productId = Integer.parseInt(productIdStr);
-            // Use getProductWithDetails to load all relationships including variants
             Product product = productService.getProductWithDetails(productId);
 
             if (product == null) {
@@ -144,12 +133,10 @@ public class ProductsController extends HttpServlet {
                 return;
             }
 
-            // Get rating information for the product
             List<Rating> ratings = ratingDAO.getRatingsByProductId(productId);
             Double averageRating = ratingDAO.getAverageRatingByProductId(productId);
             Long totalRatings = ratingDAO.getTotalRatingsByProductId(productId);
 
-            // Check if current user has rated this product
             HttpSession session = request.getSession();
             User currentUser = (User) session.getAttribute("user");
             Rating userRating = null;
@@ -184,7 +171,6 @@ public class ProductsController extends HttpServlet {
         try {
             int variantId = Integer.parseInt(variantIdStr);
 
-            // Get the variant with its product details
             ProductVariant variant = productService.getVariantWithDetails(variantId);
 
             if (variant == null) {
@@ -193,11 +179,9 @@ public class ProductsController extends HttpServlet {
                 return;
             }
 
-            // Set both variant and product information
             request.setAttribute("selectedVariant", variant);
             request.setAttribute("product", variant.getProduct());
 
-            // Forward to a variant detail page (we'll create this)
             request.getRequestDispatcher("variantDetail.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {

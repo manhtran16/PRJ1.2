@@ -34,7 +34,6 @@ public class VariantController extends HttpServlet {
         try {
             int variantId = Integer.parseInt(variantIdStr);
 
-            // Get variant details with all relationships loaded
             ProductVariant variant = productDAO.getVariantWithDetails(variantId);
 
             if (variant == null) {
@@ -43,7 +42,6 @@ public class VariantController extends HttpServlet {
                 return;
             }
 
-            // Get the product associated with this variant
             Product product = variant.getProduct();
             if (product == null) {
                 request.setAttribute("errorMessage", "Không tìm thấy sản phẩm cho phiên bản này.");
@@ -51,11 +49,9 @@ public class VariantController extends HttpServlet {
                 return;
             }
 
-            // Set attributes for JSP
             request.setAttribute("selectedVariant", variant);
             request.setAttribute("product", product);
 
-            // Forward to variant detail page
             request.getRequestDispatcher("variantDetail.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {

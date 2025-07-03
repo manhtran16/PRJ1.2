@@ -49,7 +49,6 @@ public class RatingController extends HttpServlet {
             int rate = Integer.parseInt(request.getParameter("rate"));
             String comment = request.getParameter("comment");
 
-            // Validate rate (1-5)
             if (rate < 1 || rate > 5) {
                 request.setAttribute("error", "Rating must be between 1 and 5");
                 request.getRequestDispatcher("/displayPro?id=" + productId).forward(request, response);
@@ -70,7 +69,6 @@ public class RatingController extends HttpServlet {
             request.setAttribute("error", "An error occurred while processing your rating.");
         }
 
-        // Redirect back to product detail page
         String productId = request.getParameter("productId");
         response.sendRedirect(request.getContextPath() + "/displayPro?id=" + productId);
     }
@@ -83,7 +81,6 @@ public class RatingController extends HttpServlet {
             int rate = Integer.parseInt(request.getParameter("rate"));
             String comment = request.getParameter("comment");
 
-            // Validate rate (1-5)
             if (rate < 1 || rate > 5) {
                 request.setAttribute("error", "Rating must be between 1 and 5");
                 request.getRequestDispatcher("/displayPro?id=" + productId).forward(request, response);
@@ -104,7 +101,6 @@ public class RatingController extends HttpServlet {
             request.setAttribute("error", "An error occurred while updating your rating.");
         }
 
-        // Redirect back to product detail page
         String productId = request.getParameter("productId");
         response.sendRedirect(request.getContextPath() + "/displayPro?id=" + productId);
     }

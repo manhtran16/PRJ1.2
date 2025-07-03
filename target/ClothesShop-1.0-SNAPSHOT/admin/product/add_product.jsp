@@ -204,11 +204,28 @@
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Thêm sản phẩm</button>
             </form>
+            <div style="text-align:center; margin-top:1.5rem;">
+                <a href="${pageContext.request.contextPath}/admindashboard" class="btn btn-secondary" style="background:linear-gradient(90deg,#a770ef 0%,#f6d365 100%);color:#fff;border:none;border-radius:8px;padding:10px 32px;font-weight:500;text-decoration:none;">
+                    <i class="fas fa-arrow-left"></i> Quay lại trang quản trị
+                </a>
+            </div>
         </div>
 
         <c:if test="${not empty requestScope.error}">
             <div class="alert alert-danger mt-3 text-center">
                 ${requestScope.msg}
+            </div>
+        </c:if>
+
+        <c:if test="${not empty requestScope.success}">
+            <div class="alert alert-success mt-3 text-center">
+                ${requestScope.success}
+            </div>
+        </c:if>
+        <c:if test="${not empty sessionScope.success}">
+            <div class="alert alert-success mt-3 text-center">
+                ${sessionScope.success}
+                <c:remove var="success" scope="session"/>
             </div>
         </c:if>
 

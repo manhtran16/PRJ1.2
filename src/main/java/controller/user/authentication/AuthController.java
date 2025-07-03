@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.User;
+import service.AuthService;
 
 /**
  *
@@ -25,6 +26,7 @@ import model.User;
 public class AuthController extends HttpServlet {
 
     private UserDAO userDao;
+    private AuthService authService = new AuthService(userDao);
 
     @Override
     public void init() throws ServletException {
@@ -110,70 +112,53 @@ public class AuthController extends HttpServlet {
 
     protected void postLogin(HttpServletRequest request, HttpServletResponse response, String email, String password)
             throws ServletException, IOException {
-        try {
-            int status = userDao.checkLoginUser(email, password);
-            String rememberLogin = request.getParameter("remember");
-            switch (status) {
-                case 0:// login success
-                    User user = userDao.getUserByEmail(email);
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", user);
-                    if (user.getUserRole() == 0) {
-                        if (Validate.checkString(rememberLogin)) {
-                            Cookie cookie = new Cookie("rememberUser", String.valueOf(user.getUserID()));
-                            cookie.setMaxAge(60 * 60 * 24 * 30); // 30 days
-                            response.addCookie(cookie);
-                        }
-                        response.sendRedirect("index");
-                    } else {
-                        response.sendRedirect(request.getContextPath() + "/admindashboard");
-                    }
-                    break;
-
-                case 1:// wrong password66
-                    request.setAttribute("loginStatus", 1);
-                    request.setAttribute("msg", "Wrong password");
-                    request.setAttribute("email", email);
-
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                    break;
-                case 2:// userName not found
-                    request.setAttribute("loginStatus", 2);
-                    request.setAttribute("email", email);
-                    request.setAttribute("msg", "Account is not exist!!!");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                    break;
-
-                default:
-
-                    break;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("msg", "Lỗi server. Vui lòng thử lại sau.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        int result = authService.login(request, response, email, password);
+        switch (result) {
+            case 0:
+                response.sendRedirect("index");
+                break;
+            case 3:
+                response.sendRedirect(request.getContextPath() + "/admindashboard");
+                break;
+            case 1:
+                request.setAttribute("loginStatus", 1);
+                request.setAttribute("msg", "Wrong password");
+                request.setAttribute("email", email);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                break;
+            case 2:
+                request.setAttribute("loginStatus", 2);
+                request.setAttribute("email", email);
+                request.setAttribute("msg", "Account is not exist!!!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                break;
+            default:
+                request.setAttribute("msg", "Lỗi server. Vui lòng thử lại sau.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                break;
         }
     }
 
-    protected void postRegister(HttpServletRequest request,
-            HttpServletResponse response,
-            User user,
-            String password)
+    protected void postRegister(HttpServletRequest request, HttpServletResponse response, User user, String password)
             throws ServletException, IOException {
-
-        if (userDao.getUserByUserName(user.getUserName()) != null) {
-            request.setAttribute("msg", "User is exist!!!");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+        int result = authService.register(request, user, password);
+        switch (result) {
+            case 1:
+                request.setAttribute("msg", "User is exist!!!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                break;
+            case 2:
+                request.setAttribute("msg", "Email is exist!!!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                break;
+            case 0:
+                response.sendRedirect("login.jsp");
+                break;
+            default:
+                request.setAttribute("msg", "Lỗi server. Vui lòng thử lại sau.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                break;
         }
-        if (userDao.getUserByEmail(user.getEmail()) != null) {
-            request.setAttribute("msg", "Email is exist!!!");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-        } else {
-            userDao.createUser(user, password);
-            response.sendRedirect("login.jsp");
-
-        }
-
     }
 
     /**

@@ -81,12 +81,9 @@ public class ProductVariantDAO {
         }
     }
 
-    /**
-     * Get variant by ID
-     */
+
     public ProductVariant getById(int variantId) {
         try {
-            // Clear cache to ensure fresh data
             em.clear();
             return em.find(ProductVariant.class, variantId);
         } catch (Exception e) {

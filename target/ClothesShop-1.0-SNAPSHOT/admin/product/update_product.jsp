@@ -21,12 +21,12 @@
                 min-height: 100vh;
             }
             .update-product-container {
-                max-width: 500px;
+                max-width: 900px;         /* Tăng chiều rộng tối đa */
                 margin: 60px auto;
                 background: #fff;
                 border-radius: 16px;
                 box-shadow: 0 6px 24px rgba(167,112,239,0.10);
-                padding: 36px 32px;
+                padding: 48px 40px;       /* Tăng padding cho rộng */
             }
             .update-product-container h2 {
                 color: #6c2eb7;
@@ -42,9 +42,9 @@
             .form-control {
                 border-radius: 8px;
                 border: 1.5px solid #d1c4e9;
-                font-size: 1.05rem;
+                font-size: 1.2rem;      /* Tăng cỡ chữ */
                 margin-bottom: 18px;
-                padding: 10px 14px;
+                padding: 16px 18px;     /* Tăng padding */
                 transition: border 0.2s;
             }
             .form-control:focus {
@@ -165,8 +165,10 @@
                                 <label class="form-label">Ảnh biến thể</label>
                                 <div>
                                     <c:forEach var="img" items="${variant.images}">
-                                        <c:if test="${img ne null && not empty img.imageUrl}">
-                                            <img src="${pageContext.request.contextPath}/img/product-img/${img.imageUrl}" alt="Ảnh biến thể" style="height:38px; border-radius:4px; margin-right:4px; border:1px solid #eee;">
+                                        <c:if test="${img ne null}">
+                                            <c:if test="${not empty img.url}">
+                                                <img src="${img.url}" alt="Ảnh biến thể" style="height:100%; width:180px; object-fit:cover; border-radius:8px; margin-right:16px; border:1px solid #eee;">
+                                            </c:if>
                                         </c:if>
                                     </c:forEach>
                                 </div>
@@ -187,7 +189,9 @@
                 </div>
             </c:if>
             <div style="text-align:center; margin-top:1.5rem;">
-                <a href="${pageContext.request.contextPath}/productmanagement" style="color:#6c2eb7;text-decoration:underline;">Quay lại danh sách sản phẩm</a>
+                <a href="${pageContext.request.contextPath}/admindashboard" class="btn btn-secondary" style="background:linear-gradient(90deg,#a770ef 0%,#f6d365 100%);color:#fff;border:none;border-radius:8px;padding:10px 32px;font-weight:500;text-decoration:none;">
+                    <i class="fas fa-arrow-left"></i> Quay lại trang quản trị
+                </a>
             </div>
         </div>
         <script src="${pageContext.request.contextPath}/js/mdb.min.js"></script>
