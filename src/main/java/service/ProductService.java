@@ -16,6 +16,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.ArrayList;
+
 /**
  * Product Service Layer - xu ly logic nghiep vu
  */
@@ -27,22 +28,15 @@ public class ProductService {
         this.productDAO = new ProductDAO();
     }
 
-<<<<<<< HEAD
     /**
      * lay thong tin chi tiet variant theo ID
      */
-=======
->>>>>>> e884e6c0f6f2f2c2363c11c4a54cc454d080a638
     public ProductVariant getVariantWithDetails(int variantId) {
         if (variantId <= 0) {
             throw new IllegalArgumentException("Invalid variant ID");
         }
 
         ProductVariant variant = productDAO.getVariantWithDetails(variantId);
-<<<<<<< HEAD
-=======
-
->>>>>>> e884e6c0f6f2f2c2363c11c4a54cc454d080a638
         if (variant != null) {
         }
 
@@ -89,7 +83,7 @@ public class ProductService {
                 variant.setProduct(product);
 
                 em.persist(variant);
-                em.flush(); 
+                em.flush();
                 System.out.println("After flush - Variant ID: " + variant.getVariantID());
                 // Xử lý các giá trị thuộc tính
                 List<VariantAttributeValue> attributeValues = variant.getAttributeValues();
@@ -101,17 +95,9 @@ public class ProductService {
                                     "❌ Thiếu hoặc sai attribute ID trong VariantAttributeValue");
                         }
                         System.out.println("2");
-<<<<<<< HEAD
                         int attrId = vav.getAttribute().getAttributeID();
                         Attribute managedAttr = em.getReference(Attribute.class, attrId);
                         vav.setAttribute(managedAttr);
-=======
-                        // Lấy attribute từ DB 
-                        int attrId = vav.getAttribute().getAttributeID();
-                        Attribute managedAttr = em.getReference(Attribute.class, attrId);
-                        vav.setAttribute(managedAttr);
-
->>>>>>> e884e6c0f6f2f2c2363c11c4a54cc454d080a638
                         vav.setVariant(variant);
 
                         if (vav.getId() == null) {
@@ -126,13 +112,8 @@ public class ProductService {
                         em.persist(vav);
                     }
                 }
-<<<<<<< HEAD
 
                 System.out.println("5");
-=======
-                System.out.println("5");
-
->>>>>>> e884e6c0f6f2f2c2363c11c4a54cc454d080a638
                 if (variant.getImages() != null) {
                     for (Image image : variant.getImages()) {
                         image.setVariant(variant);

@@ -141,10 +141,6 @@ public class UserOrdersController extends HttpServlet {
         try {
             List<OrderTable> orders = orderService.getUserOrders(user.getUserID());
 
-<<<<<<< HEAD
-            // calculate totals for each order
-=======
->>>>>>> e884e6c0f6f2f2c2363c11c4a54cc454d080a638
             for (OrderTable order : orders) {
                 double total = orderService.getOrderTotal(order.getOrderID());
                 request.setAttribute("orderTotal_" + order.getOrderID(), total);
