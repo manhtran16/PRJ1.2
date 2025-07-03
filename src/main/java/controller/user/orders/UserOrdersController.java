@@ -66,10 +66,8 @@ public class UserOrdersController extends HttpServlet {
         if ("checkoutSelected".equals(action)) {
             handleSelectedCheckout(request, response, currentUser);
         } else if ("processCheckout".equals(action)) {
-            // Handle other checkout actions if needed
             handleCheckout(request, response, currentUser);
         } else {
-            // Default to GET behavior
             doGet(request, response);
         }
     }
@@ -156,7 +154,7 @@ public class UserOrdersController extends HttpServlet {
         try {
             List<OrderTable> orders = orderService.getUserOrders(user.getUserID());
 
-            // Calculate totals for each order
+            // calculate totals for each order
             for (OrderTable order : orders) {
                 double total = orderService.getOrderTotal(order.getOrderID());
                 request.setAttribute("orderTotal_" + order.getOrderID(), total);

@@ -15,7 +15,7 @@ public class TypeDAO {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
-    // Lấy toàn bộ loại sản phẩm
+    // Select all product types
     public List<Type> getType() {
         try {
             TypedQuery<Type> query = em.createQuery("SELECT t FROM Type t", Type.class);
@@ -26,7 +26,7 @@ public class TypeDAO {
         }
     }
 
-    // Đếm số lượng loại sản phẩm
+    // Count the number of product types
     public int countType() {
         try {
             Long count = em.createQuery("SELECT COUNT(t) FROM Type t", Long.class).getSingleResult();
@@ -37,7 +37,7 @@ public class TypeDAO {
         }
     }
 
-    // Tạo mới một loại
+    // Create a new product type
     public boolean createType(String typeName) {
         try {
             em.getTransaction().begin();
@@ -55,7 +55,7 @@ public class TypeDAO {
         }
     }
 
-    // Xoá loại theo ID
+    // Delete a product type by ID
     public void deleteType(int id) {
         try {
             em.getTransaction().begin();

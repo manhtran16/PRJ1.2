@@ -363,7 +363,6 @@
         <div class="row">
             <!--Grid column-->
             <div class="col-md-6 mb-4">
-
                 <c:choose>
                     <c:when test="${not empty product.variants and not empty product.variants[0].images and not empty product.variants[0].images[0].url}">
                         <img src="${product.variants[0].images[0].url}" 
@@ -468,7 +467,9 @@
                                         <c:set var="variantColor" value="Mặc định" />
                                         <c:set var="variantSize" value="" />
                                         
+                                
                                         <c:forEach var="attrValue" items="${variant.attributeValues}">
+                                         
                                             <c:set var="attrNameLower" value="${fn:toLowerCase(attrValue.attribute.attributeName)}" />
                                             <c:if test="${attrNameLower == 'color' || attrNameLower == 'màu sắc' || attrNameLower == 'mau sac' || fn:contains(attrNameLower, 'color') || fn:contains(attrNameLower, 'màu')}">
                                                 <c:set var="variantColor" value="${attrValue.value}" />
@@ -479,6 +480,7 @@
                                             </c:if>
                                         </c:forEach>
                                         
+                                      
                                         <c:if test="${variantColor == color}">
                                             <div class="size-variant-card">
                                                 <div class="size-title">

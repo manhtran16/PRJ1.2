@@ -40,14 +40,11 @@ public class ProductDAO {
      */
     public List<Product> getAllProducts() {
         try {
-            // Clear the EntityManager cache to ensure fresh data
-            em.clear();
-
             // First, get products with variants
             TypedQuery<Product> query = em.createQuery(
                     "SELECT DISTINCT p FROM Product p "
-                            + "LEFT JOIN FETCH p.variants "
-                            + "ORDER BY p.productName",
+                    + "LEFT JOIN FETCH p.variants "
+                    + "ORDER BY p.productName",
                     Product.class);
             List<Product> products = query.getResultList();
 
@@ -73,49 +70,8 @@ public class ProductDAO {
      */
     public Product getProductWithDetails(int productId) {
         try {
-            // Clear the EntityManager cache to ensure fresh data
-            em.clear();
-
-            // First, get product with basic relationships (brands, types)
-            TypedQuery<Product> productQuery = em.createQuery(
-                    "SELECT DISTINCT p FROM Product p "
-                            + "LEFT JOIN FETCH p.brand b "
-                            + "LEFT JOIN FETCH p.type t "
-                            + "WHERE p.productID = :productId",
-                    Product.class);
-            productQuery.setParameter("productId", productId);
-            Product product = productQuery.getSingleResult();
-
-            if (product != null) {
-                // Then fetch variants separately
-                TypedQuery<ProductVariant> variantQuery = em.createQuery(
-                        "SELECT DISTINCT v FROM ProductVariant v "
-                                + "LEFT JOIN FETCH v.images "
-                                + "WHERE v.product.productID = :productId",
-                        ProductVariant.class);
-                variantQuery.setParameter("productId", productId);
-                List<ProductVariant> variants = variantQuery.getResultList();
-
-                // Finally fetch attribute values for each variant
-                for (ProductVariant variant : variants) {
-                    TypedQuery<ProductVariant> attrQuery = em.createQuery(
-                            "SELECT DISTINCT v FROM ProductVariant v "
-                                    + "LEFT JOIN FETCH v.attributeValues av "
-                                    + "LEFT JOIN FETCH av.attribute a "
-                                    + "WHERE v.variantID = :variantId",
-                            ProductVariant.class);
-                    attrQuery.setParameter("variantId", variant.getVariantID());
-                    ProductVariant variantWithAttrs = attrQuery.getSingleResult();
-                    variant.setAttributeValues(variantWithAttrs.getAttributeValues());
-                }
-
-                // Set the variants back to product
-                product.setVariants(variants);
-            }
-
-            return product;
+            return em.find(Product.class, productId);
         } catch (Exception e) {
-            System.err.println("ERROR in getProductWithDetails: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -126,15 +82,12 @@ public class ProductDAO {
      */
     public ProductVariant getVariantWithDetails(int variantId) {
         try {
-            // Clear the EntityManager cache to ensure fresh data
-            em.clear();
-
             TypedQuery<ProductVariant> query = em.createQuery(
                     "SELECT pv FROM ProductVariant pv "
-                            + "LEFT JOIN FETCH pv.product p "
-                            + "LEFT JOIN FETCH pv.attributeValues av "
-                            + "LEFT JOIN FETCH av.attribute a "
-                            + "WHERE pv.variantID = :variantId",
+                    + "LEFT JOIN FETCH pv.product p "
+                    + "LEFT JOIN FETCH pv.attributeValues av "
+                    + "LEFT JOIN FETCH av.attribute a "
+                    + "WHERE pv.variantID = :variantId",
                     ProductVariant.class);
             query.setParameter("variantId", variantId);
             return query.getSingleResult();
@@ -149,9 +102,6 @@ public class ProductDAO {
     public List<Product> searchAndFilterProducts(String searchQuery, Integer brandId, Integer typeId,
             Double minPrice, Double maxPrice) {
         try {
-            // Clear the EntityManager cache to ensure fresh data
-            em.clear();
-
             StringBuilder queryStr = new StringBuilder("SELECT p FROM Product p WHERE 1=1");
 
             if (searchQuery != null && !searchQuery.trim().isEmpty()) {
@@ -217,7 +167,8 @@ public class ProductDAO {
     public long getTotalProducts() {
         try {
             TypedQuery<Long> query = em.createQuery(
-                    "SELECT COUNT(p) FROM Product p", Long.class);
+                    "SELECT COUNT(p) FROM Product p", Long.class
+            );
             return query.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();

@@ -340,7 +340,6 @@ public class CartService {
                 int variantId = selectedItem.getVariant().getVariantID();
                 int orderQuantity = selectedItem.getOrderQuantity();
 
-                System.out.println("=== STOCK UPDATE DEBUG ===");
                 System.out.println("Processing variant ID: " + variantId);
                 System.out.println("Order quantity: " + orderQuantity);
                 System.out.println("Current stock before update: " + selectedItem.getVariant().getQuantity());

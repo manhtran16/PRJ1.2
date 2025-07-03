@@ -20,7 +20,7 @@ import model.Brand;
 import model.Type;
 
 /**
- * Product Service Layer - handles business logic for products
+ * Product Service Layer - xu ly logic nghiep vu
  */
 public class ProductService {
 
@@ -31,7 +31,7 @@ public class ProductService {
     }
 
     /**
-     * Get variant with details and validation
+     * lay thong tin chi tiet variant theo ID
      */
     public ProductVariant getVariantWithDetails(int variantId) {
         if (variantId <= 0) {
@@ -39,10 +39,7 @@ public class ProductService {
         }
 
         ProductVariant variant = productDAO.getVariantWithDetails(variantId);
-
-        // Apply business logic - check stock, validate price, etc.
         if (variant != null) {
-            // You could add stock validation, price checks, etc. here
         }
 
         return variant;
@@ -77,8 +74,6 @@ public class ProductService {
 
         // Apply business logic - filter out inactive variants, sort variants, etc.
         if (product.getVariants() != null) {
-            // Here you could add business rules like filtering inactive variants
-            // or sorting variants by price, popularity, etc.
         }
 
         return product;
@@ -105,22 +100,17 @@ public class ProductService {
                 List<VariantAttributeValue> attributeValues = variant.getAttributeValues();
                 if (attributeValues != null) {
                     for (VariantAttributeValue vav : attributeValues) {
-                        // Kiểm tra kỹ attribute trước khi sử dụng
                         System.out.println("1");
                         if (vav.getAttribute() == null || vav.getAttribute().getAttributeID() == 0) {
                             throw new IllegalArgumentException(
                                     "❌ Thiếu hoặc sai attribute ID trong VariantAttributeValue");
                         }
                         System.out.println("2");
-                        // Lấy attribute từ DB (managed)
                         int attrId = vav.getAttribute().getAttributeID();
                         Attribute managedAttr = em.getReference(Attribute.class, attrId);
                         vav.setAttribute(managedAttr);
-
-                        // Gán variant
                         vav.setVariant(variant);
 
-                        // Đảm bảo id không null và có đủ giá trị
                         if (vav.getId() == null) {
                             vav.setId(new VariantAttributeKey(
                                     variant.getVariantID(),
@@ -133,10 +123,8 @@ public class ProductService {
                         em.persist(vav); // Chỉ persist vav, KHÔNG persist attribute!
                     }
                 }
-                // Lưu variant → sinh ID
-                System.out.println("5");
 
-                // Lưu ảnh nếu có
+                System.out.println("5");
                 if (variant.getImages() != null) {
                     for (Image image : variant.getImages()) {
                         image.setVariant(variant);
@@ -171,7 +159,6 @@ public class ProductService {
         try {
             List<Product> products = productDAO.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice,
                     maxPrice);
-            // Đảm bảo mỗi product đều load variants (nếu cần)
             if (products != null) {
                 for (Product p : products) {
                     if (p.getVariants() == null) {
