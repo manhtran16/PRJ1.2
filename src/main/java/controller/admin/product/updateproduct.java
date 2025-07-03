@@ -36,7 +36,6 @@ public class updateproduct extends HttpServlet {
             request.setAttribute("error", "Không tìm thấy sản phẩm!");
         } else {
             request.setAttribute("product", product);
-            // Lấy danh sách variant của sản phẩm
             request.setAttribute("variants", product.getVariants());
         }
         request.getRequestDispatcher("/admin/product/update_product.jsp").forward(request, response);
@@ -47,12 +46,10 @@ public class updateproduct extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        // Nhận thông tin sản phẩm
         String productIdStr = request.getParameter("productId");
         String productName = request.getParameter("productName");
         String description = request.getParameter("description");
 
-        // Nhận thông tin biến thể
         String[] variantIds = request.getParameterValues("variantIds");
         String[] variantPrices = request.getParameterValues("variantPrices");
         String[] variantQuantities = request.getParameterValues("variantQuantities");
@@ -62,7 +59,6 @@ public class updateproduct extends HttpServlet {
 
             ProductService productService = new ProductService();
 
-            // Gọi hàm cập nhật sản phẩm (KHÔNG truyền typeId, brandId vì không cho sửa)
             boolean success = productService.updateFullProduct(
                     productId,
                     productName,
@@ -70,7 +66,7 @@ public class updateproduct extends HttpServlet {
                     variantIds,
                     variantPrices,
                     variantQuantities,
-                    request // truyền request để lấy các mảng thuộc tính động cho từng variant
+                    request 
             );
 
             if (success) {
@@ -83,7 +79,6 @@ public class updateproduct extends HttpServlet {
             e.printStackTrace();
         }
 
-        // Sau khi cập nhật, load lại thông tin sản phẩm để hiển thị
         ProductService productService = new ProductService();
         Product product = productService.getProductWithDetails(Integer.parseInt(productIdStr));
         request.setAttribute("product", product);

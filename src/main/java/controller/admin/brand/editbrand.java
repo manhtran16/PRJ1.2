@@ -61,11 +61,9 @@ public class editbrand extends HttpServlet {
         String brandIdStr = request.getParameter("brandId");
         int brandId = Integer.parseInt(brandIdStr);
 
-        // Lấy brand từ DB
         BrandDAO brandDao = new BrandDAO();
         Brand brand = brandDao.getBrandById(brandId);
 
-        // Gửi tên brand sang JSP
         request.setAttribute("brand", brand);
         request.getRequestDispatcher("/admin/brand/edit_brand.jsp").forward(request, response);
     } 
@@ -98,7 +96,6 @@ public class editbrand extends HttpServlet {
         } catch (Exception e) {
             error = "Có lỗi xảy ra khi cập nhật thương hiệu.";
         }
-        // Lấy lại brand mới nhất để hiển thị
         BrandDAO brandDao = new BrandDAO();
         brand = brandDao.getBrandById(brandId);
         request.setAttribute("brand", brand);

@@ -161,5 +161,10 @@
             </table>
             <p>Số lượng type: ${fn:length(typeList)}</p>
         </div>
+        <div style="text-align:center; margin-top:2rem;">
+            <a href="${pageContext.request.contextPath}/admindashboard" class="btn btn-secondary" style="background:linear-gradient(90deg,#a770ef 0%,#f6d365 100%);color:#fff;border:none;border-radius:8px;padding:10px 32px;font-weight:500;text-decoration:none;">
+                <i class="fas fa-arrow-left"></i> Quay lại trang quản trị
+            </a>
+        </div>
     </body>
 </html>

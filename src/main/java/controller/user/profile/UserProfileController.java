@@ -20,17 +20,14 @@ public class UserProfileController extends HttpServlet {
         User currentUser = (User) session.getAttribute("user");
 
         if (currentUser == null) {
-            // Set error message and redirect to login
             session.setAttribute("errorMessage", "Vui lòng đăng nhập để xem thông tin cá nhân.");
             response.sendRedirect("login.jsp");
             return;
         }
 
-        // Clear any previous messages
         session.removeAttribute("errorMessage");
         session.removeAttribute("successMessage");
 
-        // User information is already in session, just forward to JSP
         request.getRequestDispatcher("user/userProfile.jsp").forward(request, response);
     }
 

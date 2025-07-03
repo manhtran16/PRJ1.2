@@ -66,30 +66,22 @@ public class UserOrdersController extends HttpServlet {
         if ("checkoutSelected".equals(action)) {
             handleSelectedCheckout(request, response, currentUser);
         } else if ("processCheckout".equals(action)) {
-            // Handle other checkout actions if needed
             handleCheckout(request, response, currentUser);
         } else {
-            // Default to GET behavior
             doGet(request, response);
         }
     }
 
-    /**
-     * Handle checkout process
-     */
     private void handleCheckout(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
 
         try {
-            // Convert cart to order
             OrderTable order = cartService.checkoutCart(user);
 
             if (order != null) {
-                // Set success message
                 HttpSession session = request.getSession();
                 session.setAttribute("successMessage", "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID());
 
-                // Redirect to order details
                 response.sendRedirect("userOrders?action=viewDetails&orderId=" + order.getOrderID());
             } else {
                 request.setAttribute("errorMessage", "Không thể đặt hàng. Vui lòng thử lại.");
@@ -104,9 +96,6 @@ public class UserOrdersController extends HttpServlet {
         }
     }
 
-    /**
-     * Handle checkout for selected items only
-     */
     private void handleSelectedCheckout(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
 
@@ -119,23 +108,19 @@ public class UserOrdersController extends HttpServlet {
                 return;
             }
 
-            // Convert string array to integer array
             Integer[] variantIds = new Integer[selectedVariants.length];
             for (int i = 0; i < selectedVariants.length; i++) {
                 variantIds[i] = Integer.parseInt(selectedVariants[i]);
             }
 
-            // Convert selected cart items to order
             OrderTable order = cartService.checkoutSelectedItems(user, variantIds);
 
             if (order != null) {
-                // Set success message
                 HttpSession session = request.getSession();
                 session.setAttribute("successMessage",
                         "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID() +
                                 " (" + selectedVariants.length + " sản phẩm)");
 
-                // Redirect to order details
                 response.sendRedirect("userOrders?action=viewDetails&orderId=" + order.getOrderID());
             } else {
                 request.getSession().setAttribute("errorMessage", "Không thể đặt hàng. Vui lòng thử lại.");
@@ -156,7 +141,6 @@ public class UserOrdersController extends HttpServlet {
         try {
             List<OrderTable> orders = orderService.getUserOrders(user.getUserID());
 
-            // Calculate totals for each order
             for (OrderTable order : orders) {
                 double total = orderService.getOrderTotal(order.getOrderID());
                 request.setAttribute("orderTotal_" + order.getOrderID(), total);
@@ -185,7 +169,6 @@ public class UserOrdersController extends HttpServlet {
 
             int orderId = Integer.parseInt(orderIdStr);
 
-            // Get order information
             OrderTable order = orderService.getOrderById(orderId);
             if (order == null || order.getUser().getUserID() != user.getUserID()) {
                 request.setAttribute("errorMessage", "Mặt hàng không tồn tại hoặc không thuộc về bạn");
@@ -193,7 +176,6 @@ public class UserOrdersController extends HttpServlet {
                 return;
             }
 
-            // Get order details
             List<OrderDetail> orderDetails = orderService.getOrderDetails(orderId);
             double orderTotal = orderService.getOrderTotal(orderId);
 

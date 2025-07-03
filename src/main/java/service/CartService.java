@@ -27,28 +27,22 @@ public class CartService {
         this.productVariantDAO = new ProductVariantDAO();
     }
 
-    /**
-     * Get or create cart for user
-     * Cart is an OrderTable with status = 0
-     */
+
     public OrderTable getOrCreateCart(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
         }
 
-        // Try to find existing cart (order with status = 0)
         OrderTable cart = orderDAO.getCartByUserId(user.getUserID());
 
         if (cart == null) {
-            // Create new cart
+
             cart = new OrderTable();
             cart.setUser(user);
             cart.setOrderDate(new Date(System.currentTimeMillis()));
-            cart.setStatus(0); // 0 = Cart status (giỏ hàng)
-
+            cart.setStatus(0); 
             cart = orderDAO.createOrder(cart);
 
-            // Check if cart creation failed
             if (cart == null) {
                 throw new RuntimeException("Failed to create cart for user: " + user.getUserID());
             }
@@ -57,9 +51,7 @@ public class CartService {
         return cart;
     }
 
-    /**
-     * Add item to cart
-     */
+
     public boolean addToCart(User user, int variantId, int quantity) {
         if (user == null || variantId <= 0 || quantity <= 0) {
             System.err.println("AddToCart failed: Invalid parameters - user: " + user + ", variantId: " + variantId
@@ -68,7 +60,6 @@ public class CartService {
         }
 
         try {
-            // Validate variant exists
             ProductVariant variant = productService.getVariantWithDetails(variantId);
             if (variant == null) {
                 System.err.println("Product variant not found for ID: " + variantId);
@@ -76,23 +67,16 @@ public class CartService {
             }
 
             OrderTable cart = getOrCreateCart(user);
-
-            // Check if item already exists in cart
             OrderDetail existingItem = orderDAO.getCartItem(cart.getOrderID(), variantId);
 
             if (existingItem != null) {
-                // Update quantity
                 int newQuantity = existingItem.getOrderQuantity() + quantity;
                 return orderDAO.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
             } else {
-                // Add new item - don't set the detached variant object
                 OrderDetail newItem = new OrderDetail();
                 newItem.setOrder(cart);
-                // Don't set variant object directly to avoid detached entity issue
-                // newItem.setVariant(variant);
                 newItem.setOrderQuantity(quantity);
 
-                // Set composite key with variant ID
                 OrderDetailKey key = new OrderDetailKey(cart.getOrderID(), variantId);
                 newItem.setId(key);
 
@@ -107,9 +91,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Update cart item quantity
-     */
     public boolean updateCartItem(User user, int variantId, int newQuantity) {
         if (user == null || variantId <= 0) {
             System.err.println("Invalid parameters - user: " + user + ", variantId: " + variantId);
@@ -126,11 +107,9 @@ public class CartService {
             System.out.println("Cart ID: " + cart.getOrderID());
 
             if (newQuantity <= 0) {
-                // Remove item
                 System.out.println("Quantity <= 0, removing item");
                 return orderDAO.removeCartItem(cart.getOrderID(), variantId);
             } else {
-                // Update quantity
                 System.out.println("Updating quantity to: " + newQuantity);
                 boolean result = orderDAO.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
                 System.out.println("DAO update result: " + result);
@@ -144,9 +123,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Remove item from cart
-     */
     public boolean removeFromCart(User user, int variantId) {
         if (user == null || variantId <= 0) {
             return false;
@@ -166,9 +142,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Get cart items (OrderDetails with status = 0)
-     */
     public List<OrderDetail> getCartItems(User user) {
         if (user == null) {
             return new ArrayList<>();
@@ -209,9 +182,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Get cart total amount
-     */
     public double getCartTotal(User user) {
         if (user == null) {
             return 0.0;
@@ -233,9 +203,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Get cart items count
-     */
     public int getCartItemsCount(User user) {
         if (user == null) {
             return 0;
@@ -245,9 +212,6 @@ public class CartService {
         return items.stream().mapToInt(OrderDetail::getOrderQuantity).sum();
     }
 
-    /**
-     * Convert cart to order (checkout)
-     */
     public OrderTable checkoutCart(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
@@ -261,7 +225,6 @@ public class CartService {
                 throw new IllegalArgumentException("Cart is empty");
             }
 
-            // Check and update stock for all items first
             for (OrderDetail item : cartItems) {
                 int variantId = item.getVariant().getVariantID();
                 int orderQuantity = item.getOrderQuantity();
@@ -273,11 +236,9 @@ public class CartService {
                 }
             }
 
-            // Update cart status from 0 (giỏ hàng) to 1 (đã thanh toán)
             boolean updated = orderDAO.updateOrderStatus(cart.getOrderID(), 1);
 
             if (updated) {
-                // Update order date to current time
                 cart.setOrderDate(new Date(System.currentTimeMillis()));
                 cart.setStatus(1);
                 return cart;
@@ -290,9 +251,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Checkout only selected items from cart
-     */
     public OrderTable checkoutSelectedItems(User user, Integer[] selectedVariantIds) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
@@ -307,8 +265,6 @@ public class CartService {
             if (cartItems.isEmpty()) {
                 throw new IllegalArgumentException("Cart is empty");
             }
-
-            // Filter cart items to only include selected variants
             List<OrderDetail> selectedItems = new ArrayList<>();
             for (OrderDetail item : cartItems) {
                 for (Integer variantId : selectedVariantIds) {
@@ -323,29 +279,23 @@ public class CartService {
                 throw new IllegalArgumentException("No selected items found in cart");
             }
 
-            // Create a new order for selected items
             OrderTable newOrder = new OrderTable();
             newOrder.setUser(user);
             newOrder.setOrderDate(new Date(System.currentTimeMillis()));
-            newOrder.setStatus(1); // Confirmed order
-
-            // Save the new order and get the created order with ID
+            newOrder.setStatus(1); 
             OrderTable savedOrder = orderDAO.createOrder(newOrder);
             if (savedOrder == null) {
                 throw new RuntimeException("Failed to create new order");
             }
 
-            // Move selected items to the new order and update stock
             for (OrderDetail selectedItem : selectedItems) {
                 int variantId = selectedItem.getVariant().getVariantID();
                 int orderQuantity = selectedItem.getOrderQuantity();
 
-                System.out.println("=== STOCK UPDATE DEBUG ===");
                 System.out.println("Processing variant ID: " + variantId);
                 System.out.println("Order quantity: " + orderQuantity);
                 System.out.println("Current stock before update: " + selectedItem.getVariant().getQuantity());
 
-                // Check and update stock first
                 boolean stockUpdated = productVariantDAO.updateStock(variantId, orderQuantity);
                 System.out.println("Stock update result: " + stockUpdated);
 
@@ -354,7 +304,6 @@ public class CartService {
                             ". Insufficient stock or variant not found.");
                 }
 
-                // Create new order detail for the new order
                 OrderDetail newDetail = new OrderDetail();
                 OrderDetailKey newKey = new OrderDetailKey();
                 newKey.setOrderId(savedOrder.getOrderID());
@@ -365,14 +314,12 @@ public class CartService {
                 newDetail.setVariant(selectedItem.getVariant());
                 newDetail.setOrderQuantity(orderQuantity);
 
-                // Add to new order
                 boolean detailAdded = orderDAO.createOrderDetail(newDetail);
                 if (!detailAdded) {
                     throw new RuntimeException(
                             "Failed to add order detail for variant " + variantId);
                 }
 
-                // Remove from cart
                 OrderDetailKey cartKey = selectedItem.getId();
                 boolean removedFromCart = orderDAO.removeCartItem(cartKey.getOrderId(), cartKey.getVariantId());
                 if (!removedFromCart) {
@@ -387,9 +334,7 @@ public class CartService {
         }
     }
 
-    /**
-     * Clear cart (remove all items)
-     */
+
     public boolean clearCart(User user) {
         if (user == null) {
             return false;
@@ -405,9 +350,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Get user cart (returns null if no cart exists)
-     */
     public OrderTable getUserCart(User user) {
         if (user == null) {
             return null;
@@ -421,9 +363,6 @@ public class CartService {
         }
     }
 
-    /**
-     * Close resources
-     */
     public void close() {
         if (orderDAO != null) {
             orderDAO.close();

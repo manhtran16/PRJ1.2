@@ -79,7 +79,6 @@ public class productmanagement extends HttpServlet {
         ProductService productService = new ProductService();
 
         String productName = request.getParameter("productName");
-        // Nếu không tìm kiếm, hiển thị tất cả sản phẩm
         if (productName == null || productName.trim().isEmpty()) {
             List<Product> productList = productService.getAllProducts();
 
@@ -94,11 +93,9 @@ public class productmanagement extends HttpServlet {
 
             request.setAttribute("productList", productList);
         } else {
-            // Tìm kiếm sản phẩm theo tên
             List<Product> searchResults = productService.searchProductsByName(productName);
             request.setAttribute("searchResults", searchResults);
         }
-        // Forward về trang quản lý sản phẩm để hiển thị kết quả
         request.getRequestDispatcher("/admin/product/product_management.jsp").forward(request, response);
     }
 

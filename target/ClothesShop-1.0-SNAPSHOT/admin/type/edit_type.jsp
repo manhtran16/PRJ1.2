@@ -149,6 +149,11 @@
             </div>
             <button type="submit" class="btn btn-primary w-100">Cập nhật</button>
         </form>
+        <div style="text-align:center; margin-top:1.5rem;">
+            <a href="${pageContext.request.contextPath}/admindashboard" class="btn btn-secondary" style="background:linear-gradient(90deg,#a770ef 0%,#f6d365 100%);color:#fff;border:none;border-radius:8px;padding:10px 32px;font-weight:500;text-decoration:none;">
+                <i class="fas fa-arrow-left"></i> Quay lại trang quản trị
+            </a>
+        </div>
         <c:if test="${not empty error}">
             <div class="alert alert-danger custom-alert mt-3 text-center">
                 <i class="fas fa-times-circle"></i> ${error}

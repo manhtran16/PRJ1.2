@@ -24,12 +24,10 @@ public class changePassword extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Clear any cart-related messages
         HttpSession session = request.getSession();
         session.removeAttribute("successMessage");
         session.removeAttribute("errorMessage");
 
-        // Forward to change password form
         request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
     }
 
@@ -50,7 +48,6 @@ public class changePassword extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
 
         try {
-            // Validate input
             if (currentPassword == null || currentPassword.trim().isEmpty()) {
                 request.setAttribute("error", "Vui lòng nhập mật khẩu hiện tại");
                 request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
@@ -69,14 +66,12 @@ public class changePassword extends HttpServlet {
                 return;
             }
 
-            // Verify current password
             if (!userDao.verifyCurrentPassword(user.getUserID(), currentPassword)) {
                 request.setAttribute("error", "Mật khẩu hiện tại không đúng");
                 request.getRequestDispatcher("user/changePassword.jsp").forward(request, response);
                 return;
             }
 
-            // Update password
             boolean success = userDao.updatePassword(user.getUserID(), newPassword);
 
             if (success) {

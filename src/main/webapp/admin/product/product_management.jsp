@@ -22,9 +22,9 @@
                 background: linear-gradient(90deg, #a770ef 0%, #f6d365 100%);
                 color: #fff;
                 text-align: center;
-                padding: 32px 0 18px 0;
+                padding: 44px 0 28px 0;
                 margin: 0;
-                font-size: 2.1rem;
+                font-size: 2.5rem;
                 font-weight: 700;
                 letter-spacing: 2px;
                 border-radius: 0 0 24px 24px;
@@ -42,20 +42,21 @@
                 align-items: stretch;
                 margin: 48px auto 0 auto;
                 gap: 22px;
-                max-width: 520px;
+                max-width: 1300px;
                 background: #fff;
                 border-radius: 18px;
                 box-shadow: 0 6px 32px rgba(167,112,239,0.13);
-                padding: 36px 32px 32px 32px;
+                padding: 48px 48px 44px 48px;
+                font-size: 1.25rem;
             }
             .product-content a {
                 display: flex;
                 align-items: center;
                 text-decoration: none;
-                font-size: 1.15rem;
+                font-size: 1.22rem;
                 color: #fff;
                 background: linear-gradient(90deg, #a770ef 0%, #f6d365 100%);
-                padding: 14px 28px;
+                padding: 18px 36px;
                 border-radius: 8px;
                 font-weight: 500;
                 box-shadow: 0 2px 8px rgba(167,112,239,0.08);
@@ -76,7 +77,11 @@
                 background: #f9f9f9;
                 border-radius: 10px;
                 box-shadow: 0 2px 8px rgba(167,112,239,0.07);
-                padding: 18px 12px;
+                padding: 40px 36px;
+                max-width: 1200px;
+                font-size: 1.02em;
+                margin-left: auto;
+                margin-right: auto;
             }
             .search-result-box h4 {
                 margin-bottom: 12px;
@@ -88,17 +93,22 @@
                 background: #fff;
                 border-radius: 8px;
                 overflow: hidden;
+                font-size: 1.22em;
+            }
+            .table th, .table td {
+                padding: 22px 22px;
+                font-size: 1.13em;
             }
             .action-btn {
                 background: #a770ef;
                 color: #fff;
                 border: none;
                 border-radius: 6px;
-                padding: 6px 16px;
+                padding: 10px 22px;
                 text-decoration: none;
                 display: inline-flex;
                 align-items: center;
-                font-size: 1rem;
+                font-size: 1.08rem;
                 margin-right: 6px;
                 transition: background 0.2s;
             }
@@ -121,6 +131,12 @@
                 }
                 .search-result-box {
                     padding: 10px 2px;
+                }
+            }
+            @media (max-width: 1200px) {
+                .search-result-box {
+                    max-width: 98vw;
+                    padding: 10px 2vw;
                 }
             }
             tr[style*='cursor:pointer']{transition:background 0.2s;}
@@ -263,6 +279,11 @@
                     </table>
                 </div>
             </c:if>
+        </div>
+        <div style="text-align:center; margin-top:2rem;">
+            <a href="${pageContext.request.contextPath}/admindashboard" class="btn btn-secondary" style="background:linear-gradient(90deg,#a770ef 0%,#f6d365 100%);color:#fff;border:none;border-radius:8px;padding:10px 32px;font-weight:500;text-decoration:none;">
+                <i class="fas fa-arrow-left"></i> Quay lại trang quản trị
+            </a>
         </div>
     </body>
 </html>

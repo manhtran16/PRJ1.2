@@ -39,7 +39,6 @@ public class ProductDetailController extends HttpServlet {
 
         try {
             int productId = Integer.parseInt(productIdStr);
-            // Use getProductWithDetails to load all relationships including variants
             Product product = productService.getProductWithDetails(productId);
 
             if (product == null) {
@@ -48,12 +47,10 @@ public class ProductDetailController extends HttpServlet {
                 return;
             }
 
-            // Get rating information for the product
             List<Rating> ratings = ratingDAO.getRatingsByProductId(productId);
             Double averageRating = ratingDAO.getAverageRatingByProductId(productId);
             Long totalRatings = ratingDAO.getTotalRatingsByProductId(productId);
 
-            // Check if current user has rated this product
             HttpSession session = request.getSession();
             User currentUser = (User) session.getAttribute("user");
             Rating userRating = null;

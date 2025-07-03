@@ -6,9 +6,6 @@ import model.OrderDetail;
 import java.util.List;
 import java.util.ArrayList;
 
-/**
- * Order Service - handles order business logic
- */
 public class OrderService {
 
     private OrderDAO orderDAO;
@@ -17,9 +14,6 @@ public class OrderService {
         this.orderDAO = new OrderDAO();
     }
 
-    /**
-     * Get orders for a specific user (excluding cart orders)
-     */
     public List<OrderTable> getUserOrders(int userId) {
         if (userId <= 0) {
             return new ArrayList<>();
@@ -34,9 +28,6 @@ public class OrderService {
         }
     }
 
-    /**
-     * Get order by ID
-     */
     public OrderTable getOrderById(int orderId) {
         if (orderId <= 0) {
             return null;
@@ -51,9 +42,6 @@ public class OrderService {
         }
     }
 
-    /**
-     * Get order details for a specific order
-     */
     public List<OrderDetail> getOrderDetails(int orderId) {
         if (orderId <= 0) {
             return new ArrayList<>();
@@ -68,9 +56,6 @@ public class OrderService {
         }
     }
 
-    /**
-     * Calculate total amount for an order
-     */
     public double getOrderTotal(int orderId) {
         if (orderId <= 0) {
             return 0.0;
@@ -85,9 +70,6 @@ public class OrderService {
         }
     }
 
-    /**
-     * Get order status text
-     */
     public String getOrderStatusText(int status) {
         switch (status) {
             case 0:
@@ -99,9 +81,6 @@ public class OrderService {
         }
     }
 
-    /**
-     * Update order status
-     */
     public boolean updateOrderStatus(int orderId, int newStatus) {
         if (orderId <= 0 || newStatus < 0) {
             return false;
@@ -116,9 +95,6 @@ public class OrderService {
         }
     }
 
-    /**
-     * Close resources
-     */
     public void close() {
         if (orderDAO != null) {
             orderDAO.close();
