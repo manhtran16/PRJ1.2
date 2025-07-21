@@ -1,42 +1,25 @@
-<%-- 
-    Document   : home
-    Created on : Jun 3, 2025, 11:29:10 AM
-    Author     : Admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Title  -->
-    <title>Clothes Store - Fashion Ecommerce</title>
-
-    <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
-
-    <!-- Core Style CSS -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Chi tiết đơn hàng #${order.orderID} - Clothes Shop</title>
+    <link href="${pageContext.request.contextPath}/admin/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
- 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/script.css">
 </head>
-
 <body>
-    <!-- ##### Header Area Start ##### -->
-    <header class="header_area">
+     <header class="header_area">
         <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
             <!-- Classy Menu -->
             <nav class="classy-navbar" id="essenceNav">
                 <!-- Logo -->
-                <a class="nav-brand" href="index"><img src="img/core-img/logo.png" alt=""></a>
+                <a class="nav-brand" href="../index"><img src="../img/core-img/logo.png" alt=""></a>
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
                     <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -81,9 +64,9 @@
                                 <li>
                                 <a href="#">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="index">Home</a></li>
-                                    <li><a href="products">Shop</a></li>
-                                   
+                                    <li><a href="${pageContext.request.contextPath}/index">Home</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/products">Shop</a></li>
+                                    
                                 </ul>
                                 
                             </li>
@@ -96,15 +79,15 @@
 
             <!-- Header Meta Data -->
             <div class="header-meta d-flex clearfix justify-content-end">
-               
+                
                 <!-- User Login Info -->
                 <div class="user-login-info">
-                    <a href="#"><img src="img/core-img/user.svg" alt=""></a>
+                    <a href="#"><img src="${pageContext.request.contextPath}/img/core-img/user.svg" alt=""></a>
                     <div class="user-content">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <a href="userProfile">Tài khoản</a>
-                                <a href="userOrders">Đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/userProfile">Tài khoản</a>
+                                <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
                                 <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                             </c:when>
                             <c:otherwise>
@@ -116,182 +99,119 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> </a>
+                    <a href="${pageContext.request.contextPath}/cart" id="essenceCartBtn"><img src="../img/core-img/bag.svg" alt=""></a>
                 </div>
             </div>
 
         </div>
     </header>
-    <!-- ##### Header Area End ##### -->
 
-    <!-- ##### Welcome Area Start ##### -->
-    <section class="welcome_area bg-img background-overlay" style="background-image: url(img/bg-img/bg-1.jpg);">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-12">
-                    <div class="hero-content">
-                        <h6>CLOTHES STORE</h6>
-                        <h2>New Collection</h2>
-                        <a href="products" class="btn essence-btn">Xem bộ sưu tập</a>
-                    </div>
-                </div>
-            </div>
+    <div class="container mt-4">
+        <!-- Back Button -->
+        <div class="mb-3">
+            <a href="${pageContext.request.contextPath}/userOrders" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Quay lại danh sách đơn hàng
+            </a>
         </div>
-    </section>
-    <!-- ##### Welcome Area End ##### -->
 
-    <!-- ##### Top Catagory Area Start ##### -->
-    <div class="top_catagory_area section-padding-80 clearfix">
-        <div class="container">
-            <div class="row justify-content-center">
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
-                        style="background-image: url(img/bg-img/bg-2.jpg);">
-                        <div class="catagory-content">
-                            <a href="products">Trang phục</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
-                        style="background-image: url(img/bg-img/bg-3.jpg);">
-                        <div class="catagory-content">
-                            <a href="products">Giày dép</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
-                        style="background-image: url(img/bg-img/bg-4.jpg);">
-                        <div class="catagory-content">
-                            <a href="products">Phụ kiện</a>
-                        </div>
-                    </div>
-                </div>
+        <c:if test="${not empty errorMessage}">
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>${errorMessage}
             </div>
-        </div>
-    </div>
-    <!-- ##### Top Catagory Area End ##### -->
+        </c:if>
 
-    <!-- ##### CTA Area Start ##### -->
-    <div class="cta-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="cta-content bg-img background-overlay"
-                        style="background-image: url(img/bg-img/bg-5.jpg);">
-                        <div class="h-100 d-flex align-items-center justify-content-end">
-                            <div class="cta--text">
-                                <h6>-50%</h6>
-                                <h2>SALE CUỐI THÁNG</h2>
-                                <a href="products" class="btn essence-btn">Mua ngay</a>
-                            </div>
+        <c:if test="${not empty order}">
+            <!-- Order Header -->
+            <div class="order-detail-card">
+                <div class="order-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Đơn hàng #${order.orderID}</h3>
+                            <p class="mb-1">
+                                <i class="fas fa-calendar me-2"></i>
+                                Ngày đặt: <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy"/>
+                            </p>
+                            <p class="mb-0">
+                                <i class="fas fa-user me-2"></i>
+                                Khách hàng: ${order.user.firstName} ${order.user.lastName}
+                            </p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <c:choose>
+                                <c:when test="${order.status == 0}">
+                                    <span class="status-badge status-pending">
+                                        <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
+                                    </span>
+                                </c:when>
+                                <c:when test="${order.status == 1}">
+                                    <span class="status-badge status-delivered">
+                                        <i class="fas fa-check me-1"></i>Đã thanh toán
+                                    </span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="status-badge">Status ${order.status}</span>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- ##### CTA Area End ##### -->
 
-    <!-- ##### New Arrivals Area Start ##### -->
-    <section class="new_arrivals_area section-padding-80 clearfix"> 
-        <!-- Popular item -->
-        <div class="related-product">
-            <div class="row">
-                <!-- Title -->
-                <div class="col-md-12">
-                    <div class="section-title">
-                        <h3 class="title">Sản phẩm nổi bật</h3>
-                    </div>
-                </div>
-                
-                <!-- Dynamic Products from Database -->
-                <c:forEach var="product" items="${randomProducts}" varStatus="status">
-                    <!-- Single Product -->
-                    <div class="col-md-3 col-xs-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <c:choose>
-                                    <c:when test="${not empty product.variants and not empty product.variants[0].images}">
-                                        <img src="${product.variants[0].images[0].url}" alt="${product.productName}">
-                                        <!-- Hover Thumb -->
-                                        <c:if test="${product.variants[0].images.size() > 1}">
-                                            <img class="hover-img" src="${product.variants[0].images[1].url}" alt="${product.productName}">
-                                        </c:if>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="https://via.placeholder.com/300x400?text=No+Image" alt="${product.productName}">
-                                        <img class="hover-img" src="https://via.placeholder.com/300x400?text=No+Image" alt="${product.productName}">
-                                    </c:otherwise>
-                                </c:choose>
-                                
-                                <!-- Favourite -->
-                                <div class="product-favourite">
-                                    <a href="#" class="favme fa fa-heart"></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description">
-                                <span>
-                                    <c:choose>
-                                        <c:when test="${not empty product.brand}">
-                                            ${product.brand.brandName}
-                                        </c:when>
-                                        <c:otherwise>
-                                            Clothes Store
-                                        </c:otherwise>
-                                    </c:choose>
-                                </span>
-                                <a href="products?action=detail&id=${product.productID}">
-                                    <h6>${product.productName}</h6>
-                                </a>
-                                <c:if test="${not empty product.variants}">
-                                    <p class="product-price">${product.variants[0].price} đ</p>
-                                </c:if>
-
-                                <!-- Hover Content -->
-                                <div class="hover-content">
-                                    <!-- Add to Cart -->
-                                    <div class="add-to-cart-btn">
-                                        <c:choose>
-                                            <c:when test="${not empty sessionScope.user}">
-                                                <c:if test="${not empty product.variants}">
-                                                    <a href="cart?action=add&variantId=${product.variants[0].variantID}&quantity=1" class="btn essence-btn">Thêm vào giỏ</a>
-                                                </c:if>
-                                                <c:if test="${empty product.variants}">
-                                                    <a href="#" class="btn essence-btn disabled">Hết hàng</a>
-                                                </c:if>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="login.jsp" class="btn essence-btn">Đăng nhập để mua</a>
-                                            </c:otherwise>
-                                        </c:choose>
+                <!-- Order Items -->
+                <div class="card-body">
+                    <h5 class="mb-3">Chi tiết sản phẩm</h5>
+                    
+                    <c:if test="${empty orderDetails}">
+                        <p class="text-muted">Không có chi tiết sản phẩm.</p>
+                    </c:if>
+                    
+                    <c:if test="${not empty orderDetails}">
+                        <c:forEach var="detail" items="${orderDetails}">
+                            <div class="product-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <h6 class="mb-1">${detail.variant.product.productName}</h6>
+                                        <div class="text-muted">
+                                            <c:forEach var="attr" items="${detail.variant.attributeValues}">
+                                                <span class="badge bg-light text-dark me-1">
+                                                    ${attr.attribute.attributeName}: ${attr.value}
+                                                </span>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <span class="fw-bold">SL: ${detail.orderQuantity}</span>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <span><fmt:formatNumber value="${detail.variant.price}" pattern="#,###"/> VNĐ</span>
+                                    </div>
+                                    <div class="col-md-2 text-end">
+                                        <span class="fw-bold text-primary">
+                                            <fmt:formatNumber value="${detail.orderQuantity * detail.variant.price}" pattern="#,###"/> VNĐ
+                                        </span>
                                     </div>
                                 </div>
                             </div>
+                        </c:forEach>
+                        
+                        <!-- Order Total -->
+                        <div class="row mt-3 pt-3 border-top">
+                            <div class="col-md-8 offset-md-4">
+                                <div class="d-flex justify-content-between">
+                                    <span class="fs-5 fw-bold">Tổng cộng:</span>
+                                    <span class="fs-5 fw-bold text-success">
+                                        <fmt:formatNumber value="${orderTotal}" pattern="#,###"/> VNĐ
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </c:forEach>
-                
-                <!-- Show message if no products -->
-                <c:if test="${empty randomProducts}">
-                    <div class="col-12 text-center">
-                        <div class="alert alert-warning">
-                            <h4>Không có sản phẩm nào để hiển thị!</h4>
-                            <p>Vui lòng kiểm tra database có dữ liệu không.</p>
-                        </div>
-                    </div>
-                </c:if>
-
+                    </c:if>
+                </div>
             </div>
-        </div>
-    </section>
+        </c:if>
+    </div>
+
+   
+
     <!-- ##### New Arrivals Area End ##### -->
 
     <!-- ##### Brands Area Start ##### -->
@@ -418,7 +338,6 @@
     <script src="${pageContext.request.contextPath}/js/classy-nav.min.js"></script>
     <!-- Active js -->
     <script src="${pageContext.request.contextPath}/js/active.js"></script>
-
+    <script src="${pageContext.request.contextPath}/admin/js/mdb.umd.min.js"></script>
 </body>
-
 </html>

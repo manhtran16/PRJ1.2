@@ -1,14 +1,8 @@
-<%-- 
-    Document   : home
-    Created on : Jun 3, 2025, 11:29:10 AM
-    Author     : Admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -20,23 +14,20 @@
     <title>Clothes Store - Fashion Ecommerce</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="${pageContext.request.contextPath}/img/core-img/favicon.ico">
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
- 
 </head>
-
 <body>
-    <!-- ##### Header Area Start ##### -->
     <header class="header_area">
         <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
             <!-- Classy Menu -->
             <nav class="classy-navbar" id="essenceNav">
                 <!-- Logo -->
-                <a class="nav-brand" href="index"><img src="img/core-img/logo.png" alt=""></a>
+                <a class="nav-brand" href="../index"><img src="../img/core-img/logo.png" alt=""></a>
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
                     <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -81,9 +72,9 @@
                                 <li>
                                 <a href="#">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="index">Home</a></li>
-                                    <li><a href="products">Shop</a></li>
-                                   
+                                    <li><a href="${pageContext.request.contextPath}/index">Home</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/products">Shop</a></li>
+                                    
                                 </ul>
                                 
                             </li>
@@ -99,202 +90,189 @@
                
                 <!-- User Login Info -->
                 <div class="user-login-info">
-                    <a href="#"><img src="img/core-img/user.svg" alt=""></a>
+                    <a href="#"><img src="${pageContext.request.contextPath}/img/core-img/user.svg" alt=""></a>
                     <div class="user-content">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <a href="userProfile">Tài khoản</a>
-                                <a href="userOrders">Đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/userProfile">Tài khoản</a>
+                                <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
                                 <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="login.jsp">Đăng nhập</a>
-                                <a href="register.jsp">Đăng ký</a>
+                                <a href="../login.jsp">Đăng nhập</a>
+                                <a href="../register.jsp">Đăng ký</a>
                             </c:otherwise>
                         </c:choose>
                     </div>
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> </a>
+                    <a href="${pageContext.request.contextPath}/cart" id="essenceCartBtn"><img src="${pageContext.request.contextPath}/img/core-img/bag.svg" alt=""> <span>0</span></a>
                 </div>
             </div>
 
         </div>
     </header>
-    <!-- ##### Header Area End ##### -->
 
-    <!-- ##### Welcome Area Start ##### -->
-    <section class="welcome_area bg-img background-overlay" style="background-image: url(img/bg-img/bg-1.jpg);">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-12">
-                    <div class="hero-content">
-                        <h6>CLOTHES STORE</h6>
-                        <h2>New Collection</h2>
-                        <a href="products" class="btn essence-btn">Xem bộ sưu tập</a>
-                    </div>
-                </div>
+<main>
+<div class="container py-5">
+  <c:choose>
+    <c:when test="${not empty order}">
+      <!-- Order Confirmation -->
+      <h2 class="text-center mb-5 text-success">
+        <i class="fas fa-check-circle"></i> Đặt hàng thành công!
+      </h2>
+      
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0">Thông tin đơn hàng #${order.orderID}</h5>
             </div>
-        </div>
-    </section>
-    <!-- ##### Welcome Area End ##### -->
-
-    <!-- ##### Top Catagory Area Start ##### -->
-    <div class="top_catagory_area section-padding-80 clearfix">
-        <div class="container">
-            <div class="row justify-content-center">
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
-                        style="background-image: url(img/bg-img/bg-2.jpg);">
-                        <div class="catagory-content">
-                            <a href="products">Trang phục</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
-                        style="background-image: url(img/bg-img/bg-3.jpg);">
-                        <div class="catagory-content">
-                            <a href="products">Giày dép</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img"
-                        style="background-image: url(img/bg-img/bg-4.jpg);">
-                        <div class="catagory-content">
-                            <a href="products">Phụ kiện</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-body">
+              <p><strong>Ngày đặt:</strong> <fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy"/></p>
+              <p><strong>Trạng thái:</strong> 
+                <span class="badge bg-warning">Chờ xử lý</span>
+              </p>
+              
+              <h6 class="mt-4">Chi tiết đơn hàng:</h6>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Sản phẩm</th>
+                      <th>Phiên bản</th>
+                      <th>Số lượng</th>
+                      <th>Đơn giá</th>
+                      <th>Thành tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <c:set var="total" value="0"/>
+                    <c:forEach var="detail" items="${order.orderDetails}">
+                      <tr>
+                        <td>${detail.variant.product.productName}</td>
+                        <td>
+                          <c:forEach var="attr" items="${detail.variant.attributeValues}">
+                            <small>${attr.attribute.attributeName}: ${attr.value}</small><br/>
+                          </c:forEach>
+                        </td>
+                        <td>${detail.orderQuantity}</td>
+                        <td><fmt:formatNumber value="${detail.variant.price}" pattern="#,###"/> VNĐ</td>
+                        <td><fmt:formatNumber value="${detail.orderQuantity * detail.variant.price}" pattern="#,###"/> VNĐ</td>
+                        <c:set var="total" value="${total + (detail.orderQuantity * detail.variant.price)}"/>
+                      </tr>
+                    </c:forEach>
+                  </tbody>
+                  <tfoot>
+                    <tr class="table-success">
+                      <td colspan="4" class="text-end"><strong>Tổng cộng:</strong></td>
+                      <td><strong><fmt:formatNumber value="${total}" pattern="#,###"/> VNĐ</strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              
+              <div class="text-center mt-4">
+                <a href="products" class="btn btn-primary me-2">
+                  <i class="fas fa-shopping-bag"></i> Tiếp tục mua sắm
+                </a>
+                <a href="userOrders" class="btn btn-outline-secondary">
+                  <i class="fas fa-list"></i> Xem đơn hàng của tôi
+                </a>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-    <!-- ##### Top Catagory Area End ##### -->
-
-    <!-- ##### CTA Area Start ##### -->
-    <div class="cta-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="cta-content bg-img background-overlay"
-                        style="background-image: url(img/bg-img/bg-5.jpg);">
-                        <div class="h-100 d-flex align-items-center justify-content-end">
-                            <div class="cta--text">
-                                <h6>-50%</h6>
-                                <h2>SALE CUỐI THÁNG</h2>
-                                <a href="products" class="btn essence-btn">Mua ngay</a>
-                            </div>
-                        </div>
+      </div>
+      
+    </c:when>
+    <c:otherwise>
+      <!-- Checkout Form -->
+      <h2 class="text-center mb-5">Thanh toán đơn hàng</h2>
+      
+      <c:set var="cart" value="${sessionScope.cart}"/>
+      <c:if test="${empty cart}">
+        <div class="alert alert-warning text-center">
+          <h5>Giỏ hàng trống!</h5>
+          <a href="products" class="btn btn-primary">Tiếp tục mua sắm</a>
+        </div>
+      </c:if>
+      
+      <c:if test="${not empty cart}">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-header">
+                <h5>Thông tin giao hàng</h5>
+              </div>
+              <div class="card-body">
+                <form action="userOrders" method="post">
+                    <input type="hidden" name="action" value="processCheckout">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="fullName" class="form-label">Họ tên *</label>
+                      <input type="text" class="form-control" id="fullName" name="fullName" required>
                     </div>
-                </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="phone" class="form-label">Số điện thoại *</label>
+                      <input type="tel" class="form-control" id="phone" name="phone" required>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Địa chỉ giao hàng *</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="notes" class="form-label">Ghi chú</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="2"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-credit-card"></i> Đặt hàng
+                  </button>
+                </form>
+              </div>
             </div>
-        </div>
-    </div>
-    <!-- ##### CTA Area End ##### -->
-
-    <!-- ##### New Arrivals Area Start ##### -->
-    <section class="new_arrivals_area section-padding-80 clearfix"> 
-        <!-- Popular item -->
-        <div class="related-product">
-            <div class="row">
-                <!-- Title -->
-                <div class="col-md-12">
-                    <div class="section-title">
-                        <h3 class="title">Sản phẩm nổi bật</h3>
+          </div>
+          
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+                <h5>Đơn hàng của bạn</h5>
+              </div>
+              <div class="card-body">
+                <c:set var="total" value="0"/>
+                <c:forEach var="item" items="${cart}">
+                  <div class="d-flex justify-content-between mb-2">
+                    <div>
+                      <small>${item.variant.product.productName}</small><br/>
+                      <small class="text-muted">SL: ${item.quantity}</small>
                     </div>
-                </div>
-                
-                <!-- Dynamic Products from Database -->
-                <c:forEach var="product" items="${randomProducts}" varStatus="status">
-                    <!-- Single Product -->
-                    <div class="col-md-3 col-xs-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <c:choose>
-                                    <c:when test="${not empty product.variants and not empty product.variants[0].images}">
-                                        <img src="${product.variants[0].images[0].url}" alt="${product.productName}">
-                                        <!-- Hover Thumb -->
-                                        <c:if test="${product.variants[0].images.size() > 1}">
-                                            <img class="hover-img" src="${product.variants[0].images[1].url}" alt="${product.productName}">
-                                        </c:if>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="https://via.placeholder.com/300x400?text=No+Image" alt="${product.productName}">
-                                        <img class="hover-img" src="https://via.placeholder.com/300x400?text=No+Image" alt="${product.productName}">
-                                    </c:otherwise>
-                                </c:choose>
-                                
-                                <!-- Favourite -->
-                                <div class="product-favourite">
-                                    <a href="#" class="favme fa fa-heart"></a>
-                                </div>
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description">
-                                <span>
-                                    <c:choose>
-                                        <c:when test="${not empty product.brand}">
-                                            ${product.brand.brandName}
-                                        </c:when>
-                                        <c:otherwise>
-                                            Clothes Store
-                                        </c:otherwise>
-                                    </c:choose>
-                                </span>
-                                <a href="products?action=detail&id=${product.productID}">
-                                    <h6>${product.productName}</h6>
-                                </a>
-                                <c:if test="${not empty product.variants}">
-                                    <p class="product-price">${product.variants[0].price} đ</p>
-                                </c:if>
-
-                                <!-- Hover Content -->
-                                <div class="hover-content">
-                                    <!-- Add to Cart -->
-                                    <div class="add-to-cart-btn">
-                                        <c:choose>
-                                            <c:when test="${not empty sessionScope.user}">
-                                                <c:if test="${not empty product.variants}">
-                                                    <a href="cart?action=add&variantId=${product.variants[0].variantID}&quantity=1" class="btn essence-btn">Thêm vào giỏ</a>
-                                                </c:if>
-                                                <c:if test="${empty product.variants}">
-                                                    <a href="#" class="btn essence-btn disabled">Hết hàng</a>
-                                                </c:if>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="login.jsp" class="btn essence-btn">Đăng nhập để mua</a>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div>
+                      <fmt:formatNumber value="${item.subtotal}" pattern="#,###"/> VNĐ
                     </div>
+                  </div>
+                  <c:set var="total" value="${total + item.subtotal}"/>
                 </c:forEach>
-                
-                <!-- Show message if no products -->
-                <c:if test="${empty randomProducts}">
-                    <div class="col-12 text-center">
-                        <div class="alert alert-warning">
-                            <h4>Không có sản phẩm nào để hiển thị!</h4>
-                            <p>Vui lòng kiểm tra database có dữ liệu không.</p>
-                        </div>
-                    </div>
-                </c:if>
-
+                <hr>
+                <div class="d-flex justify-content-between">
+                  <strong>Tổng cộng:</strong>
+                  <strong><fmt:formatNumber value="${total}" pattern="#,###"/> VNĐ</strong>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
-    <!-- ##### New Arrivals Area End ##### -->
+      </c:if>
+      
+    </c:otherwise>
+  </c:choose>
+</div>
+</main>
 
-    <!-- ##### Brands Area Start ##### -->
+
+
+        <!-- ##### Brands Area Start ##### -->
     <div class="brands-area d-flex align-items-center justify-content-between">
         <!-- Brand Logo -->
         <div class="single-brands-logo">
@@ -419,6 +397,7 @@
     <!-- Active js -->
     <script src="${pageContext.request.contextPath}/js/active.js"></script>
 
-</body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
+
