@@ -214,7 +214,7 @@
                 <strong style="font-size: 18px;">🎯 Các phiên bản có sẵn:</strong>
                 
                 <!-- Group variants by color -->
-                <div style="margin-top: 15px;">
+                <div style="margin-top: 15px;overflow: scroll;height: 300px;width: 263px;">
                     <%-- Create a map to group variants by color --%>
                     <c:set var="colorGroups" value="${{}}" />
                     
