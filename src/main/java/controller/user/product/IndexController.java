@@ -51,8 +51,6 @@ public class IndexController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      * 
@@ -64,7 +62,6 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("DEBUG: IndexController doGet() called");
         ProductDAO productDAO = new ProductDAO();
         List<Product> allProducts = productDAO.getAllProducts();
         Collections.shuffle(allProducts);

@@ -14,19 +14,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>CLoth store</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
-    <!-- MDB -->
-    <link rel="stylesheet" href="css/mdb.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
+    <!-- Local CSS with context path -->
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <style>
-        /* Variant Cards Styling */
         .variant-container {
             margin: 20px 0;
         }
@@ -261,76 +258,45 @@
   <body>
     <header>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg bg-body">
-    <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
+    <div class="container">
+      <a class="navbar-brand text-white" href="index">
+        <i class="fas fa-tshirt me-2"></i>Clothes Store
+      </a>
       <button
-        data-mdb-collapse-init
         class="navbar-toggler"
         type="button"
-        data-mdb-target="#navbarExample01"
-        aria-controls="navbarExample01"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <i class="fas fa-bars"></i>
+        <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarExample01">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" aria-current="page" href="#">Trang chủ</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="index">
+              <i class="fas fa-home me-1"></i>Home
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Trang phục nam</a>
+            <a class="nav-link text-white" href="products">
+              <i class="fas fa-shopping-bag me-1"></i>Products
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Trang phục nữ</a>
+            <a class="nav-link text-white" href="cart">
+              <i class="fas fa-shopping-cart me-1"></i>Cart
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Trang phục trẻ em</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Phụ kiện</a>
+            <a class="nav-link text-white" href="userOrders">
+              <i class="fas fa-receipt me-1"></i>My Orders
+            </a>
           </li>
         </ul>
-        <ul class="navbar-nav d-flex flex-row">
-      <!-- Icons -->
-      <li class="nav-item me-3 me-lg-0">
-        <a class="nav-link" href="#">
-          <span class="badge badge-pill bg-danger">1</span>
-          <span><i class="fas fa-shopping-cart"></i></span>
-        </a>
-      </li>
-      <li class="nav-item me-3 me-lg-0">
-        <a class="nav-link" href="#">
-          <i class="fab fa-twitter"></i>
-        </a>
-      </li>
-      <!-- Icon dropdown -->
-      <li class="nav-item me-3 me-lg-0 dropdown">
-        <a
-          data-mdb-dropdown-init
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          aria-expanded="false"
-        >
-          <i class="fas fa-user"></i>
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li>
-            <a class="dropdown-item" href="#">Action</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Another action</a>
-          </li>
-          <li><hr class="dropdown-divider" /></li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
       </div>
     </div>
   </nav>
@@ -824,6 +790,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

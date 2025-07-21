@@ -26,6 +26,14 @@ public class CartController extends HttpServlet {
         this.productService = new ProductService();
     }
 
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     * 
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -52,6 +60,14 @@ public class CartController extends HttpServlet {
         }
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     * 
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -77,9 +93,6 @@ public class CartController extends HttpServlet {
         }
     }
 
-    /**
-     * Display cart page
-     */
     private void displayCart(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
 

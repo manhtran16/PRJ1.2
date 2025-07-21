@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package service;
 
 import repository.OrderDAO;
@@ -12,8 +16,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Cart Service - manages cart using OrderTable as temporary cart
- * Cart is represented as OrderTable with status = 0 (temporary/cart status)
+ *
+ * @author manht
  */
 public class CartService {
 
@@ -27,7 +31,6 @@ public class CartService {
         this.productVariantDAO = new ProductVariantDAO();
     }
 
-
     public OrderTable getOrCreateCart(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
@@ -40,7 +43,7 @@ public class CartService {
             cart = new OrderTable();
             cart.setUser(user);
             cart.setOrderDate(new Date(System.currentTimeMillis()));
-            cart.setStatus(0); 
+            cart.setStatus(0);
             cart = orderDAO.createOrder(cart);
 
             if (cart == null) {
@@ -50,7 +53,6 @@ public class CartService {
 
         return cart;
     }
-
 
     public boolean addToCart(User user, int variantId, int quantity) {
         if (user == null || variantId <= 0 || quantity <= 0) {
@@ -148,7 +150,7 @@ public class CartService {
         }
 
         try {
-            System.out.println("=== getCartItems DEBUG ===");
+            System.out.println("getCartItems DEBUG");
             System.out.println("Getting cart items for user: " + user.getUserID());
 
             OrderTable cart = getOrCreateCart(user);
@@ -282,7 +284,7 @@ public class CartService {
             OrderTable newOrder = new OrderTable();
             newOrder.setUser(user);
             newOrder.setOrderDate(new Date(System.currentTimeMillis()));
-            newOrder.setStatus(1); 
+            newOrder.setStatus(1);
             OrderTable savedOrder = orderDAO.createOrder(newOrder);
             if (savedOrder == null) {
                 throw new RuntimeException("Failed to create new order");
@@ -333,7 +335,6 @@ public class CartService {
             throw new RuntimeException("Selected checkout failed: " + e.getMessage(), e);
         }
     }
-
 
     public boolean clearCart(User user) {
         if (user == null) {
