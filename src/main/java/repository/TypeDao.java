@@ -11,7 +11,7 @@ public class TypeDao {
 
     private EntityManager em;
 
-    public TypeDAO() {
+    public TypeDao() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 

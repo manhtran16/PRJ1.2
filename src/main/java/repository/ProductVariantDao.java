@@ -15,7 +15,7 @@ import model.ProductVariant;
 public class ProductVariantDao {
     private EntityManager em;
 
-    public ProductVariantDAO() {
+    public ProductVariantDao() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 

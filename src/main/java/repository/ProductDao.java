@@ -12,7 +12,7 @@ public class ProductDao {
 
     private EntityManager em;
 
-    public ProductDAO() {
+    public ProductDao() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 

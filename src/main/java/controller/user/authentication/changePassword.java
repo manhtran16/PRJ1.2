@@ -1,6 +1,6 @@
 package controller.user.authentication;
 
-import repository.UserDAO;
+import repository.UserDao;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,11 +13,11 @@ import model.User;
 @WebServlet(name = "/changePassword", urlPatterns = { "/changepassword" })
 public class changePassword extends HttpServlet {
 
-    private UserDAO userDao;
+    private UserDao userDao;
 
     @Override
     public void init() throws ServletException {
-        userDao = new UserDAO();
+        userDao = new UserDao();
     }
 
     @Override

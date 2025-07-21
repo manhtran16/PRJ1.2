@@ -6,18 +6,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import repository.ProductDAO;
+import repository.ProductDao;
 import model.Product;
 import model.ProductVariant;
 
 @WebServlet(name = "VariantController", urlPatterns = { "/variant" })
 public class VariantController extends HttpServlet {
 
-    private ProductDAO productDAO;
+    private ProductDao productDao;
 
     @Override
     public void init() throws ServletException {
-        productDAO = new ProductDAO();
+        productDao = new ProductDao();
     }
 
     /**
@@ -42,7 +42,7 @@ public class VariantController extends HttpServlet {
         try {
             int variantId = Integer.parseInt(variantIdStr);
 
-            ProductVariant variant = productDAO.getVariantWithDetails(variantId);
+            ProductVariant variant = productDao.getVariantWithDetails(variantId);
 
             if (variant == null) {
                 request.setAttribute("errorMessage", "Không tìm thấy phiên bản sản phẩm này.");

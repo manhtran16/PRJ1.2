@@ -5,7 +5,7 @@
 package controller.user.authentication;
 
 import utils.Validate;
-import repository.UserDAO;
+import repository.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -24,11 +24,11 @@ import model.User;
 @WebServlet(name = "AuthController", urlPatterns = { "/auth" })
 public class AuthController extends HttpServlet {
 
-    private UserDAO userDao;
+    private UserDao userDao;
 
     @Override
     public void init() throws ServletException {
-        userDao = new UserDAO();
+        userDao = new UserDao();
     }
 
     /**
