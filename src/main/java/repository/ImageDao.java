@@ -16,7 +16,7 @@ public class ImageDao {
 
     private EntityManager em;
 
-    public ImageDAO() {
+    public ImageDao() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 

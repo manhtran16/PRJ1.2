@@ -6,7 +6,7 @@
 package controller.user.product;
 
 import service.ProductService;
-import repository.RatingDAO;
+import repository.RatingDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -29,12 +29,12 @@ import model.User;
 public class ProductDetailController extends HttpServlet {
 
     private ProductService productService;
-    private RatingDAO ratingDAO;
+    private RatingDao ratingDao;
 
     @Override
     public void init() throws ServletException {
         productService = new ProductService();
-        ratingDAO = new RatingDAO();
+        ratingDao = new RatingDao();
     }
 
     /**
@@ -84,15 +84,15 @@ public class ProductDetailController extends HttpServlet {
                 return;
             }
 
-            List<Rating> ratings = ratingDAO.getRatingsByProductId(productId);
-            Double averageRating = ratingDAO.getAverageRatingByProductId(productId);
-            Long totalRatings = ratingDAO.getTotalRatingsByProductId(productId);
+            List<Rating> ratings = ratingDao.getRatingsByProductId(productId);
+            Double averageRating = ratingDao.getAverageRatingByProductId(productId);
+            Long totalRatings = ratingDao.getTotalRatingsByProductId(productId);
 
             HttpSession session = request.getSession();
             User currentUser = (User) session.getAttribute("user");
             Rating userRating = null;
             if (currentUser != null) {
-                userRating = ratingDAO.getUserRatingForProduct(currentUser.getUserID(), productId);
+                userRating = ratingDao.getUserRatingForProduct(currentUser.getUserID(), productId);
             }
 
             request.setAttribute("product", product);

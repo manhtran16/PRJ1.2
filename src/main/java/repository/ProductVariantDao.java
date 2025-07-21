@@ -12,7 +12,7 @@ import model.ProductVariant;
  *
  * @author admin
  */
-public class ProductVariantDAO {
+public class ProductVariantDao {
     private EntityManager em;
 
     public ProductVariantDAO() {
@@ -80,7 +80,6 @@ public class ProductVariantDAO {
             return false;
         }
     }
-
 
     public ProductVariant getById(int variantId) {
         try {

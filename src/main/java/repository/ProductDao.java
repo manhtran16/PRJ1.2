@@ -8,7 +8,7 @@ import factory.EntityManagerFactoryProvider;
 import java.util.List;
 import java.util.ArrayList;
 
-public class ProductDAO {
+public class ProductDao {
 
     private EntityManager em;
 

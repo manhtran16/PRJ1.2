@@ -9,11 +9,11 @@ import model.Product;
 import factory.EntityManagerFactoryProvider;
 import java.util.List;
 
-public class RatingDAO {
+public class RatingDao {
 
     private EntityManager em;
 
-    public RatingDAO() {
+    public RatingDao() {
         em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
