@@ -13,71 +13,76 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Brand;
-import repository.BrandDAO;
+import repository.BrandDao;
 import service.BrandService;
 
 /**
  *
  * @author manht
  */
-@WebServlet(name="editbrand", urlPatterns={"/editbrand"})
+@WebServlet(name = "editbrand", urlPatterns = { "/editbrand" })
 public class editbrand extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     * 
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet editbrand</title>");  
+            out.println("<title>Servlet editbrand</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet editbrand at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet editbrand at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
+    /**
      * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
+     * 
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String brandIdStr = request.getParameter("brandId");
         int brandId = Integer.parseInt(brandIdStr);
 
-        BrandDAO brandDao = new BrandDAO();
+        BrandDao brandDao = new BrandDao();
         Brand brand = brandDao.getBrandById(brandId);
 
         request.setAttribute("brand", brand);
         request.getRequestDispatcher("/admin/brand/edit_brand.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
+     * 
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String brandIdStr = request.getParameter("brandId");
         String brandName = request.getParameter("brandName");
         String error = null;
@@ -96,7 +101,7 @@ public class editbrand extends HttpServlet {
         } catch (Exception e) {
             error = "Có lỗi xảy ra khi cập nhật thương hiệu.";
         }
-        BrandDAO brandDao = new BrandDAO();
+        BrandDao brandDao = new BrandDao();
         brand = brandDao.getBrandById(brandId);
         request.setAttribute("brand", brand);
         request.setAttribute("error", error);
@@ -104,8 +109,9 @@ public class editbrand extends HttpServlet {
         request.getRequestDispatcher("/admin/brand/edit_brand.jsp").forward(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     * 
      * @return a String containing servlet description
      */
     @Override

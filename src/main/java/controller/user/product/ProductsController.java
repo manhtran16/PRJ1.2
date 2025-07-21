@@ -2,7 +2,7 @@ package controller.user.product;
 
 import service.ProductService;
 import repository.RatingDAO;
-import repository.BrandDAO;
+import repository.BrandDao;
 import repository.TypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,16 +25,16 @@ import model.Type;
 public class ProductsController extends HttpServlet {
 
     private ProductService productService;
-    private RatingDAO ratingDAO;
-    private BrandDAO brandDAO;
-    private TypeDAO typeDAO;
+    private RatingDao ratingDAO;
+    private BrandDao brandDAO;
+    private TypeDao typeDAO;
 
     @Override
     public void init() throws ServletException {
         productService = new ProductService();
-        ratingDAO = new RatingDAO();
-        brandDAO = new BrandDAO();
-        typeDAO = new TypeDAO();
+        ratingDAO = new RatingDao();
+        brandDAO = new BrandDao();
+        typeDAO = new TypeDao();
     }
 
     /**

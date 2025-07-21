@@ -12,7 +12,7 @@ import model.Image;
  *
  * @author manht
  */
-public class ImageDAO {
+public class ImageDao {
 
     private EntityManager em;
 

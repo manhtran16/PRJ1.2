@@ -7,7 +7,7 @@ import factory.EntityManagerFactoryProvider;
 
 import java.util.List;
 
-public class TypeDAO {
+public class TypeDao {
 
     private EntityManager em;
 

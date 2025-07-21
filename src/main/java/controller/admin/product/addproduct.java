@@ -2,8 +2,8 @@ package controller.admin.product;
 
 import factory.EntityManagerFactoryProvider;
 import jakarta.persistence.EntityManager;
-import repository.BrandDAO;
-import repository.TypeDAO;
+import repository.BrandDao;
+import repository.TypeDao;
 import model.Type;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,15 +21,15 @@ import model.ProductVariant;
 import model.VariantAttributeValue;
 import service.ProductService;
 
-@WebServlet(name = "AddProduct", urlPatterns = {"/addproduct"})
+@WebServlet(name = "AddProduct", urlPatterns = { "/addproduct" })
 public class addproduct extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        TypeDAO tdao = new TypeDAO();
+        TypeDao tdao = new TypeDao();
         List<Type> typeList = tdao.getType();
-        BrandDAO bdao = new BrandDAO();
+        BrandDao bdao = new BrandDao();
         List<Brand> brandList = bdao.getBrand();
         request.setAttribute("typeList", typeList);
         request.setAttribute("brandList", brandList);
@@ -46,8 +46,8 @@ public class addproduct extends HttpServlet {
             int typeID = Integer.parseInt(request.getParameter("typeID"));
             Double price = Double.parseDouble(request.getParameter("price"));
 
-            BrandDAO bdao = new BrandDAO();
-            TypeDAO tdao = new TypeDAO();
+            BrandDao bdao = new BrandDao();
+            TypeDao tdao = new TypeDao();
 
             Brand brand = bdao.getBrandById(brandID);
             Type type = tdao.getTypeByID(typeID);
@@ -76,16 +76,16 @@ public class addproduct extends HttpServlet {
             }
 
             EntityManager em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
-            
-            int sizeAttributeID = 2;   // ID của Attribute "Size" trong bảng Attribute
-            int colorAttributeID = 1;  // ID của Attribute "Color" trong bảng Attribute
-            
+
+            int sizeAttributeID = 2; // ID của Attribute "Size" trong bảng Attribute
+            int colorAttributeID = 1; // ID của Attribute "Color" trong bảng Attribute
+
             List<ProductVariant> variantList = new ArrayList<>();
             for (int i = 0; i < quantities.length; i++) {
                 ProductVariant variant = new ProductVariant();
                 variant.setQuantity(Integer.parseInt(quantities[i]));
                 variant.setPrice(price);
-                variant.setProduct(product); 
+                variant.setProduct(product);
 
                 List<VariantAttributeValue> attributes = new ArrayList<>();
 

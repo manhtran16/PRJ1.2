@@ -5,7 +5,7 @@
 package service;
 
 import model.Brand;
-import repository.BrandDAO;
+import repository.BrandDao;
 
 /**
  *
