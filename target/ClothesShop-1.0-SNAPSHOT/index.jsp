@@ -23,6 +23,7 @@
     <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Style CSS -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="style.css">
     <style>
@@ -60,6 +61,12 @@
             display: block;
         }
     </style>
+=======
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
+ 
+>>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 </head>
 
 <body>
@@ -111,14 +118,28 @@
                                     </div>
                                 </div>
                             </li>
+<<<<<<< HEAD
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="index">Home</a></li>
                                     <li><a href="products">Shop</a></li>
                                     <li><a href="about.jsp">About</a></li>
+=======
+                                <li>
+                                <a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="index">Home</a></li>
+                                    <li><a href="products">Shop</a></li>
+                                   
+>>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                                 </ul>
+                                
                             </li>
+<<<<<<< HEAD
                             <li><a href="about.jsp">Contact</a></li>
+=======
+                            
+>>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -127,6 +148,7 @@
 
             <!-- Header Meta Data -->
             <div class="header-meta d-flex clearfix justify-content-end">
+<<<<<<< HEAD
                 <!-- Search Area -->
                 <div class="search-area">
                     <form action="products" method="get">
@@ -138,6 +160,9 @@
                 <div class="favourite-area">
                     <a href="#"><img src="img/core-img/heart.svg" alt=""></a>
                 </div>
+=======
+               
+>>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                 <!-- User Login Info -->
                 <div class="user-login-info">
                     <a href="#"><img src="img/core-img/user.svg" alt=""></a>
@@ -157,7 +182,11 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
+<<<<<<< HEAD
                     <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>0</span></a>
+=======
+                    <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> </a>
+>>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                 </div>
             </div>
 
@@ -389,7 +418,11 @@
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area mb-30">
                         <ul class="footer_widget_menu">
+<<<<<<< HEAD
                             <li><a href="userOrders">Trạng thái đơn hàng</a></li>
+=======
+                            <li><a href="userOrders.jsp">Trạng thái đơn hàng</a></li>
+>>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                             <li><a href="#">Tùy chọn thanh toán</a></li>
                             <li><a href="#">Hướng dẫn</a></li>
                             <li><a href="#">Chính sách bảo mật</a></li>
@@ -448,6 +481,7 @@
     <!-- ##### Footer Area End ##### -->
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
+<<<<<<< HEAD
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
     <script src="js/popper.min.js"></script>
@@ -459,6 +493,19 @@
     <script src="js/classy-nav.min.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+=======
+    <script src="${pageContext.request.contextPath}/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <!-- Plugins js -->
+    <script src="${pageContext.request.contextPath}/js/plugins.js"></script>
+    <!-- Classy Nav js -->
+    <script src="${pageContext.request.contextPath}/js/classy-nav.min.js"></script>
+    <!-- Active js -->
+    <script src="${pageContext.request.contextPath}/js/active.js"></script>
+>>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 
 </body>
 
