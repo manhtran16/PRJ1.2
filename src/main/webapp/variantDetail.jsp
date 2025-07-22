@@ -1,31 +1,59 @@
-<%-- 
-    Document   : about
-    Created on : Jul 22, 2025, 2:45:29 AM
-    Author     : Admin
---%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-        <!-- Title  -->
-        <title>Essence - Clothing shop</title>
-
-        <!-- Favicon  -->
-        <link rel="icon" href="img/core-img/favicon.ico">
-
-        <!-- Core Style CSS -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Chi tiết variant - ${product.productName}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/css/mdb.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
-       
+        <style>
+            .variant-card {
+                border: 2px solid #007bff;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px 0;
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .attribute-badge {
+                background-color: #007bff;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 15px;
+                margin: 5px;
+                display: inline-block;
+                font-size: 14px;
+            }
+            .back-btn {
+                background-color: #6c757d;
+                color: white;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+            .add-to-cart-btn {
+                background-color: #28a745;
+                color: white;
+                padding: 15px 30px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px;
+                font-weight: bold;
+                width: 100%;
+                margin-top: 20px;
+            }
+        </style>
     </head>
     <body>
         <!-- ##### Header Area Start ##### -->
@@ -72,7 +100,7 @@
                                             <li><a href="products?typeId=12">Áo khoác</a></li>
                                         </ul>
                                         <div class="single-mega cn-col-4">
-                                            <img src="${pageContext.request.contextPath}/img/bg-img/bg-6.jpg" alt="">
+                                            <img src="img/bg-img/bg-6.jpg" alt="">
                                         </div>
                                     </div>
                                 </li>
@@ -81,11 +109,11 @@
                                     <ul class="dropdown">
                                         <li><a href="${pageContext.request.contextPath}/index">Home</a></li>
                                         <li><a href="${pageContext.request.contextPath}/products">Shop</a></li>
-                                        <li><a href="about.jsp">About</a></li>
+                                        
                                     </ul>
 
                                 </li>
-                                 <li><a href="about.jsp">About</a></li>
+                                
                             </ul>
                         </div>
                         <!-- Nav End -->
@@ -94,21 +122,22 @@
 
                 <!-- Header Meta Data -->
                 <div class="header-meta d-flex clearfix justify-content-end">
-
+                   
                     <!-- User Login Info -->
                     <div class="user-login-info">
                         <a href="#"><img src="${pageContext.request.contextPath}/img/core-img/user.svg" alt=""></a>
                         <div class="user-content">
-                         
                             <c:choose>
                                 <c:when test="${not empty sessionScope.user}">
-                                    <a href="${pageContext.request.contextPath}/user/userProfile.jsp">Tài khoản</a>
-                                    <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
-                                    <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
-                                </c:when>
+                                   
+                                <a href="${pageContext.request.contextPath}/user/userProfile.jsp">Tài khoản</a>
+                                <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                            </c:when>
+                              
                                 <c:otherwise>
-                                    <a href="../login.jsp">Đăng nhập</a>
-                                    <a href="../register.jsp">Đăng ký</a>
+                                    <a href="login.jsp">Đăng nhập</a>
+                                    <a href="register.jsp">Đăng ký</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -122,64 +151,131 @@
             </div>
         </header>
         <!-- ##### Header Area End ##### -->
-        <!-- ##### Blog Wrapper Area Start ##### -->
-        <div class="single-blog-wrapper">
+        <main class="mt-5 pt-4">
+            <div class="container mt-5">
 
-            <!-- Single Blog Post Thumb -->
-            <div class="single-blog-post-thumb">
-                <img src="img/bg-img/bg-7.jpg" alt="">
-            </div>
+                <!-- Back button -->
+                <a href="products?action=detail&id=${product.productID}" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Quay lại sản phẩm
+                </a>
 
-            <!-- Single Blog Content Wrap -->
-            <div class="single-blog-content-wrapper d-flex">
+                <div class="row">
+                    <!-- Product Image -->
+                    <div class="col-md-6 mb-4">
+                        <c:choose>
+                            <c:when test="${not empty selectedVariant.images}">
+                                <img src="${selectedVariant.images[0].url}" class="img-fluid" alt="${product.productName}" />
+                            </c:when>
+                            <c:when test="${not empty product.variants and not empty product.variants[0].images}">
+                                <img src="${product.variants[0].images[0].url}" class="img-fluid" alt="${product.productName}" />
+                            </c:when>
+                            <c:otherwise>
+                                <img src="https://via.placeholder.com/500x400?text=Product+Image" class="img-fluid" alt="${product.productName}" />
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
 
-                <!-- Blog Content -->
-                <div class="single-blog--text">
-                    <h2>Chào mừng bạn đến với <strong>Essence-Clothing shop</strong>! Chúng tôi không chỉ là một cửa hàng quần áo, mà còn là nơi bạn có thể tìm thấy nguồn cảm hứng cho phong cách cá nhân, thể hiện cá tính và sự tự tin của riêng mình qua từng bộ trang phục.</h2>
-                    <p>Câu Chuyện Của Chúng Tôi</p>
+                    <!-- Variant Details -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4">
 
-                    <blockquote>
-                        <h6><i class="fa fa-quote-left" aria-hidden="true"></i> Essence-Clothing shop được thành lập bởi những người có chung niềm đam mê mãnh liệt với thời trang. Chúng tôi bắt đầu từ một ý tưởng đơn giản: tạo ra một không gian mua sắm nơi mọi khách hàng đều có thể tìm thấy những sản phẩm chất lượng, hợp xu hướng với mức giá phải chăng. Từ những ngày đầu khởi nghiệp đầy thử thách, chúng tôi đã không ngừng nỗ lực để mang đến những bộ sưu tập độc đáo và dịch vụ khách hàng tận tâm nhất.</h6>
-                    </blockquote>
-            
+                            <!-- Product Title -->
+                            <h2>${product.productName}</h2>
+                            <c:if test="${not empty product.brand}">
+                                <p class="text-muted">Brand: ${product.brand.brandName}</p>
+                            </c:if>
+                            <c:if test="${not empty product.type}">
+                                <p class="text-muted">Category: ${product.type.typeName}</p>
+                            </c:if>
+
+                            <!-- Variant Specific Card -->
+                            <div class="variant-card">
+                                <h4 style="color: #007bff; margin-bottom: 15px;">
+                                    <i class="fas fa-tag"></i> Chi tiết phiên bản này
+                                </h4>
+
+                                <!-- Variant Attributes -->
+                                <div style="margin-bottom: 15px;">
+                                    <c:forEach var="attrValue" items="${selectedVariant.attributeValues}">
+                                        <span class="attribute-badge">
+                                            ${attrValue.attribute.attributeName}: ${attrValue.value}
+                                        </span>
+                                    </c:forEach>
+                                </div>
+
+                                <!-- Price -->
+                                <h3 style="color: #28a745; margin: 15px 0;">
+                                    Giá: ${selectedVariant.price} VNĐ
+                                </h3>
+
+                                <!-- Stock Status -->
+                                <div style="margin: 15px 0;">
+                                    <c:choose>
+                                        <c:when test="${selectedVariant.quantity > 0}">
+                                            <p style="color: #28a745; font-size: 16px;">
+                                                <i class="fas fa-check-circle"></i> 
+                                                Còn hàng: <strong>${selectedVariant.quantity}</strong> sản phẩm
+                                            </p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p style="color: #dc3545; font-size: 16px;">
+                                                <i class="fas fa-times-circle"></i> 
+                                                <strong>Hết hàng</strong>
+                                            </p>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+
+                            <!-- Product Description -->
+                            <div style="margin: 20px 0;">
+                                <h5>Mô tả sản phẩm:</h5>
+                                <p>
+                                    <c:choose>
+                                        <c:when test="${not empty product.description}">
+                                            ${product.description}
+                                        </c:when>
+                                        <c:otherwise>
+                                            Không có mô tả cho sản phẩm này.
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
+                            </div>
+
+                            <!-- Add to Cart Form -->
+                            <c:if test="${selectedVariant.quantity > 0}">
+                                <form action="cart" method="post">
+                                    <input type="hidden" name="action" value="add">
+                                    <input type="hidden" name="variantId" value="${selectedVariant.variantID}">
+
+                                    <div style="margin: 20px 0;">
+                                        <label for="quantity" style="font-weight: bold;">Số lượng:</label>
+                                        <input type="number" id="quantity" name="quantity" value="1" 
+                                               min="1" max="${selectedVariant.quantity}" 
+                                               style="width: 80px; margin-left: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 5px;">
+                                    </div>
+
+                                    <button type="submit" class="add-to-cart-btn">
+                                        <i class="fas fa-shopping-cart"></i> THÊM VÀO GIỎ HÀNG
+                                    </button>
+                                </form>
+                            </c:if>
+
+                            <!-- Other Variants Link -->
+                            <div style="margin-top: 30px; text-align: center;">
+                                <a href="products?action=detail&id=${product.productID}" 
+                                   style="color: #007bff; text-decoration: none; font-weight: bold;">
+                                    <i class="fas fa-list"></i> Xem tất cả phiên bản khác
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-                
-
-                <!-- Related Blog Post -->
-                <div class="related-blog-post">
-                    <!-- Single Related Blog Post -->
-                    <div class="single-related-blog-post">
-                        <img src="img/bg-img/rp1.jpg" alt="">
-                        <a href="#">
-
-                        </a>
-                    </div>
-                    <!-- Single Related Blog Post -->
-                    <div class="single-related-blog-post">
-                        <img src="img/bg-img/rp2.jpg" alt="">
-                        <a href="#">
-
-                        </a>
-                    </div>
-                    <!-- Single Related Blog Post -->
-                    <div class="single-related-blog-post">
-                        <img src="img/bg-img/rp3.jpg" alt="">
-                        <a href="#">
-
-                        </a>
-                    </div>
-                    <!-- Single Related Blog Post -->
-                    <div class="single-related-blog-post">
-                        <img src="img/bg-img/rp4.jpg" alt="">
-                        <a href="#">
-
-                        </a>
-                    </div>
-                </div>
-
             </div>
-        </div>
-        <!-- ##### Brands Area Start ##### -->
+        </main>
+
+         <!-- ##### Brands Area Start ##### -->
     <div class="brands-area d-flex align-items-center justify-content-between">
         <!-- Brand Logo -->
         <div class="single-brands-logo">
@@ -289,8 +385,6 @@
     <script src="${pageContext.request.contextPath}/js/classy-nav.min.js"></script>
     <!-- Active js -->
     <script src="${pageContext.request.contextPath}/js/active.js"></script>
-    <!-- MDB JavaScript -->
-    <script src="${pageContext.request.contextPath}/admin/js/mdb.umd.min.js"></script>
-        
+
     </body>
 </html>
