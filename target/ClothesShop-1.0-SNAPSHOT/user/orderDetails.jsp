@@ -6,69 +6,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Chi tiết đơn hàng #${order.orderID} - Clothes Shop</title>
-<<<<<<< HEAD
-    <link href="${pageContext.request.contextPath}/css/mdb.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .order-detail-card {
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .order-header {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-bottom: 1px solid #dee2e6;
-            border-radius: 8px 8px 0 0;
-        }
-        .product-item {
-            border-bottom: 1px solid #f0f0f0;
-            padding: 15px 0;
-        }
-        .product-item:last-child {
-            border-bottom: none;
-        }
-        .status-badge {
-            font-size: 0.875rem;
-            padding: 0.5rem 1rem;
-            border-radius: 50rem;
-        }
-        .status-pending { 
-            background-color: #fff3cd; 
-            color: #856404; 
-            border: 1px solid #ffeaa7;
-        }
-        .status-delivered { 
-            background-color: #d4edda; 
-            color: #155724; 
-            border: 1px solid #c3e6cb;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
-        <div class="container">
-            <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/products">
-                <i class="fas fa-tshirt me-2"></i>Clothes Store
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link text-white" href="${pageContext.request.contextPath}/products">
-                    <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
-                </a>
-                <a class="nav-link text-white active" href="${pageContext.request.contextPath}/userOrders">
-                    <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
-                </a>
-                <a class="nav-link text-white" href="${pageContext.request.contextPath}/cart">
-                    <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
-                </a>
-                <a class="nav-link text-white" href="${pageContext.request.contextPath}/userProfile">
-                    <i class="fas fa-user me-1"></i>Tài khoản
-                </a>
-            </div>
-        </div>
-    </nav>
-=======
     <link href="${pageContext.request.contextPath}/admin/css/mdb.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
@@ -168,7 +105,6 @@
 
         </div>
     </header>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 
     <div class="container mt-4">
         <!-- Back Button -->
@@ -274,17 +210,6 @@
         </c:if>
     </div>
 
-<<<<<<< HEAD
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <div class="container">
-            <p class="mb-0">&copy; 2025 Clothes Store. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/mdb.umd.min.js"></script>
-=======
    
 
     <!-- ##### New Arrivals Area End ##### -->
@@ -414,6 +339,5 @@
     <!-- Active js -->
     <script src="${pageContext.request.contextPath}/js/active.js"></script>
     <script src="${pageContext.request.contextPath}/admin/js/mdb.umd.min.js"></script>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 </body>
 </html>

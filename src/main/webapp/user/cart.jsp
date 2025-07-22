@@ -5,11 +5,6 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-<<<<<<< HEAD
-        <title>Giỏ hàng</title>
-        <link href="${pageContext.request.contextPath}/css/mdb.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-=======
         <meta name="description" content="">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,7 +18,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
         <style>
             .cart-table {
                 width: 100%;
@@ -70,56 +64,6 @@
                     padding: 4px 8px;
                 }
             }
-<<<<<<< HEAD
-
-            /* Checkbox styling */
-            .product-checkbox {
-                transform: scale(1.2);
-                margin-right: 10px;
-            }
-
-            .select-all-checkbox {
-                transform: scale(1.3);
-            }
-
-            /* Selected row highlighting */
-            .selected-row {
-                background-color: #f8f9fa;
-            }
-
-            /* Checkout summary */
-            .checkout-summary {
-                background-color: #e8f5e9;
-                border: 1px solid #4caf50;
-                border-radius: 8px;
-                padding: 15px;
-                margin-top: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
-            <div class="container">
-                <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/products">
-                    <i class="fas fa-tshirt me-2"></i>Cloth Store
-                </a>
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link text-white" href="${pageContext.request.contextPath}/products">
-                        <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
-                    </a>
-                    <a class="nav-link text-white active" href="${pageContext.request.contextPath}/cart">
-                        <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
-                    </a>
-                    <a class="nav-link text-white" href="${pageContext.request.contextPath}/userOrders">
-                        <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
-                    </a>
-                    <a class="nav-link text-white" href="${pageContext.request.contextPath}/userProfile">
-                        <i class="fas fa-user me-1"></i>Tài khoản
-                    </a>
-                </div>
-            </div>
-        </nav>
-=======
         </style>
     </head>
     <body>
@@ -216,7 +160,6 @@
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
         <div class="container mt-4">
             <h2>Giỏ hàng của bạn</h2>
 
@@ -239,26 +182,12 @@
 
             <c:if test="${empty cartItems}">
                 <div class="alert alert-info">Giỏ hàng trống.</div>
-<<<<<<< HEAD
-                <a href="${pageContext.request.contextPath}/products" class="btn btn-primary">Tiếp tục mua sắm</a>
-=======
-                <a href="../products" class="btn btn-primary">Tiếp tục mua sắm</a>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
+                <a href="./products" class="btn btn-primary">Tiếp tục mua sắm</a>
             </c:if>
             <c:if test="${not empty cartItems}">
                 <table class="table cart-table">
                     <thead>
                         <tr>
-<<<<<<< HEAD
-                            <th>
-                                <input type="checkbox" 
-                                       id="selectAll" 
-                                       class="select-all-checkbox" 
-                                       title="Chọn tất cả">
-                                <label for="selectAll" class="ms-1">Chọn tất cả</label>
-                            </th>
-=======
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                             <th>Sản phẩm</th>
                             <th>Phiên bản</th>
                             <th>Giá (VNĐ)</th>
@@ -269,23 +198,8 @@
                     </thead>
                     <tbody>
                         <c:set var="total" value="0"/>
-<<<<<<< HEAD
-                        <c:forEach var="item" items="${cartItems}" varStatus="status">
-                            <tr class="cart-row" data-variant-id="${item.variant.variantID}">
-                                <td>
-                                    <input type="checkbox" 
-                                           class="product-checkbox" 
-                                           id="product_${item.variant.variantID}"
-                                           data-variant-id="${item.variant.variantID}"
-                                           data-price="${item.variant.price}"
-                                           data-quantity="${item.orderQuantity}"
-                                           data-product-name="${item.variant.product.productName}"
-                                           value="${item.variant.variantID}">
-                                </td>
-=======
                         <c:forEach var="item" items="${cartItems}">
                             <tr>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                                 <td>${item.variant.product.productName}</td>
                                 <td>
                                     <c:forEach var="attr" items="${item.variant.attributeValues}">
@@ -294,11 +208,7 @@
                                 </td>
                                 <td><fmt:formatNumber value="${item.variant.price}" pattern="#,###"/></td>
                                 <td>
-<<<<<<< HEAD
-                                    <form action="${pageContext.request.contextPath}/cart" method="post" style="display: inline;" class="quantity-form">
-=======
                                     <form action="cart" method="post" style="display: inline;" class="quantity-form">
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                                         <input type="hidden" name="action" value="update"/>
                                         <input type="hidden" name="variantId" value="${item.variant.variantID}"/>
                                         <input type="number" 
@@ -314,11 +224,7 @@
                                 <td><fmt:formatNumber value="${item.variant.price * item.orderQuantity}" pattern="#,###"/></td>
                                 <td>
                                     <!-- Form method for removing item -->
-<<<<<<< HEAD
-                                    <form action="${pageContext.request.contextPath}/cart" method="get" style="display: inline;">
-=======
                                     <form action="cart" method="get" style="display: inline;">
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                                         <input type="hidden" name="action" value="remove">
                                         <input type="hidden" name="variantId" value="${item.variant.variantID}">
                                         <button type="submit" 
@@ -335,39 +241,20 @@
                     </tbody>
                     <tfoot>
                         <tr class="table-success">
-<<<<<<< HEAD
-                            <td colspan="5" class="text-end font-weight-bold">Tổng tiền:</td>
-=======
                             <td colspan="4" class="text-end font-weight-bold">Tổng tiền:</td>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                             <td colspan="2" class="font-weight-bold">
                                 <fmt:formatNumber value="${total}" pattern="#,###"/> VNĐ
                             </td>
                         </tr>
                     </tfoot>
                 </table>
-<<<<<<< HEAD
-
-                <!-- Simple selected items display -->
-                <div class="alert alert-info" id="selectedInfo" style="display: none;">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Đã chọn <strong><span id="selectedCount2">0</span></strong> sản phẩm để thanh toán.
-                </div>
-                <div class="mt-3">
-                    <a href="${pageContext.request.contextPath}/products" class="btn btn-secondary">
-=======
                 <div class="mt-3">
                     <a href="products" class="btn btn-secondary">
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                         <i class="fas fa-arrow-left"></i> Tiếp tục mua sắm
                     </a>
 
                     <!-- Form method for clearing cart -->
-<<<<<<< HEAD
-                    <form action="${pageContext.request.contextPath}/cart" method="get" style="display: inline;">
-=======
                     <form action="cart" method="get" style="display: inline;">
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                         <input type="hidden" name="action" value="clear">
                         <button type="submit" 
                                 class="btn btn-warning"
@@ -376,128 +263,13 @@
                         </button>
                     </form>
 
-<<<<<<< HEAD
-                    <!-- Checkout Form with Selected Items -->
-                    <form action="${pageContext.request.contextPath}/cart" method="post" style="display: inline;" id="checkoutForm">
-                        <input type="hidden" name="action" value="checkoutSelected">
-                        
-                        <button type="submit" 
-                                id="checkoutBtn"
-                                class="btn btn-success"
-                                onclick="return validateCheckout()"
-                                disabled>
-                            <i class="fas fa-credit-card"></i> Thanh toán (<span id="selectedCount">0</span> sản phẩm)
-                        </button>
-                    </form>
-=======
                     <a href="userOrders?action=checkout" class="btn btn-success">
                         <i class="fas fa-credit-card"></i> Thanh toán
                     </a>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                 </div>
             </c:if>
         </div>
 
-<<<<<<< HEAD
-        <!-- MDB JavaScript -->
-        <script src="${pageContext.request.contextPath}/js/mdb.umd.min.js"></script>
-        
-        <script>
-            // Simple JavaScript for checkbox functionality
-            document.addEventListener('DOMContentLoaded', function() {
-                const selectAllCheckbox = document.getElementById('selectAll');
-                const productCheckboxes = document.querySelectorAll('.product-checkbox');
-                const checkoutBtn = document.getElementById('checkoutBtn');
-                const selectedCount = document.getElementById('selectedCount');
-                const selectedInfo = document.getElementById('selectedInfo');
-                const selectedCount2 = document.getElementById('selectedCount2');
-
-                // Select All functionality
-                if (selectAllCheckbox) {
-                    selectAllCheckbox.addEventListener('change', function() {
-                        productCheckboxes.forEach(checkbox => {
-                            checkbox.checked = this.checked;
-                            highlightRow(checkbox);
-                        });
-                        updateCheckoutButton();
-                    });
-                }
-
-                // Individual checkbox functionality
-                productCheckboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        highlightRow(this);
-                        updateSelectAll();
-                        updateCheckoutButton();
-                    });
-                });
-
-                function highlightRow(checkbox) {
-                    const row = checkbox.closest('tr');
-                    if (checkbox.checked) {
-                        row.classList.add('selected-row');
-                    } else {
-                        row.classList.remove('selected-row');
-                    }
-                }
-
-                function updateSelectAll() {
-                    const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
-                    selectAllCheckbox.checked = checkedBoxes.length === productCheckboxes.length;
-                    selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < productCheckboxes.length;
-                }
-
-                function updateCheckoutButton() {
-                    const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
-                    const count = checkedBoxes.length;
-                    
-                    if (count > 0) {
-                        checkoutBtn.disabled = false;
-                        selectedInfo.style.display = 'block';
-                    } else {
-                        checkoutBtn.disabled = true;
-                        selectedInfo.style.display = 'none';
-                    }
-                    
-                    selectedCount.textContent = count;
-                    selectedCount2.textContent = count;
-                }
-
-                // Initial update
-                updateCheckoutButton();
-            });
-
-            // Validate checkout - simple validation
-            function validateCheckout() {
-                const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
-                
-                if (checkedBoxes.length === 0) {
-                    alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán!');
-                    return false;
-                }
-
-                // Add selected variant IDs to form before submit
-                const form = document.getElementById('checkoutForm');
-                
-                // Remove old hidden inputs
-                const oldInputs = form.querySelectorAll('input[name="selectedVariants"]');
-                oldInputs.forEach(input => input.remove());
-
-                // Add new hidden inputs for selected items
-                checkedBoxes.forEach(checkbox => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'selectedVariants';
-                    input.value = checkbox.value;
-                    form.appendChild(input);
-                });
-
-                return true;
-            }
-        </script>
-    </body>
-</html>
-=======
     <!-- ##### New Arrivals Area End ##### -->
 
     <!-- ##### Brands Area Start ##### -->
@@ -628,4 +400,3 @@
         <script src="${pageContext.request.contextPath}/admin/js/mdb.umd.min.js"></script>
     </body>
 </html>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13

@@ -3,62 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< HEAD
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Đổi mật khẩu</title>
-    <link href="../css/mdb.min.css" rel="stylesheet">
-    <link href="../css/core-style.css" rel="stylesheet">
-    <link href="../style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .change-password-container {
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .alert {
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        .alert-danger {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-        .alert-success {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
-        <div class="container">
-            <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/products">
-                <i class="fas fa-tshirt me-2"></i>Clothes Shop
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link text-white" href="${pageContext.request.contextPath}/products">
-                    <i class="fas fa-shopping-bag me-1"></i>Sản phẩm
-                </a>
-                <a class="nav-link text-white" href="${pageContext.request.contextPath}/userOrders">
-                    <i class="fas fa-receipt me-1"></i>Đơn hàng của tôi
-                </a>
-                <a class="nav-link text-white" href="${pageContext.request.contextPath}/cart">
-                    <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
-                </a>
-                <a class="nav-link text-white active" href="${pageContext.request.contextPath}/userProfile">
-                    <i class="fas fa-user me-1"></i>Tài khoản
-                </a>
-            </div>
-        </div>
-    </nav>
-=======
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -171,7 +115,6 @@
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 
     <div class="container">
         <div class="change-password-container">
@@ -244,89 +187,6 @@
     </div>
 
     <!-- MDB JavaScript -->
-<<<<<<< HEAD
-    <script src="../js/mdb.umd.min.js"></script>
-    <script>
-        // Initialize MDB form elements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize form inputs
-            const inputs = document.querySelectorAll('.form-outline input');
-            inputs.forEach(input => {
-                new mdb.Input(input);
-            });
-        });
-
-        // Client-side password validation
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (newPassword !== confirmPassword) {
-                e.preventDefault();
-                alert('Mật khẩu mới và xác nhận mật khẩu không khớp!');
-                return false;
-            }
-
-            if (newPassword.length < 6) {
-                e.preventDefault();
-                alert('Mật khẩu mới phải có ít nhất 6 ký tự!');
-                return false;
-            }
-        });
-
-        // Password strength indicator
-        document.getElementById('newPassword').addEventListener('input', function() {
-            const password = this.value;
-            const strengthBar = document.getElementById('strengthBar');
-            const strengthText = document.getElementById('strengthText');
-
-            if (!strengthBar) return; // If strength indicator doesn't exist, skip
-
-            let strength = 0;
-            let text = '';
-            let color = '';
-
-            if (password.length >= 6) strength++;
-            if (password.length >= 8) strength++;
-            if (/[A-Z]/.test(password)) strength++;
-            if (/[0-9]/.test(password)) strength++;
-            if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-            switch (strength) {
-                case 0:
-                case 1:
-                    text = 'Quá yếu';
-                    color = '#dc3545';
-                    break;
-                case 2:
-                    text = 'Yếu';
-                    color = '#fd7e14';
-                    break;
-                case 3:
-                    text = 'Trung bình';
-                    color = '#ffc107';
-                    break;
-                case 4:
-                    text = 'Tốt';
-                    color = '#20c997';
-                    break;
-                case 5:
-                    text = 'Mạnh';
-                    color = '#198754';
-                    break;
-            }
-
-            if (strengthBar) {
-                strengthBar.style.width = (strength * 20) + '%';
-                strengthBar.style.backgroundColor = color;
-            }
-            if (strengthText) {
-                strengthText.textContent = text;
-                strengthText.style.color = color;
-            }
-        });
-    </script>
-=======
     <script src="${pageContext.request.contextPath}/admin/js/mdb.umd.min.js"></script>
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="${pageContext.request.contextPath}/js/jquery/jquery-2.2.4.min.js"></script>
@@ -341,6 +201,5 @@
     <!-- Active js -->
     <script src="${pageContext.request.contextPath}/js/active.js"></script>
     <script src="${pageContext.request.contextPath}/js/changerPasswork.js"></script>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 </body>
 </html>

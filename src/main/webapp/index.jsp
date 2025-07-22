@@ -23,50 +23,10 @@
     <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Style CSS -->
-<<<<<<< HEAD
-    <link rel="stylesheet" href="css/core-style.css">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .user-login-info a{
-            cursor: pointer;
-        }
-
-        .user-login-info {
-            position: relative;
-            display: inline-block;
-        }
-
-        .user-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .user-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .user-content a:hover {
-            background-color: #c5c5c5f5;
-            width: 160px;
-        }
-
-        .user-login-info:hover .user-content {
-            display: block;
-        }
-    </style>
-=======
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
  
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 </head>
 
 <body>
@@ -118,28 +78,16 @@
                                     </div>
                                 </div>
                             </li>
-<<<<<<< HEAD
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="index">Home</a></li>
-                                    <li><a href="products">Shop</a></li>
-                                    <li><a href="about.jsp">About</a></li>
-=======
                                 <li>
                                 <a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="index">Home</a></li>
                                     <li><a href="products">Shop</a></li>
                                    
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                                 </ul>
                                 
                             </li>
-<<<<<<< HEAD
-                            <li><a href="about.jsp">Contact</a></li>
-=======
                             
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -148,21 +96,7 @@
 
             <!-- Header Meta Data -->
             <div class="header-meta d-flex clearfix justify-content-end">
-<<<<<<< HEAD
-                <!-- Search Area -->
-                <div class="search-area">
-                    <form action="products" method="get">
-                        <input type="search" name="q" id="headerSearch" placeholder="Tìm kiếm sản phẩm">
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                </div>
-                <!-- Favourite Area -->
-                <div class="favourite-area">
-                    <a href="#"><img src="img/core-img/heart.svg" alt=""></a>
-                </div>
-=======
                
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                 <!-- User Login Info -->
                 <div class="user-login-info">
                     <a href="#"><img src="img/core-img/user.svg" alt=""></a>
@@ -182,11 +116,7 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-<<<<<<< HEAD
-                    <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>0</span></a>
-=======
                     <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> </a>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                 </div>
             </div>
 
@@ -418,11 +348,7 @@
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area mb-30">
                         <ul class="footer_widget_menu">
-<<<<<<< HEAD
-                            <li><a href="userOrders">Trạng thái đơn hàng</a></li>
-=======
                             <li><a href="userOrders.jsp">Trạng thái đơn hàng</a></li>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                             <li><a href="#">Tùy chọn thanh toán</a></li>
                             <li><a href="#">Hướng dẫn</a></li>
                             <li><a href="#">Chính sách bảo mật</a></li>
@@ -481,19 +407,6 @@
     <!-- ##### Footer Area End ##### -->
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
-<<<<<<< HEAD
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="js/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- Plugins js -->
-    <script src="js/plugins.js"></script>
-    <!-- Classy Nav js -->
-    <script src="js/classy-nav.min.js"></script>
-    <!-- Active js -->
-    <script src="js/active.js"></script>
-=======
     <script src="${pageContext.request.contextPath}/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
     <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
@@ -505,7 +418,6 @@
     <script src="${pageContext.request.contextPath}/js/classy-nav.min.js"></script>
     <!-- Active js -->
     <script src="${pageContext.request.contextPath}/js/active.js"></script>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 
 </body>
 

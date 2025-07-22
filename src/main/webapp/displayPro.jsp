@@ -10,303 +10,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-<<<<<<< HEAD
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>CLoth store</title>
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts Roboto -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap">
-    <!-- Local CSS with context path -->
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-    <style>
-        .variant-container {
-            margin: 20px 0;
-        }
-        
-        .color-group {
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            background: #f8f9fa;
-        }
-        
-        .color-group h4 {
-            margin: 0 0 15px 0;
-            color: #495057;
-            font-weight: 600;
-            border-bottom: 2px solid #dee2e6;
-            padding-bottom: 8px;
-        }
-        
-        .size-variants {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .size-variant-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 12px;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 150px;
-            max-width: 200px;
-        }
-        
-        .size-variant-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            border-color: #007bff;
-        }
-        
-        .variant-actions a {
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 4px;
-            margin: 2px;
-            font-weight: 500;
-            font-size: 12px;
-        }
-        
-        .variant-actions a:hover {
-            transform: scale(1.05);
-            text-decoration: none;
-        }
-        
-        .btn-detail {
-            background-color: #007bff;
-            color: white;
-        }
-        
-        .btn-detail:hover {
-            background-color: #0056b3;
-            color: white;
-        }
-        
-        .btn-cart {
-            background-color: #28a745;
-            color: white;
-        }
-        
-        .btn-cart:hover {
-            background-color: #218838;
-            color: white;
-        }
-        
-        .variant-price {
-            color: #28a745;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        .variant-stock {
-            font-weight: 500;
-            font-size: 12px;
-        }
-        
-        .stock-available {
-            color: #28a745;
-        }
-        
-        .stock-out {
-            color: #dc3545;
-        }
-        
-        .size-title {
-            font-weight: bold;
-            color: #343a40;
-            margin-bottom: 5px;
-        }
-        
-        .back-btn {
-            background-color: #6c757d;
-            color: white;
-            padding: 8px 16px;
-            text-decoration: none;
-            border-radius: 5px;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-        
-        .back-btn:hover {
-            background-color: #5a6268;
-            color: white;
-            text-decoration: none;
-        }
-        
-        @media (max-width: 768px) {
-            .size-variants {
-                flex-direction: column;
-            }
-            
-            .size-variant-card {
-                max-width: 100%;
-            }
-        }
-        
-        /* Rating Styles */
-        .rating-summary {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-        
-        .average-rating {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .rating-score {
-            font-size: 2em;
-            font-weight: bold;
-            color: #ffc107;
-        }
-        
-        .rating-stars {
-            display: flex;
-            gap: 2px;
-        }
-        
-        .star {
-            font-size: 1.2em;
-            color: #ddd;
-        }
-        
-        .star.filled {
-            color: #ffc107;
-        }
-        
-        .rating-count {
-            color: #6c757d;
-            font-size: 0.9em;
-        }
-        
-        .rating-input {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-        }
-        
-        .rating-input input[type="radio"] {
-            display: none;
-        }
-        
-        .star-label {
-            font-size: 1.5em;
-            color: #ddd;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        
-        .rating-input input[type="radio"]:checked + .star-label {
-            color: #ffc107;
-        }
-        
-        .rating-input input[type="radio"]:hover + .star-label {
-            color: #ffc107;
-        }
-        
-        /* Highlight stars from left to right when hovering */
-        .rating-input:hover .star-label {
-            color: #ddd;
-        }
-        
-        .rating-input input[type="radio"]:hover + .star-label,
-        .rating-input input[type="radio"]:hover ~ input[type="radio"] + .star-label {
-            color: #ffc107;
-        }
-        
-        .rating-item {
-            border-bottom: 1px solid #eee;
-            padding: 15px 0;
-        }
-        
-        .rating-item:last-child {
-            border-bottom: none;
-        }
-        
-        .rating-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        
-        .rating-comment {
-            margin-top: 8px;
-            color: #555;
-        }
-        
-        .rating-item.hidden {
-            display: none;
-        }
-    </style>
-  </head>
-  <body>
-    <header>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #cc66ff;">
-    <div class="container">
-      <a class="navbar-brand text-white" href="index">
-        <i class="fas fa-tshirt me-2"></i>Clothes Store
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link text-white" href="index">
-              <i class="fas fa-home me-1"></i>Home
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="products">
-              <i class="fas fa-shopping-bag me-1"></i>Products
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="cart">
-              <i class="fas fa-shopping-cart me-1"></i>Cart
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="userOrders">
-              <i class="fas fa-receipt me-1"></i>My Orders
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- Navbar -->
-
-  
-</header>
-<main>
-=======
    <meta charset="UTF-8">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -415,7 +118,6 @@
 
         </div>
     </header>
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 <!--Main layout-->    <main class="mt-5 pt-4">
         <div class="container mt-5">
 
@@ -505,18 +207,13 @@
                             </c:otherwise>
                         </c:choose>
                     </p>
-                    
-        <!-- Hiển thị tất cả variants của sản phẩm grouped by color -->
+                
         <c:if test="${not empty product.variants}">
             <div class="variant-container">
                 <strong style="font-size: 18px;">🎯 Các phiên bản có sẵn:</strong>
                 
                 <!-- Group variants by color -->
-<<<<<<< HEAD
-                <div style="margin-top: 15px;">
-=======
                 <div style="margin-top: 15px;overflow: scroll;height: 300px;width: 263px;">
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
                     <%-- Create a map to group variants by color --%>
                     <c:set var="colorGroups" value="${{}}" />
                     
@@ -794,15 +491,6 @@
 </main>
 
 
-<<<<<<< HEAD
- <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2020 Copyright:
-    <a class="text-body" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-  </div>
-  <!-- Copyright -->
-</footer>
-=======
   <!-- ##### Brands Area Start ##### -->
     <div class="brands-area d-flex align-items-center justify-content-between">
         <!-- Brand Logo -->
@@ -915,7 +603,6 @@
     </footer>
     <!-- ##### Footer Area End ##### -->
 
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 
 <script>
 // Auto-hide alerts after 5 seconds
@@ -1032,10 +719,5 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Active js -->
     <script src="${pageContext.request.contextPath}/js/active.js"></script>
 
-<<<<<<< HEAD
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-=======
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 </body>
 </html>
