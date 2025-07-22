@@ -76,10 +76,10 @@
                                 <ul class="dropdown">
                                     <li><a href="${pageContext.request.contextPath}/index">Home</a></li>
                                     <li><a href="${pageContext.request.contextPath}/products">Shop</a></li>
-                                    
+                                     <li><a href="${pageContext.request.contextPath}/about.jsp">About</a></li>
                                 </ul>
                             </li>
-                            
+                             <li><a href="${pageContext.request.contextPath}/about.jsp">About</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -95,7 +95,7 @@
                     <div class="user-content">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <a href="${pageContext.request.contextPath}/userProfile">Tài khoản</a>
+                                <a href="${pageContext.request.contextPath}/user/userProfile.jsp">Tài khoản</a>
                                 <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
                                 <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                             </c:when>
@@ -108,7 +108,7 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="${pageContext.request.contextPath}/cart" id="essenceCartBtn"><img src="../img/core-img/bag.svg" alt=""></a>
+                    <a href="${pageContext.request.contextPath}/cart" id="essenceCartBtn"><img src="${pageContext.request.contextPath}/img/core-img/bag.svg" alt=""></a>
                 </div>
             </div>
 
@@ -178,7 +178,7 @@
 
                 <!-- Back to Profile Link -->
                 <div class="text-center mt-3">
-                    <a href="userProfile" class="btn btn-outline-secondary">
+                    <a href="${pageContext.request.contextPath}/user/userProfile.jsp" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i>Quay về trang cá nhân
                     </a>
                 </div>

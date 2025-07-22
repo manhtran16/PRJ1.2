@@ -76,10 +76,10 @@
                                 <ul class="dropdown">
                                     <li><a href="${pageContext.request.contextPath}/index">Home</a></li>
                                     <li><a href="${pageContext.request.contextPath}/products">Shop</a></li>
-                                     <li><a href="about.jsp">About</a></li>
+                                     <li><a href="${pageContext.request.contextPath}/about.jsp">About</a></li>
                                 </ul>
                             </li>
-                             <li><a href="about.jsp">About</a></li>
+                             <li><a href="${pageContext.request.contextPath}/about.jsp">About</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->

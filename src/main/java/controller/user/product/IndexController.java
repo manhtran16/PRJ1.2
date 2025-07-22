@@ -66,7 +66,7 @@ public class IndexController extends HttpServlet {
         List<Product> allProducts = productDAO.getAllProducts();
         Collections.shuffle(allProducts);
         List<Product> randomProducts = allProducts.stream()
-                .limit(6)
+                .limit(8)
                 .collect(Collectors.toList());
 
         request.setAttribute("randomProducts", randomProducts);

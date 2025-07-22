@@ -317,8 +317,8 @@
                         <div class="footer_menu">
                             <ul>
                                 <li><a href="products">Shop</a></li>
-                                <li><a href="about.jsp">About</a></li>
-                                <li><a href="about.jsp">Contact</a></li>
+                                <li><a href="${pageContext.request.contextPath}/about.jsp">About</a></li>
+                                <li><a href="${pageContext.request.contextPath}/about.jsp">Contact</a></li>
                             </ul>
                         </div>
                     </div>

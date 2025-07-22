@@ -48,7 +48,7 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="products">Shop</a>
+                                <li><a href="./products">Shop</a>
                                     <div class="megamenu">
                                         <ul class="single-mega cn-col-4">
                                             <li class="title">Trang phục nữ</li>
@@ -107,8 +107,8 @@
                                     <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="../login.jsp">Đăng nhập</a>
-                                    <a href="../register.jsp">Đăng ký</a>
+                                    <a href="./login.jsp">Đăng nhập</a>
+                                    <a href="./register.jsp">Đăng ký</a>
                                 </c:otherwise>
                             </c:choose>
                         </div>

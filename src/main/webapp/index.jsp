@@ -229,7 +229,7 @@
                 <!-- Dynamic Products from Database -->
                 <c:forEach var="product" items="${randomProducts}" varStatus="status">
                     <!-- Single Product -->
-                    <div class="col-md-3 col-xs-6">
+                    <div class="col-md-3 col-xs-6 col-lg-3">
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
@@ -278,12 +278,10 @@
                                     <div class="add-to-cart-btn">
                                         <c:choose>
                                             <c:when test="${not empty sessionScope.user}">
-                                                <c:if test="${not empty product.variants}">
-                                                    <a href="cart?action=add&variantId=${product.variants[0].variantID}&quantity=1" class="btn essence-btn">Thêm vào giỏ</a>
-                                                </c:if>
-                                                <c:if test="${empty product.variants}">
-                                                    <a href="#" class="btn essence-btn disabled">Hết hàng</a>
-                                                </c:if>
+                                                <a href="products?action=detail&id=${product.productID}" 
+                                                   class="btn btn-primary w-100">
+                                                    View Details
+                                                </a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="login.jsp" class="btn essence-btn">Đăng nhập để mua</a>

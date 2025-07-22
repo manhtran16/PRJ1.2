@@ -1,5 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%> <%@taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%-- Check if user is logged in --%>
 <c:if test="${empty sessionScope.user}">
@@ -92,24 +92,24 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 <div class="megamenu">
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Trang phục nữ</li>
-                                        <li><a href="products?typeId=1">Váy</a></li>
-                                        <li><a href="products?typeId=2">Áo blouse</a></li>
-                                        <li><a href="products?typeId=3">Áo thun</a></li>
-                                        <li><a href="products?typeId=4">Jumpsuit</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=1">Váy</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=2">Áo blouse</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=3">Áo thun</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=4">Jumpsuit</a></li>
                                     </ul>
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Trang phục nam</li>
-                                        <li><a href="products?typeId=5">Áo thun</a></li>
-                                        <li><a href="products?typeId=6">Áo polo</a></li>
-                                        <li><a href="products?typeId=7">Áo sơ mi</a></li>
-                                        <li><a href="products?typeId=8">Áo khoác</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=5">Áo thun</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=6">Áo polo</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=7">Áo sơ mi</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=8">Áo khoác</a></li>
                                     </ul>
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">Trang phục trẻ em</li>
-                                        <li><a href="products?typeId=9">Váy</a></li>
-                                        <li><a href="products?typeId=10">Áo sơ mi</a></li>
-                                        <li><a href="products?typeId=11">Áo thun</a></li>
-                                        <li><a href="products?typeId=12">Áo khoác</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=9">Váy</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=10">Áo sơ mi</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=11">Áo thun</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/products?typeId=12">Áo khoác</a></li>
                                     </ul>
                                     <div class="single-mega cn-col-4">
                                         <img src="${pageContext.request.contextPath}/img/bg-img/bg-6.jpg" alt="">
@@ -121,11 +121,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 <ul class="dropdown">
                                     <li><a href="${pageContext.request.contextPath}/index">Home</a></li>
                                     <li><a href="${pageContext.request.contextPath}/products">Shop</a></li>
-                                    
+                                     <li><a href="${pageContext.request.contextPath}/about.jsp">About</a></li>
                                 </ul>
                                 
                             </li>
-                            
+                             <li><a href="${pageContext.request.contextPath}/about.jsp">About</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -141,7 +141,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <div class="user-content">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <a href="${pageContext.request.contextPath}/userProfile">Tài khoản</a>
+                                <a href="${pageContext.request.contextPath}/user/userProfile.jsp">Tài khoản</a>
                                 <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
                                 <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                             </c:when>
@@ -305,21 +305,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </div>
 
             <div class="row align-items-end">
-                <!-- Single Widget Area -->
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area">
-                        <div class="footer_heading mb-30">
-                            <h6>Đăng ký nhận tin</h6>
-                        </div>
-                        <div class="subscribtion_form">
-                            <form action="#" method="post">
-                                <input type="email" name="mail" class="mail" placeholder="Email của bạn">
-                                <button type="submit" class="submit"><i class="fa fa-long-arrow-right"
-                                        aria-hidden="true"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
                 <!-- Single Widget Area -->
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area">
