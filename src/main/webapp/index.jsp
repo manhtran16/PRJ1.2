@@ -26,7 +26,24 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
- 
+    <style>
+            .single-product-wrapper .product-img img {
+                height: 250px;
+                width: 100%;
+                object-fit: cover;
+            }
+
+
+            .single-product-wrapper .product-img {
+                height: 250px;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+          
+            
+        </style>
 </head>
 
 <body>
@@ -83,11 +100,11 @@
                                 <ul class="dropdown">
                                     <li><a href="index">Home</a></li>
                                     <li><a href="products">Shop</a></li>
-                                   
+                                    <li><a href="about.jsp">About</a></li>
                                 </ul>
                                 
                             </li>
-                            
+                            <li><a href="about.jsp">About</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -103,9 +120,9 @@
                     <div class="user-content">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <a href="userProfile">Tài khoản</a>
-                                <a href="userOrders">Đơn hàng</a>
-                                <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                                <a href="${pageContext.request.contextPath}/user/userProfile.jsp">Tài khoản</a>
+                                <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>                         
                             </c:when>
                             <c:otherwise>
                                 <a href="login.jsp">Đăng nhập</a>

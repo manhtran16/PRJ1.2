@@ -80,10 +80,10 @@
                                 <ul class="dropdown">
                                     <li><a href="index">Home</a></li>
                                     <li><a href="products">Shop</a></li>
-                                    
+                                     <li><a href="about.jsp">About</a></li>
                                 </ul>
                             </li>
-                            
+                             <li><a href="about.jsp">About</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -99,8 +99,8 @@
                     <div class="user-content">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <a href="userProfile">Tài khoản</a>
-                                <a href="userOrders">Đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/user/userProfile.jsp">Tài khoản</a>
+                                <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
                                 <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                             </c:when>
                             <c:otherwise>
@@ -207,7 +207,8 @@
                             </c:otherwise>
                         </c:choose>
                     </p>
-                
+                    
+        <!-- Hiển thị tất cả variants của sản phẩm grouped by color -->
         <c:if test="${not empty product.variants}">
             <div class="variant-container">
                 <strong style="font-size: 18px;">🎯 Các phiên bản có sẵn:</strong>
@@ -556,21 +557,7 @@
             </div>
 
             <div class="row align-items-end">
-                <!-- Single Widget Area -->
-                <div class="col-12 col-md-6">
-                    <div class="single_widget_area">
-                        <div class="footer_heading mb-30">
-                            <h6>Đăng ký nhận tin</h6>
-                        </div>
-                        <div class="subscribtion_form">
-                            <form action="#" method="post">
-                                <input type="email" name="mail" class="mail" placeholder="Email của bạn">
-                                <button type="submit" class="submit"><i class="fa fa-long-arrow-right"
-                                        aria-hidden="true"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+               
                 <!-- Single Widget Area -->
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area">

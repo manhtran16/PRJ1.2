@@ -176,10 +176,10 @@
     cursor: default;
 }
 
-.no-csspointerevents .nice-select .list {
+/*.no-csspointerevents .nice-select .list {
     display: none;
-}
+}*/
 
-.no-csspointerevents .nice-select.open .list {
+/*.no-csspointerevents .nice-select.open .list {
     display: block;
-}
+}*/

@@ -16,16 +16,18 @@
         <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
         <!-- Title  -->
-        <title>Essence - Fashion Ecommerce Template</title>
+        <title>Essence - Clothing shop</title>
 
         <!-- Favicon  -->
         <link rel="icon" href="img/core-img/favicon.ico">
 
         <!-- Core Style CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
+        
+
         <style>
             .single-product-wrapper .product-img img {
                 height: 250px;
@@ -41,33 +43,39 @@
                 justify-content: center;
                 align-items: center;
             }
+            .filter-product{
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+            
         </style>
     </head>
     <body>
         <!-- Navigation -->
-         <header class="header_area">
-        <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
-            <!-- Classy Menu -->
-            <nav class="classy-navbar" id="essenceNav">
-                <!-- Logo -->
-                <a class="nav-brand" href="index"><img src="img/core-img/logo.png" alt=""></a>
-                <!-- Navbar Toggler -->
-                <div class="classy-navbar-toggler">
-                    <span class="navbarToggler"><span></span><span></span><span></span></span>
-                </div>
-                <!-- Menu -->
-                <div class="classy-menu">
-                    <!-- close btn -->
-                    <div class="classycloseIcon">
-                        <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+        <header class="header_area">
+            <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
+                <!-- Classy Menu -->
+                <nav class="classy-navbar" id="essenceNav">
+                    <!-- Logo -->
+                    <a class="nav-brand" href="index"><img src="img/core-img/logo.png" alt=""></a>
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
                     </div>
-                    <!-- Nav Start -->
-                    <div class="classynav">
-                        <ul>
-                           <li><a href="products">Shop</a>
-                                <div class="megamenu">
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Trang phục nữ</li>
+                    <!-- Menu -->
+                    <div class="classy-menu">
+                        <!-- close btn -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+                        <!-- Nav Start -->
+                        <div class="classynav">
+                            <ul>
+                                <li><a href="products">Shop</a>
+                                    <div class="megamenu">
+                                        <ul class="single-mega cn-col-4">
+                                            <li class="title">Trang phục nữ</li>
                                             <li><a href="products?typeId=1">Váy</a></li>
                                             <li><a href="products?typeId=2">Áo blouse</a></li>
                                             <li><a href="products?typeId=3">Áo thun</a></li>
@@ -87,36 +95,36 @@
                                             <li><a href="products?typeId=11">Áo thun</a></li>
                                             <li><a href="products?typeId=12">Áo khoác</a></li>
                                         </ul>
-                                    <div class="single-mega cn-col-4">
-                                        <img src="img/bg-img/bg-6.jpg" alt="">
+                                        <div class="single-mega cn-col-4">
+                                            <img src="img/bg-img/bg-6.jpg" alt="">
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="index">Home</a></li>
-                                    <li><a href="products">Shop</a></li>
-                                    <li><a href="about.jsp">About</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="about.jsp">Contact</a></li>
-                        </ul>
+                                </li>
+                                <li><a href="#">Pages</a>
+                                    <ul class="dropdown">
+                                        <li><a href="index">Home</a></li>
+                                        <li><a href="products">Shop</a></li>
+                                        <li><a href="about.jsp">About</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="about.jsp">About</a></li>
+                            </ul>
+                        </div>
+                        <!-- Nav End -->
                     </div>
-                    <!-- Nav End -->
-                </div>
-            </nav>
+                </nav>
 
-            <!-- Header Meta Data -->
-            <div class="header-meta d-flex clearfix justify-content-end">
-              
-                <!-- User Login Info -->
-                <div class="user-login-info">
-                    <a href="#"><img src="img/core-img/user.svg" alt=""></a>
-                    <div class="user-content">
-                         <c:choose>
+                <!-- Header Meta Data -->
+                <div class="header-meta d-flex clearfix justify-content-end">
+
+                    <!-- User Login Info -->
+                    <div class="user-login-info">
+                        <a href="#"><img src="img/core-img/user.svg" alt=""></a>
+                        <div class="user-content">
+                            <c:choose>
                                 <c:when test="${not empty sessionScope.user}">
-                                    <a href="userProfile">Tài khoản</a>
-                                    <a href="userOrders">Đơn hàng</a>
+                                    <a href="${pageContext.request.contextPath}/user/userProfile.jsp">Tài khoản</a>
+                                    <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
                                     <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
                                 </c:when>
                                 <c:otherwise>
@@ -125,24 +133,20 @@
                                 </c:otherwise>
                             </c:choose>
 
+                        </div>
+                    </div>
+                    <!-- Cart Area -->
+                    <div class="cart-area">
+                        <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> </a>
                     </div>
                 </div>
-                <!-- Cart Area -->
-                <div class="cart-area">
-                    <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""></a>
-                </div>
+
+
             </div>
-
-        </div>
-    </header>
-        
-        <div class="right-side-cart-area">
-
-            <div class="cart-button">
-                <a href="#" id="rightSideCart"><img src="img/core-img/bag.svg" alt=""></a>
-            </div>
-        </div>
-
+        </header>
+        <!-- ##### Breadcumb Area Start ##### -->
+    
+    <!-- ##### Breadcumb Area End ##### -->
         <section class="shop_grid_area section-padding-80">
             <div class="container">
                 <div class="row">
@@ -158,58 +162,62 @@
 
                     <!-- Search and Filter Section -->
                     <div class="col-12 col-md-4 col-lg-3">
-                        <div class="shop_sidebar_area">
+                        <div>
                             <h6>Filter</h6>
                             <form method="GET" action="products">
 
                                 <!-- Search Box -->
-                                <div class="widget search mb-50">
+                                <div class="filter-product" style="margin-bottom: 20px;">
                                     <label for="searchQuery" class="form-label">Search Products</label>
                                     <input type="text" class="form-control" id="searchQuery" name="q" 
                                            value="${searchQuery}" placeholder="Enter product name...">
                                 </div>
 
-                                <!-- Brand Filter -->
-                                <div class="widget brand mb-50">
-                                    <label for="brandSelect" class="form-label">Brand</label>
-                                    <select class="form-select" id="brandSelect" name="brandId">
+                               
+                                    <div class="filter-product">
+                                    <select class="form-control" id="brandFilter" >
+                                       
                                         <option value="">All Brands</option>
                                         <c:forEach var="brand" items="${brands}">
-                                            <option value="${brand.brandID}" 
+                                            
+                                                <option value="${brand.brandID}"
                                                     ${selectedBrandId == brand.brandID ? 'selected' : ''}>
                                                 ${brand.brandName}
                                             </option>
+                                           
                                         </c:forEach>
+                                           
                                     </select>
                                 </div>
 
-                                <!-- Type Filter -->
-                                <div class="widget catagory mb-50">
-                                    <label for="typeSelect" class="form-label">Category</label>
-                                    <select class="form-select" id="typeSelect" name="typeId">
+                                <div class="filter-product">
+                                    <select class="form-control" id="typeFilter" >
                                         <option value="">All Categories</option>
                                         <c:forEach var="type" items="${types}">
-                                            <option value="${type.typeID}" 
+                                            <option value="${type.typeID}"
                                                     ${selectedTypeId == type.typeID ? 'selected' : ''}>
                                                 ${type.typeName}
                                             </option>
                                         </c:forEach>
                                     </select>
                                 </div>
-
+                                
                                 <!-- Price Range -->
-                                <div class="widget price mb-50">
+                                <div class="filter-product" >
                                     <div>
-                                        <label for="minPrice" class="form-label">Min Price (VNĐ)</label>
+                                        <label for="minPrice" class="form-label" >Min Price (VNĐ)</label>
                                         <input type="number" class="form-control" id="minPrice" name="minPrice" 
-                                               value="${minPrice}" placeholder="0" min="0" step="1000">
+                                               value="${minPrice}" placeholder="0" min="0" step="1">
+                                        <span id="minPriceError" class="text-danger"></span>
                                     </div>
 
                                     <div>
                                         <label for="maxPrice" class="form-label">Max Price (VNĐ)</label>
                                         <input type="number" class="form-control" id="maxPrice" name="maxPrice" 
-                                               value="${maxPrice}" placeholder="1000000" min="0" step="1000">
+                                               value="${maxPrice}" placeholder="1000000" min="0" step="1">
+                                        <span id="maxPriceError" class="text-danger"></span>
                                     </div>
+                                    <span id="priceRangeError" class="text-danger"></span>
                                 </div>
 
 
@@ -353,7 +361,7 @@
                                 <ul>
                                     <li><a href="products">Shop</a></li>
                                     <li><a href="about.jsp">About</a></li>
-                                    <li><a href="about.jsp">Contact</a></li>
+                                    <li><a href="about.jsp">About</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -373,22 +381,7 @@
                 </div>
 
                 <div class="row align-items-end">
-                    <!-- Single Widget Area -->
-                    <div class="col-12 col-md-6">
-                        <div class="single_widget_area">
-                            <div class="footer_heading mb-30">
-                                <h6>Đăng ký nhận tin</h6>
-                            </div>
-                            <div class="subscribtion_form">
-                                <form action="#" method="post">
-                                    <input type="email" name="mail" class="mail" placeholder="Email của bạn">
-                                    <button type="submit" class="submit"><i class="fa fa-long-arrow-right"
-                                                                            aria-hidden="true"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Widget Area -->
+
                     <div class="col-12 col-md-6">
                         <div class="single_widget_area">
                             <div class="footer_social_area">
@@ -419,19 +412,21 @@
             </div>
         </footer>
         <!-- ##### Footer Area End ##### -->
-
+    
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <!-- jQuery (Necessary for All JavaScript Plugins) -->
-    <script src="${pageContext.request.contextPath}/js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <!-- Plugins js -->
-    <script src="${pageContext.request.contextPath}/js/plugins.js"></script>
-    <!-- Classy Nav js -->
-    <script src="${pageContext.request.contextPath}/js/classy-nav.min.js"></script>
-    <!-- Active js -->
-    <script src="${pageContext.request.contextPath}/js/active.js"></script>
-
-    </body>
+        <script src="${pageContext.request.contextPath}/js/jquery/jquery-2.2.4.min.js"></script>
+        <!-- Popper js -->
+        <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
+        <!-- Bootstrap js -->
+        <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+        <!-- Plugins js -->
+        <!--<script src="${pageContext.request.contextPath}/js/plugins.js"></script>-->
+        <!-- Classy Nav js -->
+        <script src="${pageContext.request.contextPath}/js/classy-nav.min.js"></script>
+        <!-- Active js -->
+        <script src="${pageContext.request.contextPath}/js/active.js"></script>
+        <script src="${pageContext.request.contextPath}/js/shopPro.js"></script>
+     
+</script>
 </html>
