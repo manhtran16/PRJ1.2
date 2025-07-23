@@ -146,6 +146,18 @@
       text-decoration: underline;
       outline: none;
     }
+    .success-message {
+    color: #219653;
+    background: #eafaf1;
+    border: 1.5px solid #b7e6c9;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 18px 0 0 0;
+    font-size: 1.08rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
     /* Responsive */
     @media (max-width: 720px) {
       .container {
@@ -189,12 +201,14 @@
         <input type="submit" name="type" value="LOGIN"">
       </form>
     <h2>${requestScope.msg}</h2>
+    <h2 class="success-message">${requestScope.regissuc}</h2>
       <div class="links">
          <div>
           Don't have an account? <a href="register.jsp" tabindex="0">Register here</a>
         </div>
       </div>
      </section>
+      
   </main>
 
         </f:view>

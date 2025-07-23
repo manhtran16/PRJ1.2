@@ -70,7 +70,6 @@ public class AuthController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
@@ -101,6 +100,49 @@ public class AuthController extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String password = request.getParameter("password");
+            String confirmPassword = request.getParameter("confirmPassword");
+
+            if (!Validate.checkUserName(userName)) {
+                request.setAttribute("msg", "Tên đăng nhập không hợp lệ!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+            if (!Validate.checkName(firstName)) {
+                request.setAttribute("msg", "Họ không được để trống!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+            if (!Validate.checkName(lastName)) {
+                request.setAttribute("msg", "Tên không được để trống!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+            if (!Validate.checkEmail(email)) {
+                request.setAttribute("msg", "Email không hợp lệ!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+            if (!Validate.checkPhone(phone)) {
+                request.setAttribute("msg", "Số điện thoại không hợp lệ!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+            if (!Validate.checkAddress(address)) {
+                request.setAttribute("msg", "Địa chỉ không được để trống!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+            if (!Validate.checkPassword(password)) {
+                request.setAttribute("msg", "Mật khẩu phải có ít nhất 6 ký tự!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+            if (!Validate.checkConfirmPassword(password, confirmPassword)) {
+                request.setAttribute("msg", "Mật khẩu xác nhận không khớp!");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+
             User user = new User(0, userName, email,
                     phone, address, firstName, lastName);
             postRegister(request, response, user, password);
@@ -170,7 +212,8 @@ public class AuthController extends HttpServlet {
             request.getRequestDispatcher("register.jsp").forward(request, response);
         } else {
             userDao.createUser(user, password);
-            response.sendRedirect("login.jsp");
+            request.setAttribute("regissuc", "Đăng kí thành công, mời bạn đăng nhập!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
 
         }
 

@@ -113,10 +113,6 @@
         }
     }
 
-<<<<<<< HEAD
-    /* Related products */
-=======
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
     .related-product {
         padding-right: 15px;
         padding-left: 15px;
@@ -203,13 +199,10 @@
             transform: translateY(0);
         }
     }
-<<<<<<< HEAD
-=======
 /*    .related-product{
         margin: auto;
         width: 1170px;
     }*/
->>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13
 
     /* Hiển thị content khi tab được chọn */
     #tab1:checked~.tab-content-container #content1,

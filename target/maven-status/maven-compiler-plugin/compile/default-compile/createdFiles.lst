@@ -32,6 +32,7 @@ controller\user\orders\UserOrdersController.class
 repository\BrandDao.class
 controller\user\product\IndexController.class
 controller\admin\product\updateproduct.class
+controller\user\authentication\DBContext.class
 service\TypeService.class
 model\Type.class
 controller\admin\brand\editbrand.class
