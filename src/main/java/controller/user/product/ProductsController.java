@@ -1,10 +1,11 @@
 package controller.user.product;
 
 import service.ProductService;
-import repository.RatingDAO;
-import repository.BrandDAO;
-import repository.TypeDAO;
+import repository.RatingDao;
+import repository.BrandDao;
+import repository.TypeDao;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Collections;
 import jakarta.servlet.ServletException;
@@ -24,18 +25,52 @@ import model.Type;
 public class ProductsController extends HttpServlet {
 
     private ProductService productService;
-    private RatingDAO ratingDAO;
-    private BrandDAO brandDAO;
-    private TypeDAO typeDAO;
+    private RatingDao ratingDao;
+    private BrandDao brandDAO;
+    private TypeDao typeDAO;
 
     @Override
     public void init() throws ServletException {
         productService = new ProductService();
-        ratingDAO = new RatingDAO();
-        brandDAO = new BrandDAO();
-        typeDAO = new TypeDAO();
+        ratingDao = new RatingDao();
+        brandDAO = new BrandDao();
+        typeDAO = new TypeDao();
     }
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     * 
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProductsController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProductsController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     * 
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -133,15 +168,15 @@ public class ProductsController extends HttpServlet {
                 return;
             }
 
-            List<Rating> ratings = ratingDAO.getRatingsByProductId(productId);
-            Double averageRating = ratingDAO.getAverageRatingByProductId(productId);
-            Long totalRatings = ratingDAO.getTotalRatingsByProductId(productId);
+            List<Rating> ratings = ratingDao.getRatingsByProductId(productId);
+            Double averageRating = ratingDao.getAverageRatingByProductId(productId);
+            Long totalRatings = ratingDao.getTotalRatingsByProductId(productId);
 
             HttpSession session = request.getSession();
             User currentUser = (User) session.getAttribute("user");
             Rating userRating = null;
             if (currentUser != null) {
-                userRating = ratingDAO.getUserRatingForProduct(currentUser.getUserID(), productId);
+                userRating = ratingDao.getUserRatingForProduct(currentUser.getUserID(), productId);
             }
 
             request.setAttribute("product", product);

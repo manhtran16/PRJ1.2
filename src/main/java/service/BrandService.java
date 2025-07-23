@@ -5,7 +5,7 @@
 package service;
 
 import model.Brand;
-import repository.BrandDAO;
+import repository.BrandDao;
 
 /**
  *
@@ -16,7 +16,7 @@ public class BrandService {
         if (brandName == null || brandName.trim().isEmpty()) {
             throw new IllegalArgumentException("Tên thương hiệu không được để trống!");
         }
-        BrandDAO brandDao = new BrandDAO();
+        BrandDao brandDao = new BrandDao();
         if (brandDao.getBrandByName(brandName)) {
             throw new IllegalArgumentException("Thương hiệu này đã tồn tại!");
         }
@@ -27,7 +27,7 @@ public class BrandService {
         if (newBrandName == null || newBrandName.trim().isEmpty()) {
             return false;
         }
-        BrandDAO brandDao = new BrandDAO();
+        BrandDao brandDao = new BrandDao();
         if (brandDao.getBrandByName(newBrandName)) {
             Brand current = brandDao.getBrandById(brandId);
             if (current == null || !current.getBrandName().equalsIgnoreCase(newBrandName.trim())) {

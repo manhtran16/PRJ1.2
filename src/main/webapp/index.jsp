@@ -23,43 +23,27 @@
     <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="css/core-style.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core-style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userhome.css">
     <style>
-        .user-login-info a{
-            cursor: pointer;
-        }
+            .single-product-wrapper .product-img img {
+                height: 250px;
+                width: 100%;
+                object-fit: cover;
+            }
 
-        .user-login-info {
-            position: relative;
-            display: inline-block;
-        }
 
-        .user-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .user-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .user-content a:hover {
-            background-color: #c5c5c5f5;
-            width: 160px;
-        }
-
-        .user-login-info:hover .user-content {
-            display: block;
-        }
-    </style>
+            .single-product-wrapper .product-img {
+                height: 250px;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+          
+            
+        </style>
 </head>
 
 <body>
@@ -111,14 +95,16 @@
                                     </div>
                                 </div>
                             </li>
-                            <li><a href="#">Pages</a>
+                                <li>
+                                <a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="index">Home</a></li>
                                     <li><a href="products">Shop</a></li>
                                     <li><a href="about.jsp">About</a></li>
                                 </ul>
+                                
                             </li>
-                            <li><a href="about.jsp">Contact</a></li>
+                            <li><a href="about.jsp">About</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -127,26 +113,16 @@
 
             <!-- Header Meta Data -->
             <div class="header-meta d-flex clearfix justify-content-end">
-                <!-- Search Area -->
-                <div class="search-area">
-                    <form action="products" method="get">
-                        <input type="search" name="q" id="headerSearch" placeholder="Tìm kiếm sản phẩm">
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                </div>
-                <!-- Favourite Area -->
-                <div class="favourite-area">
-                    <a href="#"><img src="img/core-img/heart.svg" alt=""></a>
-                </div>
+               
                 <!-- User Login Info -->
                 <div class="user-login-info">
                     <a href="#"><img src="img/core-img/user.svg" alt=""></a>
                     <div class="user-content">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                                <a href="userProfile">Tài khoản</a>
-                                <a href="userOrders">Đơn hàng</a>
-                                <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                                <a href="${pageContext.request.contextPath}/user/userProfile.jsp">Tài khoản</a>
+                                <a href="${pageContext.request.contextPath}/userOrders">Đơn hàng</a>
+                                <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>                         
                             </c:when>
                             <c:otherwise>
                                 <a href="login.jsp">Đăng nhập</a>
@@ -157,7 +133,7 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> <span>0</span></a>
+                    <a href="cart" id="essenceCartBtn"><img src="img/core-img/bag.svg" alt=""> </a>
                 </div>
             </div>
 
@@ -253,7 +229,7 @@
                 <!-- Dynamic Products from Database -->
                 <c:forEach var="product" items="${randomProducts}" varStatus="status">
                     <!-- Single Product -->
-                    <div class="col-md-3 col-xs-6">
+                    <div class="col-md-3 col-xs-6 col-lg-3">
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
@@ -302,12 +278,10 @@
                                     <div class="add-to-cart-btn">
                                         <c:choose>
                                             <c:when test="${not empty sessionScope.user}">
-                                                <c:if test="${not empty product.variants}">
-                                                    <a href="cart?action=add&variantId=${product.variants[0].variantID}&quantity=1" class="btn essence-btn">Thêm vào giỏ</a>
-                                                </c:if>
-                                                <c:if test="${empty product.variants}">
-                                                    <a href="#" class="btn essence-btn disabled">Hết hàng</a>
-                                                </c:if>
+                                                <a href="products?action=detail&id=${product.productID}" 
+                                                   class="btn btn-primary w-100">
+                                                    View Details
+                                                </a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="login.jsp" class="btn essence-btn">Đăng nhập để mua</a>
@@ -389,7 +363,7 @@
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area mb-30">
                         <ul class="footer_widget_menu">
-                            <li><a href="userOrders">Trạng thái đơn hàng</a></li>
+                            <li><a href="userOrders.jsp">Trạng thái đơn hàng</a></li>
                             <li><a href="#">Tùy chọn thanh toán</a></li>
                             <li><a href="#">Hướng dẫn</a></li>
                             <li><a href="#">Chính sách bảo mật</a></li>
@@ -448,17 +422,17 @@
     <!-- ##### Footer Area End ##### -->
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
-    <script src="js/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
     <!-- Bootstrap js -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <!-- Plugins js -->
-    <script src="js/plugins.js"></script>
+    <script src="${pageContext.request.contextPath}/js/plugins.js"></script>
     <!-- Classy Nav js -->
-    <script src="js/classy-nav.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/classy-nav.min.js"></script>
     <!-- Active js -->
-    <script src="js/active.js"></script>
+    <script src="${pageContext.request.contextPath}/js/active.js"></script>
 
 </body>
 

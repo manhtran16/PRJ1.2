@@ -1,28 +1,28 @@
 package service.admin;
 
-import repository.OrderDAO;
-import repository.ProductDAO;
-import repository.UserDAO;
+import repository.OrderDao;
+import repository.ProductDao;
+import repository.UserDao;
 
 public class DashboardService {
 
     public long getTotalOrders() {
-        OrderDAO oDao = new OrderDAO();
+        OrderDao oDao = new OrderDao();
         return oDao.getTotalOrders();
     }
 
     public long getTotalProducts() {
-        ProductDAO pDao = new ProductDAO();
+        ProductDao pDao = new ProductDao();
         return pDao.getTotalProducts();
     }
 
     public long getTotalCustomers() {
-        UserDAO uDao = new UserDAO();
+        UserDao uDao = new UserDao();
         return uDao.getTotalCustomers();
     }
 
     public double getTotalRevenue() {
-        OrderDAO oDao = new OrderDAO();
+        OrderDao oDao = new OrderDao();
         return oDao.getTotalRevenue();
     }
 }

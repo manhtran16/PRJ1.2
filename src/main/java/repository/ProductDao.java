@@ -8,11 +8,11 @@ import factory.EntityManagerFactoryProvider;
 import java.util.List;
 import java.util.ArrayList;
 
-public class ProductDAO {
+public class ProductDao {
 
     private EntityManager em;
 
-    public ProductDAO() {
+    public ProductDao() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
@@ -32,9 +32,9 @@ public class ProductDAO {
         return em.find(Product.class, id);
     }
 
-
     public List<Product> getAllProducts() {
         try {
+
             em.clear();
 
             TypedQuery<Product> query = em.createQuery(
@@ -62,44 +62,8 @@ public class ProductDAO {
 
     public Product getProductWithDetails(int productId) {
         try {
-            em.clear();
-
-            TypedQuery<Product> productQuery = em.createQuery(
-                    "SELECT DISTINCT p FROM Product p "
-                            + "LEFT JOIN FETCH p.brand b "
-                            + "LEFT JOIN FETCH p.type t "
-                            + "WHERE p.productID = :productId",
-                    Product.class);
-            productQuery.setParameter("productId", productId);
-            Product product = productQuery.getSingleResult();
-
-            if (product != null) {
-                TypedQuery<ProductVariant> variantQuery = em.createQuery(
-                        "SELECT DISTINCT v FROM ProductVariant v "
-                                + "LEFT JOIN FETCH v.images "
-                                + "WHERE v.product.productID = :productId",
-                        ProductVariant.class);
-                variantQuery.setParameter("productId", productId);
-                List<ProductVariant> variants = variantQuery.getResultList();
-
-                for (ProductVariant variant : variants) {
-                    TypedQuery<ProductVariant> attrQuery = em.createQuery(
-                            "SELECT DISTINCT v FROM ProductVariant v "
-                                    + "LEFT JOIN FETCH v.attributeValues av "
-                                    + "LEFT JOIN FETCH av.attribute a "
-                                    + "WHERE v.variantID = :variantId",
-                            ProductVariant.class);
-                    attrQuery.setParameter("variantId", variant.getVariantID());
-                    ProductVariant variantWithAttrs = attrQuery.getSingleResult();
-                    variant.setAttributeValues(variantWithAttrs.getAttributeValues());
-                }
-
-                product.setVariants(variants);
-            }
-
-            return product;
+            return em.find(Product.class, productId);
         } catch (Exception e) {
-            System.err.println("ERROR in getProductWithDetails: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -107,8 +71,6 @@ public class ProductDAO {
 
     public ProductVariant getVariantWithDetails(int variantId) {
         try {
-            em.clear();
-
             TypedQuery<ProductVariant> query = em.createQuery(
                     "SELECT pv FROM ProductVariant pv "
                             + "LEFT JOIN FETCH pv.product p "
@@ -126,8 +88,6 @@ public class ProductDAO {
     public List<Product> searchAndFilterProducts(String searchQuery, Integer brandId, Integer typeId,
             Double minPrice, Double maxPrice) {
         try {
-            em.clear();
-
             StringBuilder queryStr = new StringBuilder("SELECT p FROM Product p WHERE 1=1");
 
             if (searchQuery != null && !searchQuery.trim().isEmpty()) {
@@ -185,7 +145,7 @@ public class ProductDAO {
         }
     }
 
-     public long getTotalProducts() {
+    public long getTotalProducts() {
         try {
             TypedQuery<Long> query = em.createQuery(
                     "SELECT COUNT(p) FROM Product p", Long.class);
@@ -196,7 +156,7 @@ public class ProductDAO {
         }
     }
 
-   public void close() {
+    public void close() {
         if (em != null && em.isOpen()) {
             em.close();
         }

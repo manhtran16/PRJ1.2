@@ -7,11 +7,11 @@ import factory.EntityManagerFactoryProvider;
 
 import java.util.List;
 
-public class BrandDAO {
+public class BrandDao {
 
     private EntityManager em;
 
-    public BrandDAO() {
+    public BrandDao() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
@@ -100,9 +100,9 @@ public class BrandDAO {
     public boolean getBrandByName(String brandName) {
         try {
             Long count = em.createQuery(
-                "SELECT COUNT(b) FROM Brand b WHERE LOWER(b.brandName) = :name", Long.class)
-                .setParameter("name", brandName.trim().toLowerCase())
-                .getSingleResult();
+                    "SELECT COUNT(b) FROM Brand b WHERE LOWER(b.brandName) = :name", Long.class)
+                    .setParameter("name", brandName.trim().toLowerCase())
+                    .getSingleResult();
             return count > 0;
         } catch (Exception e) {
             e.printStackTrace();

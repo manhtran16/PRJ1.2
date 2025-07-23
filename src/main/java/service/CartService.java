@@ -1,7 +1,11 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package service;
 
-import repository.OrderDAO;
-import repository.ProductVariantDAO;
+import repository.OrderDao;
+import repository.ProductVariantDao;
 import model.OrderTable;
 import model.OrderDetail;
 import model.OrderDetailKey;
@@ -12,36 +16,35 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Cart Service - manages cart using OrderTable as temporary cart
- * Cart is represented as OrderTable with status = 0 (temporary/cart status)
+ *
+ * @author manht
  */
 public class CartService {
 
-    private OrderDAO orderDAO;
+    private OrderDao orderDao;
     private ProductService productService;
-    private ProductVariantDAO productVariantDAO;
+    private ProductVariantDao productVariantDao;
 
     public CartService() {
-        this.orderDAO = new OrderDAO();
+        this.orderDao = new OrderDao();
         this.productService = new ProductService();
-        this.productVariantDAO = new ProductVariantDAO();
+        this.productVariantDao = new ProductVariantDao();
     }
-
 
     public OrderTable getOrCreateCart(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
         }
 
-        OrderTable cart = orderDAO.getCartByUserId(user.getUserID());
+        OrderTable cart = orderDao.getCartByUserId(user.getUserID());
 
         if (cart == null) {
 
             cart = new OrderTable();
             cart.setUser(user);
             cart.setOrderDate(new Date(System.currentTimeMillis()));
-            cart.setStatus(0); 
-            cart = orderDAO.createOrder(cart);
+            cart.setStatus(0);
+            cart = orderDao.createOrder(cart);
 
             if (cart == null) {
                 throw new RuntimeException("Failed to create cart for user: " + user.getUserID());
@@ -50,7 +53,6 @@ public class CartService {
 
         return cart;
     }
-
 
     public boolean addToCart(User user, int variantId, int quantity) {
         if (user == null || variantId <= 0 || quantity <= 0) {
@@ -67,11 +69,11 @@ public class CartService {
             }
 
             OrderTable cart = getOrCreateCart(user);
-            OrderDetail existingItem = orderDAO.getCartItem(cart.getOrderID(), variantId);
+            OrderDetail existingItem = orderDao.getCartItem(cart.getOrderID(), variantId);
 
             if (existingItem != null) {
                 int newQuantity = existingItem.getOrderQuantity() + quantity;
-                return orderDAO.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
+                return orderDao.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
             } else {
                 OrderDetail newItem = new OrderDetail();
                 newItem.setOrder(cart);
@@ -80,7 +82,7 @@ public class CartService {
                 OrderDetailKey key = new OrderDetailKey(cart.getOrderID(), variantId);
                 newItem.setId(key);
 
-                boolean result = orderDAO.createOrderDetail(newItem);
+                boolean result = orderDao.createOrderDetail(newItem);
                 return result;
             }
 
@@ -108,11 +110,11 @@ public class CartService {
 
             if (newQuantity <= 0) {
                 System.out.println("Quantity <= 0, removing item");
-                return orderDAO.removeCartItem(cart.getOrderID(), variantId);
+                return orderDao.removeCartItem(cart.getOrderID(), variantId);
             } else {
                 System.out.println("Updating quantity to: " + newQuantity);
-                boolean result = orderDAO.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
-                System.out.println("DAO update result: " + result);
+                boolean result = orderDao.updateCartItemQuantity(cart.getOrderID(), variantId, newQuantity);
+                System.out.println("Dao update result: " + result);
                 return result;
             }
 
@@ -131,7 +133,7 @@ public class CartService {
         try {
             OrderTable cart = getOrCreateCart(user);
 
-            boolean result = orderDAO.removeCartItem(cart.getOrderID(), variantId);
+            boolean result = orderDao.removeCartItem(cart.getOrderID(), variantId);
 
             return result;
 
@@ -148,7 +150,7 @@ public class CartService {
         }
 
         try {
-            System.out.println("=== getCartItems DEBUG ===");
+            System.out.println("getCartItems DEBUG");
             System.out.println("Getting cart items for user: " + user.getUserID());
 
             OrderTable cart = getOrCreateCart(user);
@@ -160,7 +162,7 @@ public class CartService {
 
             System.out.println("Cart ID: " + cart.getOrderID());
 
-            List<OrderDetail> items = orderDAO.getOrderDetailsByOrderId(cart.getOrderID());
+            List<OrderDetail> items = orderDao.getOrderDetailsByOrderId(cart.getOrderID());
 
             if (items == null) {
                 items = new ArrayList<>();
@@ -195,7 +197,7 @@ public class CartService {
                 return 0.0;
             }
 
-            return orderDAO.getOrderTotal(cart.getOrderID());
+            return orderDao.getOrderTotal(cart.getOrderID());
 
         } catch (Exception e) {
             System.err.println("Error calculating cart total: " + e.getMessage());
@@ -229,14 +231,14 @@ public class CartService {
                 int variantId = item.getVariant().getVariantID();
                 int orderQuantity = item.getOrderQuantity();
 
-                boolean stockUpdated = productVariantDAO.updateStock(variantId, orderQuantity);
+                boolean stockUpdated = productVariantDao.updateStock(variantId, orderQuantity);
                 if (!stockUpdated) {
                     throw new RuntimeException("Failed to update stock for variant " + variantId +
                             ". Insufficient stock or variant not found.");
                 }
             }
 
-            boolean updated = orderDAO.updateOrderStatus(cart.getOrderID(), 1);
+            boolean updated = orderDao.updateOrderStatus(cart.getOrderID(), 1);
 
             if (updated) {
                 cart.setOrderDate(new Date(System.currentTimeMillis()));
@@ -282,8 +284,8 @@ public class CartService {
             OrderTable newOrder = new OrderTable();
             newOrder.setUser(user);
             newOrder.setOrderDate(new Date(System.currentTimeMillis()));
-            newOrder.setStatus(1); 
-            OrderTable savedOrder = orderDAO.createOrder(newOrder);
+            newOrder.setStatus(1);
+            OrderTable savedOrder = orderDao.createOrder(newOrder);
             if (savedOrder == null) {
                 throw new RuntimeException("Failed to create new order");
             }
@@ -296,7 +298,7 @@ public class CartService {
                 System.out.println("Order quantity: " + orderQuantity);
                 System.out.println("Current stock before update: " + selectedItem.getVariant().getQuantity());
 
-                boolean stockUpdated = productVariantDAO.updateStock(variantId, orderQuantity);
+                boolean stockUpdated = productVariantDao.updateStock(variantId, orderQuantity);
                 System.out.println("Stock update result: " + stockUpdated);
 
                 if (!stockUpdated) {
@@ -314,14 +316,14 @@ public class CartService {
                 newDetail.setVariant(selectedItem.getVariant());
                 newDetail.setOrderQuantity(orderQuantity);
 
-                boolean detailAdded = orderDAO.createOrderDetail(newDetail);
+                boolean detailAdded = orderDao.createOrderDetail(newDetail);
                 if (!detailAdded) {
                     throw new RuntimeException(
                             "Failed to add order detail for variant " + variantId);
                 }
 
                 OrderDetailKey cartKey = selectedItem.getId();
-                boolean removedFromCart = orderDAO.removeCartItem(cartKey.getOrderId(), cartKey.getVariantId());
+                boolean removedFromCart = orderDao.removeCartItem(cartKey.getOrderId(), cartKey.getVariantId());
                 if (!removedFromCart) {
                     System.err.println("Warning: Failed to remove item from cart for variant " + variantId);
                 }
@@ -334,7 +336,6 @@ public class CartService {
         }
     }
 
-
     public boolean clearCart(User user) {
         if (user == null) {
             return false;
@@ -342,7 +343,7 @@ public class CartService {
 
         try {
             OrderTable cart = getOrCreateCart(user);
-            return orderDAO.clearCart(cart.getOrderID());
+            return orderDao.clearCart(cart.getOrderID());
 
         } catch (Exception e) {
             System.err.println("Error clearing cart: " + e.getMessage());
@@ -356,7 +357,7 @@ public class CartService {
         }
 
         try {
-            return orderDAO.getCartByUserId(user.getUserID());
+            return orderDao.getCartByUserId(user.getUserID());
         } catch (Exception e) {
             System.err.println("Error getting user cart: " + e.getMessage());
             return null;
@@ -364,14 +365,14 @@ public class CartService {
     }
 
     public void close() {
-        if (orderDAO != null) {
-            orderDAO.close();
+        if (orderDao != null) {
+            orderDao.close();
         }
         if (productService != null) {
             productService.close();
         }
-        if (productVariantDAO != null) {
-            productVariantDAO.close();
+        if (productVariantDao != null) {
+            productVariantDao.close();
         }
     }
 }

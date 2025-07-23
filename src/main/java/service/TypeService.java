@@ -4,7 +4,7 @@
  */
 package service;
 
-import repository.TypeDAO;
+import repository.TypeDao;
 import model.Type;
 
 /**
@@ -12,11 +12,11 @@ import model.Type;
  * @author manht
  */
 public class TypeService {
-        public boolean addType(String typeName) {
+    public boolean addType(String typeName) {
         if (typeName == null || typeName.trim().isEmpty()) {
             throw new IllegalArgumentException("Tên thương hiệu không được để trống!");
         }
-        TypeDAO typeDao = new TypeDAO();
+        TypeDao typeDao = new TypeDao();
         if (typeDao.getTypeByName(typeName)) {
             throw new IllegalArgumentException("Thương hiệu này đã tồn tại!");
         }
@@ -27,7 +27,7 @@ public class TypeService {
         if (newTypeName == null || newTypeName.trim().isEmpty()) {
             return false;
         }
-        TypeDAO typeDao = new TypeDAO();
+        TypeDao typeDao = new TypeDao();
         if (typeDao.getTypeByName(newTypeName)) {
             Type current = typeDao.getTypeByID(typeId);
             if (current == null || !current.getTypeName().equalsIgnoreCase(newTypeName.trim())) {

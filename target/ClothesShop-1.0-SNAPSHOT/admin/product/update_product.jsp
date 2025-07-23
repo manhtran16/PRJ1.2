@@ -8,6 +8,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
+<style>
+    .variant-image-left {
+        width: 30%;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1.5px solid #eee;
+        display: block;
+        margin: 0 0 16px 0;
+        background: #faf7ff;
+    }
+    .update-product-container .form-control,
+    .update-product-container textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    input[name="productName"], textarea[name="description"] {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+</style>
 <div class="dashboard-container">
     <%@ include file="../sidebar.jspf" %>
     <main class="main-content">
@@ -73,7 +96,7 @@
                                     <c:forEach var="img" items="${variant.images}">
                                         <c:if test="${img ne null}">
                                             <c:if test="${not empty img.url}">
-                                                <img src="${img.url}" alt="Ảnh biến thể" style="height:100%; width:180px; object-fit:cover; border-radius:8px; margin-right:16px; border:1px solid #eee;">
+                                                <img src="${img.url}" alt="Ảnh biến thể" class="variant-image-left">
                                             </c:if>
                                         </c:if>
                                     </c:forEach>

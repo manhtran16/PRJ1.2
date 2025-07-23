@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Type;
-import repository.TypeDAO;
+import repository.TypeDao;
 import service.TypeService;
 
 /**
@@ -24,10 +24,10 @@ public class edittype extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,14 +46,15 @@ public class edittype extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +63,7 @@ public class edittype extends HttpServlet {
         int typeId = Integer.parseInt(typeIdStr);
 
         // Lấy type từ DB
-        TypeDAO typeDao = new TypeDAO();
+        TypeDao typeDao = new TypeDao();
         Type type = typeDao.getTypeByID(typeId);
 
         // Gửi tên type sang JSP
@@ -73,10 +74,10 @@ public class edittype extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -102,7 +103,7 @@ public class edittype extends HttpServlet {
             error = "Có lỗi xảy ra khi cập nhật thương hiệu.";
         }
         // Lấy lại type mới nhất để hiển thị
-        TypeDAO typeDao = new TypeDAO();
+        TypeDao typeDao = new TypeDao();
         type = typeDao.getTypeByID(typeId);
         request.setAttribute("type", type);
         request.setAttribute("error", error);

@@ -6,20 +6,28 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import repository.ProductDAO;
+import repository.ProductDao;
 import model.Product;
 import model.ProductVariant;
 
 @WebServlet(name = "VariantController", urlPatterns = { "/variant" })
 public class VariantController extends HttpServlet {
 
-    private ProductDAO productDAO;
+    private ProductDao productDao;
 
     @Override
     public void init() throws ServletException {
-        productDAO = new ProductDAO();
+        productDao = new ProductDao();
     }
 
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     * 
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,7 +42,7 @@ public class VariantController extends HttpServlet {
         try {
             int variantId = Integer.parseInt(variantIdStr);
 
-            ProductVariant variant = productDAO.getVariantWithDetails(variantId);
+            ProductVariant variant = productDao.getVariantWithDetails(variantId);
 
             if (variant == null) {
                 request.setAttribute("errorMessage", "Không tìm thấy phiên bản sản phẩm này.");
@@ -64,9 +72,28 @@ public class VariantController extends HttpServlet {
         }
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     * 
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
+
+    /**
+     * Returns a short description of the servlet.
+     * 
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

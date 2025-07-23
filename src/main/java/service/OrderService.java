@@ -1,17 +1,25 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package service;
 
-import repository.OrderDAO;
+import repository.OrderDao;
 import model.OrderTable;
 import model.OrderDetail;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Admin
+ */
 public class OrderService {
 
-    private OrderDAO orderDAO;
+    private OrderDao orderDao;
 
     public OrderService() {
-        this.orderDAO = new OrderDAO();
+        this.orderDao = new OrderDao();
     }
 
     public List<OrderTable> getUserOrders(int userId) {
@@ -20,7 +28,7 @@ public class OrderService {
         }
 
         try {
-            return orderDAO.getOrdersByUserId(userId);
+            return orderDao.getOrdersByUserId(userId);
         } catch (Exception e) {
             System.err.println("Error getting user orders: " + e.getMessage());
             e.printStackTrace();
@@ -34,7 +42,7 @@ public class OrderService {
         }
 
         try {
-            return orderDAO.getOrderById(orderId);
+            return orderDao.getOrderById(orderId);
         } catch (Exception e) {
             System.err.println("Error getting order by ID: " + e.getMessage());
             e.printStackTrace();
@@ -48,7 +56,7 @@ public class OrderService {
         }
 
         try {
-            return orderDAO.getOrderDetailsByOrderId(orderId);
+            return orderDao.getOrderDetailsByOrderId(orderId);
         } catch (Exception e) {
             System.err.println("Error getting order details: " + e.getMessage());
             e.printStackTrace();
@@ -62,7 +70,7 @@ public class OrderService {
         }
 
         try {
-            return orderDAO.getOrderTotal(orderId);
+            return orderDao.getOrderTotal(orderId);
         } catch (Exception e) {
             System.err.println("Error calculating order total: " + e.getMessage());
             e.printStackTrace();
@@ -87,7 +95,7 @@ public class OrderService {
         }
 
         try {
-            return orderDAO.updateOrderStatus(orderId, newStatus);
+            return orderDao.updateOrderStatus(orderId, newStatus);
         } catch (Exception e) {
             System.err.println("Error updating order status: " + e.getMessage());
             e.printStackTrace();
@@ -96,8 +104,8 @@ public class OrderService {
     }
 
     public void close() {
-        if (orderDAO != null) {
-            orderDAO.close();
+        if (orderDao != null) {
+            orderDao.close();
         }
     }
 }

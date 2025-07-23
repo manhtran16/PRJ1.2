@@ -12,10 +12,10 @@ import model.ProductVariant;
  *
  * @author admin
  */
-public class ProductVariantDAO {
+public class ProductVariantDao {
     private EntityManager em;
 
-    public ProductVariantDAO() {
+    public ProductVariantDao() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
@@ -80,7 +80,6 @@ public class ProductVariantDAO {
             return false;
         }
     }
-
 
     public ProductVariant getById(int variantId) {
         try {

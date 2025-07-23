@@ -1,6 +1,10 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package service;
 
-import repository.ProductDAO;
+import repository.ProductDao;
 import model.Product;
 import model.ProductVariant;
 import model.Image;
@@ -16,24 +20,31 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.ArrayList;
+
 /**
- * Product Service Layer - handles business logic for products
+ *
+ * @author manht
+ */
+/**
+ * Product Service Layer - xu ly logic nghiep vu
  */
 public class ProductService {
 
-    private ProductDAO productDAO;
+    private ProductDao productDao;
 
     public ProductService() {
-        this.productDAO = new ProductDAO();
+        this.productDao = new ProductDao();
     }
 
+    /**
+     * lay thong tin chi tiet variant theo ID
+     */
     public ProductVariant getVariantWithDetails(int variantId) {
         if (variantId <= 0) {
             throw new IllegalArgumentException("Invalid variant ID");
         }
 
-        ProductVariant variant = productDAO.getVariantWithDetails(variantId);
-
+        ProductVariant variant = productDao.getVariantWithDetails(variantId);
         if (variant != null) {
         }
 
@@ -43,7 +54,7 @@ public class ProductService {
     public List<Product> getAllProducts() {
         try {
 
-            List<Product> products = productDAO.getAllProducts();
+            List<Product> products = productDao.getAllProducts();
             return products != null ? products : new ArrayList<>();
         } catch (Exception e) {
             System.err.println("Error in ProductService.getAllProducts: " + e.getMessage());
@@ -56,7 +67,7 @@ public class ProductService {
             throw new IllegalArgumentException("Invalid product ID");
         }
 
-        Product product = productDAO.getProductWithDetails(productId);
+        Product product = productDao.getProductWithDetails(productId);
         if (product == null) {
             return null;
         }
@@ -80,7 +91,7 @@ public class ProductService {
                 variant.setProduct(product);
 
                 em.persist(variant);
-                em.flush(); 
+                em.flush();
                 System.out.println("After flush - Variant ID: " + variant.getVariantID());
                 // Xử lý các giá trị thuộc tính
                 List<VariantAttributeValue> attributeValues = variant.getAttributeValues();
@@ -92,11 +103,9 @@ public class ProductService {
                                     "❌ Thiếu hoặc sai attribute ID trong VariantAttributeValue");
                         }
                         System.out.println("2");
-                        // Lấy attribute từ DB 
                         int attrId = vav.getAttribute().getAttributeID();
                         Attribute managedAttr = em.getReference(Attribute.class, attrId);
                         vav.setAttribute(managedAttr);
-
                         vav.setVariant(variant);
 
                         if (vav.getId() == null) {
@@ -111,8 +120,8 @@ public class ProductService {
                         em.persist(vav);
                     }
                 }
-                System.out.println("5");
 
+                System.out.println("5");
                 if (variant.getImages() != null) {
                     for (Image image : variant.getImages()) {
                         image.setVariant(variant);
@@ -142,7 +151,7 @@ public class ProductService {
     public List<Product> searchAndFilterProducts(String searchQuery, Integer brandId, Integer typeId,
             Double minPrice, Double maxPrice) {
         try {
-            List<Product> products = productDAO.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice,
+            List<Product> products = productDao.searchAndFilterProducts(searchQuery, brandId, typeId, minPrice,
                     maxPrice);
             if (products != null) {
                 for (Product p : products) {
@@ -170,8 +179,8 @@ public class ProductService {
     }
 
     public void close() {
-        if (productDAO != null) {
-            productDAO.close();
+        if (productDao != null) {
+            productDao.close();
         }
     }
 

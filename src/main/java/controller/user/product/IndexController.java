@@ -12,7 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import repository.ProductDAO;
+import repository.ProductDao;
 import model.Product;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -51,8 +51,6 @@ public class IndexController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      * 
@@ -64,12 +62,11 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("DEBUG: IndexController doGet() called");
-        ProductDAO productDAO = new ProductDAO();
+        ProductDao productDAO = new ProductDao();
         List<Product> allProducts = productDAO.getAllProducts();
         Collections.shuffle(allProducts);
         List<Product> randomProducts = allProducts.stream()
-                .limit(6)
+                .limit(8)
                 .collect(Collectors.toList());
 
         request.setAttribute("randomProducts", randomProducts);

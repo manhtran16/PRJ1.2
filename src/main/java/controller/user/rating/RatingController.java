@@ -6,20 +6,28 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import repository.RatingDAO;
+import repository.RatingDao;
 import model.User;
 import java.io.IOException;
 
 @WebServlet("/user/rating")
 public class RatingController extends HttpServlet {
 
-    private RatingDAO ratingDAO;
+    private RatingDao ratingDao;
 
     @Override
     public void init() throws ServletException {
-        ratingDAO = new RatingDAO();
+        ratingDao = new RatingDao();
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     * 
+     * @param request  servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,7 +63,7 @@ public class RatingController extends HttpServlet {
                 return;
             }
 
-            boolean success = ratingDAO.addRating(user.getUserID(), productId, rate, comment);
+            boolean success = ratingDao.addRating(user.getUserID(), productId, rate, comment);
 
             if (success) {
                 request.setAttribute("success", "Thank you for your rating!");
@@ -87,7 +95,7 @@ public class RatingController extends HttpServlet {
                 return;
             }
 
-            boolean success = ratingDAO.updateRating(user.getUserID(), productId, rate, comment);
+            boolean success = ratingDao.updateRating(user.getUserID(), productId, rate, comment);
 
             if (success) {
                 request.setAttribute("success", "Your rating has been updated!");
@@ -104,4 +112,5 @@ public class RatingController extends HttpServlet {
         String productId = request.getParameter("productId");
         response.sendRedirect(request.getContextPath() + "/displayPro?id=" + productId);
     }
+
 }

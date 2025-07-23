@@ -113,7 +113,6 @@
         }
     }
 
-    /* Related products */
     .related-product {
         padding-right: 15px;
         padding-left: 15px;
@@ -200,6 +199,10 @@
             transform: translateY(0);
         }
     }
+/*    .related-product{
+        margin: auto;
+        width: 1170px;
+    }*/
 
     /* Hiển thị content khi tab được chọn */
     #tab1:checked~.tab-content-container #content1,

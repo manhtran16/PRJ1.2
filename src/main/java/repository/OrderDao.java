@@ -12,11 +12,11 @@ import java.util.List;
  * Data Access Object for Order operations
  * Contains only data access methods, business logic moved to OrderService
  */
-public class OrderDAO {
+public class OrderDao {
 
     private EntityManager em;
 
-    public OrderDAO() {
+    public OrderDao() {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
