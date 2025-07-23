@@ -1,6 +1,7 @@
 repository\TypeDAO.class
 controller\admin\type\edittype.class
 controller\user\authentication\changePassword.class
+service\AuthService.class
 factory\EntityManagerFactoryProvider.class
 controller\user\product\VariantController.class
 model\RatingKey.class
