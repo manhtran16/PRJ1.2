@@ -1,0 +1,66 @@
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <i class="fas fa-user-shield"></i>
+        <h1>ADMIN PANEL</h1>
+    </div>
+
+    <nav class="nav-menu">
+        <div class="nav-item">
+            <a href="${pageContext.request.contextPath}/admindashboard" class="nav-link <c:if test='${pageContext.request.servletPath == "/admindashboard"}'>active</c:if>'">
+                <i class="fas fa-tachometer-alt"></i>
+                Dashboard
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="${pageContext.request.contextPath}/index.jsp" class="nav-link">
+                <i class="fas fa-home"></i>
+                User Home
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="${pageContext.request.contextPath}/productmanagement" class="nav-link">
+                <i class="fas fa-box"></i>
+                Product Management
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="${pageContext.request.contextPath}/brandmanagement" class="nav-link">
+                <i class="fas fa-tags"></i>
+                Brand Management
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="${pageContext.request.contextPath}/typemanagement" class="nav-link">
+                <i class="fas fa-list"></i>
+                Type Management
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-chart-bar"></i>
+                Statistics
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-users"></i>
+                User Management
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+        </div>
+    </nav>
+
+    <div class="logout-section">
+        <form action="${pageContext.request.contextPath}/logout" method="post" style="margin:0;">
+            <button class="logout-btn" type="submit">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </form>
+    </div>
+</aside> 

@@ -10,17 +10,22 @@
         <!-- Tên class entity -->
         <class>model.Brand</class>
         <class>model.Type</class>
-        <class>model.ProductVariant</class>
+        <class>model.Attribute</class>
         <class>model.Product</class>
+        <class>model.ProductVariant</class>
+        <class>model.Image</class>
         <class>model.User</class>
         <class>model.OrderTable</class>
+        <class>model.OrderDetail</class>
+        <class>model.Rating</class>
+        <class>model.VariantAttributeValue</class>
         
         
         
         <!-- Thông tin kết nối DB -->
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=ClothesShop1_2;encrypt=true;trustServerCertificate=true"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=ClothesShop1_3;encrypt=true;trustServerCertificate=true"/>
             <property name="jakarta.persistence.jdbc.user" value="sa"/>
             <property name="jakarta.persistence.jdbc.password" value="123"/>
 

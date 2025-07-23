@@ -134,6 +134,20 @@ public class UserDao {
         }
     }
 
+    /**
+     * Get total number of customers (users)
+     */
+    public long getTotalCustomers() {
+        try {
+            TypedQuery<Long> query = em.createQuery(
+                    "SELECT COUNT(u) FROM User u", Long.class);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public void close() {
         if (em != null && em.isOpen()) {
             em.close();

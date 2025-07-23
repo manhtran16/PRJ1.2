@@ -18,7 +18,6 @@ public class VariantAttributeValue {
     @JoinColumn(name = "attributeID")
     private Attribute attribute;
 
-    @Column(length = 100)
     private String value;
 
     public VariantAttributeValue() {
@@ -28,9 +27,7 @@ public class VariantAttributeValue {
         this.variant = variant;
         this.attribute = attribute;
         this.value = value;
-        if (variant != null && attribute != null) {
-            this.id = new VariantAttributeKey(variant.getVariantID(), attribute.getAttributeID());
-        }
+        this.id = new VariantAttributeKey(variant.getVariantID(), attribute.getAttributeID());
     }
 
     public VariantAttributeKey getId() {

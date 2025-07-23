@@ -15,7 +15,7 @@ public class TypeDao {
         this.em = EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
     }
 
-    // Lấy toàn bộ loại sản phẩm
+    // Select all product types
     public List<Type> getType() {
         try {
             TypedQuery<Type> query = em.createQuery("SELECT t FROM Type t", Type.class);
@@ -26,7 +26,7 @@ public class TypeDao {
         }
     }
 
-    // Đếm số lượng loại sản phẩm
+    // Count the number of product types
     public int countType() {
         try {
             Long count = em.createQuery("SELECT COUNT(t) FROM Type t", Long.class).getSingleResult();
@@ -37,22 +37,25 @@ public class TypeDao {
         }
     }
 
-    // Tạo mới một loại
-    public void createType(String typeName) {
+    // Create a new product type
+    public boolean createType(String typeName) {
         try {
             em.getTransaction().begin();
             Type newType = new Type();
             newType.setTypeName(typeName);
             em.persist(newType);
             em.getTransaction().commit();
+            return true;
         } catch (Exception e) {
-            if (em.getTransaction().isActive())
+            if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
+            }
             e.printStackTrace();
+            return false;
         }
     }
 
-    // Xoá loại theo ID
+    // Delete a product type by ID
     public void deleteType(int id) {
         try {
             em.getTransaction().begin();
@@ -62,8 +65,9 @@ public class TypeDao {
             }
             em.getTransaction().commit();
         } catch (Exception e) {
-            if (em.getTransaction().isActive())
+            if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -79,9 +83,23 @@ public class TypeDao {
             }
             em.getTransaction().commit();
         } catch (Exception e) {
-            if (em.getTransaction().isActive())
+            if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
+            }
             e.printStackTrace();
+        }
+    }
+
+    public boolean getTypeByName(String typeName) {
+        try {
+            Long count = em.createQuery(
+                    "SELECT COUNT(b) FROM Brand b WHERE LOWER(b.brandName) = :name", Long.class)
+                    .setParameter("name", typeName.trim().toLowerCase())
+                    .getSingleResult();
+            return count > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

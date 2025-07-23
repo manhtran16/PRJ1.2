@@ -1,6 +1,7 @@
 package controller.user.orders;
 
-import repository.OrderDao;
+import service.OrderService;
+import service.CartService;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -16,11 +17,13 @@ import model.User;
 @WebServlet("/userOrders")
 public class UserOrdersController extends HttpServlet {
 
-    private OrderDao orderDao;
+    private OrderService orderService;
+    private CartService cartService;
 
     @Override
     public void init() throws ServletException {
-        orderDao = new OrderDao();
+        this.orderService = new OrderService();
+        this.cartService = new CartService();
     }
 
     @Override
@@ -39,8 +42,96 @@ public class UserOrdersController extends HttpServlet {
 
         if ("viewDetails".equals(action)) {
             viewOrderDetails(request, response, currentUser);
+        } else if ("checkout".equals(action)) {
+            handleCheckout(request, response, currentUser);
         } else {
             listUserOrders(request, response, currentUser);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("user");
+
+        if (currentUser == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        String action = request.getParameter("action");
+
+        if ("checkoutSelected".equals(action)) {
+            handleSelectedCheckout(request, response, currentUser);
+        } else if ("processCheckout".equals(action)) {
+            handleCheckout(request, response, currentUser);
+        } else {
+            doGet(request, response);
+        }
+    }
+
+    private void handleCheckout(HttpServletRequest request, HttpServletResponse response, User user)
+            throws ServletException, IOException {
+
+        try {
+            OrderTable order = cartService.checkoutCart(user);
+
+            if (order != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("successMessage", "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID());
+
+                response.sendRedirect("userOrders?action=viewDetails&orderId=" + order.getOrderID());
+            } else {
+                request.setAttribute("errorMessage", "Không thể đặt hàng. Vui lòng thử lại.");
+                response.sendRedirect("cart");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Checkout error: " + e.getMessage());
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Lỗi trong quá trình đặt hàng: " + e.getMessage());
+            response.sendRedirect("cart");
+        }
+    }
+
+    private void handleSelectedCheckout(HttpServletRequest request, HttpServletResponse response, User user)
+            throws ServletException, IOException {
+
+        try {
+            String[] selectedVariants = request.getParameterValues("selectedVariants");
+
+            if (selectedVariants == null || selectedVariants.length == 0) {
+                request.getSession().setAttribute("errorMessage", "Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+                response.sendRedirect("cart");
+                return;
+            }
+
+            Integer[] variantIds = new Integer[selectedVariants.length];
+            for (int i = 0; i < selectedVariants.length; i++) {
+                variantIds[i] = Integer.parseInt(selectedVariants[i]);
+            }
+
+            OrderTable order = cartService.checkoutSelectedItems(user, variantIds);
+
+            if (order != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("successMessage",
+                        "Đặt hàng thành công! Mã đơn hàng: " + order.getOrderID() +
+                                " (" + selectedVariants.length + " sản phẩm)");
+
+                response.sendRedirect("userOrders?action=viewDetails&orderId=" + order.getOrderID());
+            } else {
+                request.getSession().setAttribute("errorMessage", "Không thể đặt hàng. Vui lòng thử lại.");
+                response.sendRedirect("cart");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Selected checkout error: " + e.getMessage());
+            e.printStackTrace();
+            request.getSession().setAttribute("errorMessage", "Lỗi trong quá trình đặt hàng: " + e.getMessage());
+            response.sendRedirect("cart");
         }
     }
 
@@ -48,22 +139,21 @@ public class UserOrdersController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            List<OrderTable> orders = orderDao.getOrdersByUserId(user.getUserID());
+            List<OrderTable> orders = orderService.getUserOrders(user.getUserID());
 
-            // Calculate totals for each order
             for (OrderTable order : orders) {
-                double total = orderDao.getOrderTotal(order.getOrderID());
+                double total = orderService.getOrderTotal(order.getOrderID());
                 request.setAttribute("orderTotal_" + order.getOrderID(), total);
             }
 
             request.setAttribute("orders", orders);
-            request.setAttribute("orderDao", orderDao); // For status text method
-            request.getRequestDispatcher("userOrders.jsp").forward(request, response);
+            request.setAttribute("orderService", orderService);
+            request.getRequestDispatcher("user/userOrders.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Unable to load orders. Please try again.");
-            request.getRequestDispatcher("userOrders.jsp").forward(request, response);
+            request.getRequestDispatcher("user/userOrders.jsp").forward(request, response);
         }
     }
 
@@ -79,24 +169,22 @@ public class UserOrdersController extends HttpServlet {
 
             int orderId = Integer.parseInt(orderIdStr);
 
-            // Get order information
-            OrderTable order = orderDao.getOrderById(orderId);
+            OrderTable order = orderService.getOrderById(orderId);
             if (order == null || order.getUser().getUserID() != user.getUserID()) {
                 request.setAttribute("errorMessage", "Mặt hàng không tồn tại hoặc không thuộc về bạn");
                 response.sendRedirect("userOrders");
                 return;
             }
 
-            // Get order details
-            List<OrderDetail> orderDetails = orderDao.getOrderDetailsByOrderId(orderId);
-            double orderTotal = orderDao.getOrderTotal(orderId);
+            List<OrderDetail> orderDetails = orderService.getOrderDetails(orderId);
+            double orderTotal = orderService.getOrderTotal(orderId);
 
             request.setAttribute("order", order);
             request.setAttribute("orderDetails", orderDetails);
             request.setAttribute("orderTotal", orderTotal);
-            request.setAttribute("orderDao", orderDao);
+            request.setAttribute("orderService", orderService);
 
-            request.getRequestDispatcher("orderDetails.jsp").forward(request, response);
+            request.getRequestDispatcher("user/orderDetails.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
             response.sendRedirect("userOrders");
@@ -109,8 +197,11 @@ public class UserOrdersController extends HttpServlet {
 
     @Override
     public void destroy() {
-        if (orderDao != null) {
-            orderDao.close();
+        if (orderService != null) {
+            orderService.close();
+        }
+        if (cartService != null) {
+            cartService.close();
         }
         super.destroy();
     }

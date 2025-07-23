@@ -4,30 +4,34 @@
  */
 package model;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-
+import jakarta.persistence.Column;
 
 @Entity
 public class Rating {
 
-    @EmbeddedId
-    private RatingKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RatingID")
+    private int ratingId;
 
     @ManyToOne
-    @MapsId("userId")
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "UserID")
     private User user;
 
     @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "ProductID")
     private Product product;
 
+    @Column(name = "Rate")
     private int rate;
+
+    @Column(name = "Comment")
     private String comment;
 
     public Rating() {
@@ -38,6 +42,14 @@ public class Rating {
         this.product = product;
         this.rate = rate;
         this.comment = comment;
+    }
+
+    public int getRatingId() {
+        return ratingId;
+    }
+
+    public void setRatingId(int ratingId) {
+        this.ratingId = ratingId;
     }
 
     public User getUser() {
@@ -71,6 +83,5 @@ public class Rating {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
-    
+
 }

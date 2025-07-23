@@ -5,12 +5,12 @@
 package model;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +19,12 @@ import java.util.List;
  * @author manht
  */
 @Entity
+@Table(name = "Type")
 public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int typeID;
 
-    @Column(length = 255)
     private String typeName;
 
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL, orphanRemoval = true)
