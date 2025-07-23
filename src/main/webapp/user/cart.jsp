@@ -64,6 +64,56 @@
                     padding: 4px 8px;
                 }
             }
+
+            /* Custom CSS for horizontal menu items */
+            .single-mega.cn-col-4 li:not(.title) {
+                display: inline-block;
+                margin-right: 20px;
+                margin-bottom: 5px;
+                white-space: nowrap;
+            }
+
+            .single-mega.cn-col-4 li.title {
+                display: block;
+                margin-bottom: 15px;
+                font-weight: bold;
+                width: 100%;
+            }
+
+            .single-mega.cn-col-4 {
+                width: 100% !important;
+                flex-wrap: wrap;
+            }
+
+            .single-mega.cn-col-4 li:not(.title) a {
+                padding: 5px 10px;
+                background-color: #f8f9fa;
+                border-radius: 15px;
+                text-decoration: none;
+                color: #333;
+                font-size: 13px;
+                transition: all 0.3s ease;
+            }
+
+            .single-mega.cn-col-4 li:not(.title) a:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+            /* Adjust megamenu image size */
+            .single-mega.cn-col-4 img {
+                width: 200px !important;
+                height: 150px !important;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+
+            .megamenu .single-mega.cn-col-4:last-child {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
         </style>
     </head>
     <body>
@@ -90,25 +140,10 @@
                             <li><a href="products">Shop</a>
                                 <div class="megamenu">
                                     <ul class="single-mega cn-col-4">
-                                        <li class="title">Trang phục nữ</li>
-                                        <li><a href="products?typeId=1">Váy</a></li>
-                                        <li><a href="products?typeId=2">Áo blouse</a></li>
-                                        <li><a href="products?typeId=3">Áo thun</a></li>
-                                        <li><a href="products?typeId=4">Jumpsuit</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Trang phục nam</li>
-                                        <li><a href="products?typeId=5">Áo thun</a></li>
-                                        <li><a href="products?typeId=6">Áo polo</a></li>
-                                        <li><a href="products?typeId=7">Áo sơ mi</a></li>
-                                        <li><a href="products?typeId=8">Áo khoác</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Trang phục trẻ em</li>
-                                        <li><a href="products?typeId=9">Váy</a></li>
-                                        <li><a href="products?typeId=10">Áo sơ mi</a></li>
-                                        <li><a href="products?typeId=11">Áo thun</a></li>
-                                        <li><a href="products?typeId=12">Áo khoác</a></li>
+                                        <li class="title">Danh mục sản phẩm</li>
+                                        <c:forEach var="type" items="${types}">
+                                            <li><a href="products?typeId=${type.typeID}">${type.typeName}</a></li>
+                                        </c:forEach>
                                     </ul>
                                     <div class="single-mega cn-col-4">
                                         <img src="${pageContext.request.contextPath}/img/bg-img/bg-6.jpg" alt="">
@@ -386,3 +421,234 @@
         <script src="${pageContext.request.contextPath}/admin/js/mdb.umd.min.js"></script>
     </body>
 </html>
+<< HEAD
+        <!-- MDB JavaScript -->
+        <script src="${pageContext.request.contextPath}/js/mdb.umd.min.js"></script>
+        
+        <script>
+            // Simple JavaScript for checkbox functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                const selectAllCheckbox = document.getElementById('selectAll');
+                const productCheckboxes = document.querySelectorAll('.product-checkbox');
+                const checkoutBtn = document.getElementById('checkoutBtn');
+                const selectedCount = document.getElementById('selectedCount');
+                const selectedInfo = document.getElementById('selectedInfo');
+                const selectedCount2 = document.getElementById('selectedCount2');
+
+                // Select All functionality
+                if (selectAllCheckbox) {
+                    selectAllCheckbox.addEventListener('change', function() {
+                        productCheckboxes.forEach(checkbox => {
+                            checkbox.checked = this.checked;
+                            highlightRow(checkbox);
+                        });
+                        updateCheckoutButton();
+                    });
+                }
+
+                // Individual checkbox functionality
+                productCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        highlightRow(this);
+                        updateSelectAll();
+                        updateCheckoutButton();
+                    });
+                });
+
+                function highlightRow(checkbox) {
+                    const row = checkbox.closest('tr');
+                    if (checkbox.checked) {
+                        row.classList.add('selected-row');
+                    } else {
+                        row.classList.remove('selected-row');
+                    }
+                }
+
+                function updateSelectAll() {
+                    const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
+                    selectAllCheckbox.checked = checkedBoxes.length === productCheckboxes.length;
+                    selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < productCheckboxes.length;
+                }
+
+                function updateCheckoutButton() {
+                    const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
+                    const count = checkedBoxes.length;
+                    
+                    if (count > 0) {
+                        checkoutBtn.disabled = false;
+                        selectedInfo.style.display = 'block';
+                    } else {
+                        checkoutBtn.disabled = true;
+                        selectedInfo.style.display = 'none';
+                    }
+                    
+                    selectedCount.textContent = count;
+                    selectedCount2.textContent = count;
+                }
+
+                // Initial update
+                updateCheckoutButton();
+            });
+
+            // Validate checkout - simple validation
+            function validateCheckout() {
+                const checkedBoxes = document.querySelectorAll('.product-checkbox:checked');
+                
+                if (checkedBoxes.length === 0) {
+                    alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán!');
+                    return false;
+                }
+
+                // Add selected variant IDs to form before submit
+                const form = document.getElementById('checkoutForm');
+                
+                // Remove old hidden inputs
+                const oldInputs = form.querySelectorAll('input[name="selectedVariants"]');
+                oldInputs.forEach(input => input.remove());
+
+                // Add new hidden inputs for selected items
+                checkedBoxes.forEach(checkbox => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'selectedVariants';
+                    input.value = checkbox.value;
+                    form.appendChild(input);
+                });
+
+                return true;
+            }
+        </script>
+    </body>
+</html>
+=======
+    <!-- ##### New Arrivals Area End ##### -->
+
+    <!-- ##### Brands Area Start ##### -->
+    <div class="brands-area d-flex align-items-center justify-content-between">
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand1.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand2.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand3.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand4.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand5.png" alt="">
+        </div>
+        <!-- Brand Logo -->
+        <div class="single-brands-logo">
+            <img src="img/core-img/brand6.png" alt="">
+        </div>
+    </div>
+    <!-- ##### Brands Area End ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer_area clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- Single Widget Area -->
+                <div class="col-12 col-md-6">
+                    <div class="single_widget_area d-flex mb-30">
+                        <!-- Logo -->
+                        <div class="footer-logo mr-50">
+                            <a href="index"><img src="img/core-img/logo2.png" alt=""></a>
+                        </div>
+                        <!-- Footer Menu -->
+                        <div class="footer_menu">
+                            <ul>
+                                <li><a href="products">Shop</a></li>
+                                <li><a href="about.jsp">About</a></li>
+                                <li><a href="about.jsp">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Widget Area -->
+                <div class="col-12 col-md-6">
+                    <div class="single_widget_area mb-30">
+                        <ul class="footer_widget_menu">
+                            <li><a href="userOrders.jsp">Trạng thái đơn hàng</a></li>
+                            <li><a href="#">Tùy chọn thanh toán</a></li>
+                            <li><a href="#">Hướng dẫn</a></li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <li><a href="#">Điều khoản sử dụng</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row align-items-end">
+                <!-- Single Widget Area -->
+                <div class="col-12 col-md-6">
+                    <div class="single_widget_area">
+                        <div class="footer_heading mb-30">
+                            <h6>Đăng ký nhận tin</h6>
+                        </div>
+                        <div class="subscribtion_form">
+                            <form action="#" method="post">
+                                <input type="email" name="mail" class="mail" placeholder="Email của bạn">
+                                <button type="submit" class="submit"><i class="fa fa-long-arrow-right"
+                                        aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Widget Area -->
+                <div class="col-12 col-md-6">
+                    <div class="single_widget_area">
+                        <div class="footer_social_area">
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><i
+                                    class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><i
+                                    class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><i
+                                    class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Pinterest"><i
+                                    class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Youtube"><i
+                                    class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <p>
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Clothes Store
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    <!-- ##### Footer Area End ##### -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="${pageContext.request.contextPath}/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <!-- Plugins js -->
+    <script src="${pageContext.request.contextPath}/js/plugins.js"></script>
+    <!-- Classy Nav js -->
+    <script src="${pageContext.request.contextPath}/js/classy-nav.min.js"></script>
+    <!-- Active js -->
+    <script src="${pageContext.request.contextPath}/js/active.js"></script>
+        <!-- MDB JavaScript -->
+        <script src="${pageContext.request.contextPath}/admin/js/mdb.umd.min.js"></script>
+    </body>
+</html>
+>>>>>>> 59620543d8394f5b3d0f000d6b73fceff0075f13

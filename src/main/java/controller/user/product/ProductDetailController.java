@@ -100,6 +100,7 @@ public class ProductDetailController extends HttpServlet {
             request.setAttribute("averageRating", averageRating != null ? averageRating : 0.0);
             request.setAttribute("totalRatings", totalRatings != null ? totalRatings : 0L);
             request.setAttribute("userRating", userRating);
+            // Types will be automatically loaded by TypeFilter
             request.getRequestDispatcher("displayPro.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {

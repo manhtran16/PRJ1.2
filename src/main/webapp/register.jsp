@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -125,6 +126,16 @@
       background-color: #222;
       outline: none;
     }
+    .message {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background-color: #f8f9fa;
+      border-left: 4px solid #007bff;
+      color: #495057;
+    }
     .links {
       margin-top: 1rem;
       font-size: 0.85rem;
@@ -161,18 +172,9 @@
       }
     }
   </style>
-        <%
-        String registerFirstName = (String) request.getAttribute("registerFirstName");
-        String registerLastName = (String) request.getAttribute("registerLastName");
-        String registerEmail = (String) request.getAttribute("registerEmail");
-        String registerPhone = (String) request.getAttribute("registerPhone");
-        String registerAddress = (String) request.getAttribute("registerAddress");
-        Integer registerStatus = (Integer) request.getAttribute("registerStatus");
-        %>
-    </head>
-    <body>
-        <f:view>
-            <main class="container" role="main" aria-label="Login form">
+</head>
+<body>
+    <main class="container" role="main" aria-label="Register form">
                 <section class="image-side" aria-hidden="true">
                     <img 
                         src="https://png.pngtree.com/background/20230519/original/pngtree-the-interior-of-a-clothing-store-with-clothing-on-display-picture-image_2654940.jpg" 
@@ -194,12 +196,20 @@
                         <input type="text" name="address" placeholder="Address" aria-label="Email address" required />
                         <input type="password" name="password" placeholder="Password" aria-label="Email address" required />
                         <input type="password" name="confirmPassword" placeholder="Confirm Password" aria-label="Password" required />
-                        <input type="submit" name="type" value="REGISTER"">
+                        <input type="submit" name="type" value="REGISTER">
                     </form>
-                    <h2>${requestScope.msg}</h2>
+                    
+                    <!-- Error/Success Messages -->
+                    <c:if test="${not empty requestScope.msg}">
+                        <div class="message">
+                            ${requestScope.msg}
+                        </div>
+                    </c:if>
+                    
+                    <div class="links">
+                        Already have an account? <a href="login.jsp">Sign in here</a>
+                    </div>
                 </section>
             </main>
-
-        </f:view>
-    </body>
+</body>
 </html>

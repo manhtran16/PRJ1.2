@@ -63,6 +63,7 @@ public class IndexController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDao productDAO = new ProductDao();
+
         List<Product> allProducts = productDAO.getAllProducts();
         Collections.shuffle(allProducts);
         List<Product> randomProducts = allProducts.stream()
@@ -70,6 +71,7 @@ public class IndexController extends HttpServlet {
                 .collect(Collectors.toList());
 
         request.setAttribute("randomProducts", randomProducts);
+        // Types will be automatically loaded by TypeFilter
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

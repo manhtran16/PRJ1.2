@@ -48,6 +48,56 @@
                 flex-direction: column;
                 margin-bottom: 20px;
             }
+
+            /* Custom CSS for horizontal menu items */
+            .single-mega.cn-col-4 li:not(.title) {
+                display: inline-block;
+                margin-right: 20px;
+                margin-bottom: 5px;
+                white-space: nowrap;
+            }
+
+            .single-mega.cn-col-4 li.title {
+                display: block;
+                margin-bottom: 15px;
+                font-weight: bold;
+                width: 100%;
+            }
+
+            .single-mega.cn-col-4 {
+                width: 100% !important;
+                flex-wrap: wrap;
+            }
+
+            .single-mega.cn-col-4 li:not(.title) a {
+                padding: 5px 10px;
+                background-color: #f8f9fa;
+                border-radius: 15px;
+                text-decoration: none;
+                color: #333;
+                font-size: 13px;
+                transition: all 0.3s ease;
+            }
+
+            .single-mega.cn-col-4 li:not(.title) a:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+            /* Adjust megamenu image size */
+            .single-mega.cn-col-4 img {
+                width: 200px !important;
+                height: 150px !important;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+
+            .megamenu .single-mega.cn-col-4:last-child {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
             
         </style>
     </head>
@@ -75,25 +125,10 @@
                                 <li><a href="products">Shop</a>
                                     <div class="megamenu">
                                         <ul class="single-mega cn-col-4">
-                                            <li class="title">Trang phục nữ</li>
-                                            <li><a href="products?typeId=1">Váy</a></li>
-                                            <li><a href="products?typeId=2">Áo blouse</a></li>
-                                            <li><a href="products?typeId=3">Áo thun</a></li>
-                                            <li><a href="products?typeId=4">Jumpsuit</a></li>
-                                        </ul>
-                                        <ul class="single-mega cn-col-4">
-                                            <li class="title">Trang phục nam</li>
-                                            <li><a href="products?typeId=5">Áo thun</a></li>
-                                            <li><a href="products?typeId=6">Áo polo</a></li>
-                                            <li><a href="products?typeId=7">Áo sơ mi</a></li>
-                                            <li><a href="products?typeId=8">Áo khoác</a></li>
-                                        </ul>
-                                        <ul class="single-mega cn-col-4">
-                                            <li class="title">Trang phục trẻ em</li>
-                                            <li><a href="products?typeId=9">Váy</a></li>
-                                            <li><a href="products?typeId=10">Áo sơ mi</a></li>
-                                            <li><a href="products?typeId=11">Áo thun</a></li>
-                                            <li><a href="products?typeId=12">Áo khoác</a></li>
+                                            <li class="title">Danh mục sản phẩm</li>
+                                            <c:forEach var="type" items="${types}">
+                                                <li><a href="products?typeId=${type.typeID}">${type.typeName}</a></li>
+                                            </c:forEach>
                                         </ul>
                                         <div class="single-mega cn-col-4">
                                             <img src="img/bg-img/bg-6.jpg" alt="">
