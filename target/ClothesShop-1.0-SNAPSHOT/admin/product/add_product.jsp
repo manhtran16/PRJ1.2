@@ -119,11 +119,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Thêm sản phẩm</button>
                     </form>
-                    <div class="text-center mt-3">
-                        <a href="${pageContext.request.contextPath}/admindashboard" class="btn btn-secondary back-link">
-                            <i class="fas fa-arrow-left"></i> Quay lại trang quản trị
-                        </a>
-                    </div>
+
                 </div>
                 <c:if test="${not empty requestScope.error}">
                     <div class="alert alert-danger mt-3 text-center">
